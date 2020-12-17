@@ -38,9 +38,8 @@
 
 
 ## 使用素材等
-- Font Awesome
-- URL：https://fontawesome.com/
+- Font Awesome  URL：https://fontawesome.com/
 - Unsplash
-- URL：https://unsplash.com/
+  URL：https://unsplash.com/
 - お名前.com
-- URL：https://www.onamae.com/
+  URL：https://www.onamae.com/
