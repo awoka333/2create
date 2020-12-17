@@ -1,7 +1,7 @@
 # 2create
  ![2create-logo.JPG](xxxxxx/logo.JPG "2create-logo")
 
-<br>
+
 ## サイト概要
 コロナ禍であたらしい生活様式に馴染んできた頃、
 新しく何かを始めたいと思っても、すぐに「これだ！」と浮かぶとは限りませんよね。
@@ -22,12 +22,12 @@
 ### 主な利用シーン
 新しくクリエーションを始めたい時、創作活動を何から始めていいか分からない時、創作初心者コミュニティに入りたい時
 
-<br>
+
 ## 設計書
 ### チャレンジ要素一覧
-[チャレンジ要素一覧（AI教養コース）](https://docs.google.com/spreadsheets/d/1dN4vwTJr5CT3FFcdH9HrYVmUCJgh50MfIdl2hcLT4YE/edit#gid=0)
+*[チャレンジ要素一覧（AI教養コース）](https://docs.google.com/spreadsheets/d/1dN4vwTJr5CT3FFcdH9HrYVmUCJgh50MfIdl2hcLT4YE/edit#gid=0)*
 
-<br>
+
 ## 開発環境
 - OS：Linux(CentOS)
 - 言語：HTML,CSS,JavaScript,Ruby,SQL
