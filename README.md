@@ -1,6 +1,7 @@
 # 2create
  ![2create-logo.JPG](xxxxxx/logo.JPG "2create-logo")
 
+
 ## サイト概要
 コロナ禍であたらしい生活様式に馴染んできた頃、
 新しく何かを始めたいと思っても、すぐに「これだ！」と浮かぶとは限りませんよね。
@@ -21,8 +22,8 @@
 ### 主な利用シーン
 新しくクリエーションを始めたい時、創作活動を何から始めていいか分からない時、創作初心者コミュニティに入りたい時
 
-## 設計書
 
+## 設計書
 
 ### チャレンジ要素一覧
 [チャレンジ要素一覧（AI教養コース）](https://docs.google.com/spreadsheets/d/1dN4vwTJr5CT3FFcdH9HrYVmUCJgh50MfIdl2hcLT4YE/edit#gid=0)
