@@ -38,7 +38,8 @@
 
 
 ## 使用素材等
-- Font Awesome  URL：https://fontawesome.com/
+- Font Awesome
+  URL：https://fontawesome.com/
 - Unsplash
   URL：https://unsplash.com/
 - お名前.com
