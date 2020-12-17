@@ -36,8 +36,11 @@
 - IDE：Cloud9
 - Natural Language API(Google Cloud Platform)
 
-<br>
+
 ## 使用素材等
-- Font Awesome<br>URL:https://fontawesome.com/
-- Unsplash<br>URL:https://unsplash.com/
-- お名前.com<br>URL:https://www.onamae.com/
+- Font Awesome
+- URL:https://fontawesome.com/
+- Unsplash
+- URL:https://unsplash.com/
+- お名前.com
+- URL:https://www.onamae.com/
