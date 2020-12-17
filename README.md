@@ -25,7 +25,7 @@
 
 ## 設計書
 ### チャレンジ要素一覧
-*[チャレンジ要素一覧（AI教養コース）](https://docs.google.com/spreadsheets/d/1dN4vwTJr5CT3FFcdH9HrYVmUCJgh50MfIdl2hcLT4YE/edit#gid=0)*
+[*チャレンジ要素一覧（AI教養コース）*](https://docs.google.com/spreadsheets/d/1dN4vwTJr5CT3FFcdH9HrYVmUCJgh50MfIdl2hcLT4YE/edit#gid=0)
 
 
 ## 開発環境
@@ -39,8 +39,8 @@
 
 ## 使用素材等
 - Font Awesome
-  URL：https://fontawesome.com/
+  - URL：https://fontawesome.com/
 - Unsplash
-  URL：https://unsplash.com/
+  - URL：https://unsplash.com/
 - お名前.com
-  URL：https://www.onamae.com/
+  - URL：https://www.onamae.com/
