@@ -34,13 +34,13 @@
 - フレームワーク：Ruby on Rails
 - JSライブラリ：jQuery
 - IDE：Cloud9
-- Natural Language API（Google Cloud Platform）
+- Natural Language API (Google Cloud Platform)
 
 
 ## 使用素材等
 - Font Awesome
-- URL：  https://fontawesome.com/
+- URL：https://fontawesome.com/
 - Unsplash
-- URL：  https://unsplash.com/
+- URL：https://unsplash.com/
 - お名前.com
 - URL：https://www.onamae.com/
