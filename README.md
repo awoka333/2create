@@ -24,7 +24,7 @@
 
 
 ## 設計書
-### チャレンジ要素一覧
+### 機能一覧
 [*チャレンジ要素一覧（AI教養コース）*](https://docs.google.com/spreadsheets/d/1dN4vwTJr5CT3FFcdH9HrYVmUCJgh50MfIdl2hcLT4YE/edit#gid=0)
 
 
