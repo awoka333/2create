@@ -42,5 +42,3 @@
   - URL：https://fontawesome.com/
 - Unsplash
   - URL：https://unsplash.com/
-- お名前.com
-  - URL：https://www.onamae.com/
