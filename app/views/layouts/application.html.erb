@@ -4,12 +4,22 @@
     <title>Two2create</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <script src="https://kit.fontawesome.com/45c58c3b7f.js" crossorigin="anonymous"></script>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <%= render 'layouts/header' %>
+    </header>
+    <main>
+      <%= yield %>
+    </main>
+    <footer>
+      <div class ="container-fluid">
+        <p class="text-center mb-0">© 2create</p>
+      </div>
+    </footer>
   </body>
 </html>
