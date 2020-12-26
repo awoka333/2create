@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>登録情報の編集</h2>
+    </div>
+  </div>
+
+  <!--user登録情報の編集フォーム-->
+  <% form_with model: @user, url: user_path, local: true do |f| %>
+    <div class="row">
+      <div class="col-sm-8">
+        <table>
+          <tr>
+            <td><%= f.label :name, "ニックネーム" %></td>
+            <td><%= f.text_field :name %></td>
+          </tr>
+          <tr>
+            <td><%= f.label :email, "メールアドレス" %></td>
+            <td><%= f.text_field :email %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8">
+        <table>
+          <tr>
+            <td><%= f.submit "更新する", class: "btn-sm btn-secondary" %></td>
+            <td>
+              <%= link_to users_withdraw_path do %>
+                <button type="button" class="btn btn-danger">退会する</button>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  <% end %>
+
+</div>
