@@ -74,3 +74,7 @@ gem 'pry-byebug'
 
 # N + 1問題の検出
 gem "bullet"
+
+# レイアウト
+gem 'bootstrap', '~> 4.5.3'
+gem 'jquery-rails'

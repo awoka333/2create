@@ -1,2 +1,33 @@
-<h1>Homes#about</h1>
-<p>Find me in app/views/homes/about.html.erb</p>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>2createの掛け持ち・卒業制度</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 ml-4 mr-4">
+            <p>2createでは、1度に2つまでのサークルに参加することができます。<br>
+                3つ目以上のサークルに参加したい場合や、所属しているサークルで十分学びきった場合には<br>
+                メンバーとして所属していたサークルを卒業することで、新たなサークルのメンバーとなることができます。<br>
+                なお、卒業したサークルにはシニア会員として籍が残り、現役メンバーにコメントを送ることが出来ます。
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>2createrの作品例</h2>
+        </div>
+    </div>
+    <div class="row">
+        <!--新着workを3つ並べる-->
+        <div class="col-sm-3 ml-4">
+            <% @firstworks.each do |firstwork| %>
+                <table>
+                    <tr><%= attachment_image_tag firstwork, :image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></tr>
+                    <tr><%= firstwork.title %></tr>
+                    <tr><%= firstwork.activities.name %></tr>
+                </table>
+            <% end %>
+        </div>
+    </div>
+</div>

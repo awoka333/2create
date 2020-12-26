@@ -1,2 +1,27 @@
-<h1>Homes#top</h1>
-<p>Find me in app/views/homes/top.html.erb</p>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>新着作品</h2>
+        </div>
+    </div>
+    <div class="row">
+        <!--新着workを3つ並べる-->
+        <div class="col-sm-3 ml-4">
+            <% @lastworks.each do |lastwork| %>
+                <table>
+                    <tr><%= attachment_image_tag lastwork, :image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></tr>
+                    <tr>
+                        <td><%= lastwork.title %></td>
+                        <td id="favorite-<%= lastwork.id %>"><%= render 'favorites/favorite', lastwork: work %></td>
+                    </tr>
+                    <tr><%= lastwork.activities.name %></tr>
+                </table>
+            <% end %>
+        </div>
+    </div>
+    <div class="row">
+        <%= link_to works_path do %>
+            <button type="button" class="btn btn-secondary">もっとみる</button>
+        <% end %>
+    </div>
+</div>

@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
+  devise_for :users
   root 'homes#top'
   get 'homes/about'
 
-  devise_for :users
   resources :users, only:[:index, :edit, :update]
   get 'users/my_page/:id' => 'users#show', as: 'my_page'
   get 'users/unsubscribe'
