@@ -1,5 +1,5 @@
 # 2create
- ![2create-logo.JPG](images/logo.JPG "2create-logo")
+ ![2create-logo.JPG](https://github.com/awoka333/2create/blob/master/logo.JPG?raw=true)
 
 
 ## サイト概要
