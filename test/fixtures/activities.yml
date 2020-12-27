@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  to_create: MyString
+  to_study: MyString
+  to_do: MyString
+
+two:
+  name: MyString
+  to_create: MyString
+  to_study: MyString
+  to_do: MyString
