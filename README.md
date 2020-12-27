@@ -1,5 +1,5 @@
 # 2create
- ![2create-logo.JPG](app/assets/logo.JPG "2create-logo")
+ ![2create-logo.JPG](images/logo.JPG "2create-logo")
 
 
 ## サイト概要

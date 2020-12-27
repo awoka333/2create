@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  act_id: 1
+  member_status: 1
+  graduate_status: 1
+
+two:
+  user_id: 1
+  act_id: 1
+  member_status: 1
+  graduate_status: 1

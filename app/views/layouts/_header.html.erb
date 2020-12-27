@@ -1,0 +1,20 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-4">
+      <%= link_to root_path(order_sort: 1) do %>
+        <%= image_tag('logo.JPG', class: 'navbar mt-4 mb-4') %>
+      <% end %>
+    </div>
+    <div class="col-sm-6">
+      <nav>
+        <ul>
+          <li><%= link_to 'Activity', activities_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
+          <li><%= link_to 'Work', works_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
+          <li><%= link_to 'About', homes_about_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
+          <li><%= link_to 'Join', new_user_registration_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
+          <li><%= link_to 'Login', new_user_session_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
