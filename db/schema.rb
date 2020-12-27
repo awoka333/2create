@@ -10,7 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_25_073725) do
+ActiveRecord::Schema.define(version: 2020_12_27_062054) do
+
+  create_table "activities", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "to_create", null: false
+    t.string "to_study", null: false
+    t.string "to_do"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "act_id", null: false
+    t.integer "member_status", default: 0, null: false
+    t.integer "graduate_status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

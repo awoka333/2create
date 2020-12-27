@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>会員情報一覧</h2>
+    </div>
+  </div>
+
+  <!--user登録情報の編集フォーム-->
+  <% @users.each do |user| %>
+    <div class="row">
+      <div class="col-sm-8">
+        <table>
+          <tr>
+            <th>ニックネーム</th>
+            <th>メールアドレス</th>
+            <th>ステータス</th>
+            <th></th>
+          </tr>
+          <tr>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td><%= user.status %></td>
+            <td>
+              <%= link_to belongs_path(user.id) do %>
+                <button type="button" class="btn btn-info">編集する</button>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  <% end %>
+
+</div>

@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'groups/show'
+  get 'activities/new'
+  get 'activities/index'
+  get 'activities/show'
+  get 'activities/public'
+  get 'activities/edit'
   devise_for :users
   root 'homes#top'
   get 'homes/about'
