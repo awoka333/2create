@@ -1,2 +1,82 @@
-<h1>Activities#edit</h1>
-<p>Find me in app/views/activities/edit.html.erb</p>
+<div class="container">
+  <!--user登録情報の編集フォーム-->
+  <% form_with model: @activity, url: activities_path, local: true do |f| %>
+    <div class="row">
+      <div class="col-sm-6">
+        <h2><%= f.text_field :name, placeholder: "サークル名" %></h2>
+      </div>
+      <div class="col-sm-3">
+        <h2><%= f.label :to_create, "作るもの" %></h2><br>
+        <%= f.text_field :to_create %>
+      </div>
+      <div class="col-sm-3">
+        <h2><%= f.label :to_study, "勉強すること" %></h2><br>
+        <%= f.text_field :to_study %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <h2><%= f.label :to_do, "次回日程" %></h2><br>
+        <%= f.text_field :to_do, placeholder: "XX年XX月XX日 XX時～　オンラインにて活動します" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <h2><%= f.label :to_do, "メンバー申請" %></h2>
+        <!--メンバー申請を出している人のリストを表示-->
+        <% @users.each do |user| %>
+
+        <!--if文でラジオボタンの方がよい？？？？？？？？？？？？？？？？？？？？-->
+          <table>
+            <tr>
+              <td><%= user.groups.member_status %></td>
+              <td><%= user.name %></td>
+              <td>
+                <%= link_to group_path(@activity.id), method: :patch do %>
+                  <button type="button" class="btn btn-danger">承認する</button>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to group_path(@activity.id), method: :delete do %>
+                  <button type="button" class="btn btn-danger">承認しない</button>
+                <% end %>
+              </td>
+            </tr>
+          </table>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <h2>リーダー</h2>
+        <table>
+          <tr>
+            <td><%= f.label :name, "ニックネーム" %></td>
+            <td><%= f.text_field :name %></td>
+          </tr>
+          <tr>
+            <td><%= f.label :email, "メールアドレス" %></td>
+            <td><%= f.text_field :email %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-8">
+        <h2>卒業申請</h2>
+        <table>
+          <tr>
+            <td><%= f.submit "更新する", class: "btn-sm btn-secondary" %></td>
+            <td>
+              <%= link_to users_unsubscribe_path do %>
+                <button type="button" class="btn btn-danger">退会する</button>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  <% end %>
+</div>

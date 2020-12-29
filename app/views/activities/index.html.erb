@@ -1,2 +1,48 @@
-<h1>Activities#index</h1>
-<p>Find me in app/views/activities/index.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>サークル一覧</h2>
+    </div>
+    <div class="col-sm-4">
+      <%= link_to new_activity_path do %>
+        <button type="button" class="btn btn-secondary">サークルをつくる</button>
+      <% end %>
+    </div>
+  </div>
+  <!--サークル一覧を表示w-->
+  <div class="row">
+    <div class="col-sm-3 ml-4">
+      <table class="table table-hover table-inverse">
+        <thead>
+          <tr>
+            <th></th>
+            <th>サークル名</th>
+            <th>メンバー数</th>
+            <th>作るもの</th>
+            <th>勉強すること</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @activities.each do |activity| %>
+          <tr>
+            <td>
+              <%= link_to activity_path(activity) do %>
+                <%= attachment_image_tag(activity, :profile_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %>
+              <% end %>
+            </td>
+            <td><%= link_to activity.name, activity_path(activity) %></td>
+            <td><%= activity.user.count %></td>
+            <td><%= activity.to_create %></td>
+            <td><%= activity.to_study %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <p><%= paginate @activities_paginate %></p>
+    </div>
+  </div>
+</div>
