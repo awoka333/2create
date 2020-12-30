@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'themes/edit'
+  get 'works/new'
+  get 'works/index'
+  get 'works/show'
+  get 'works/modify'
+  get 'works/edit'
   devise_for :users
 
   root 'homes#top'
@@ -10,7 +16,7 @@ Rails.application.routes.draw do
   patch 'users/withdraw'
 
   resources :activities
-  get 'activities/public'
+  get 'activities/modify'
 
   resources :groups, only:[:show, :create, :update, :destroy]
 
