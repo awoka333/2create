@@ -1,12 +1,12 @@
 class CreateThemes < ActiveRecord::Migration[5.2]
   def change
     create_table :themes do |t|
-      t.string :month
-      t.string :theme1
-      t.string :theme2
-      t.string :theme3
-      t.text :theme_sentence
-      t.integer :theme_image_id
+      t.string :month, null: false
+      t.string :theme1, null: false
+      t.string :theme2, null: false
+      t.string :theme3, null: false
+      t.text :sentence, null: false, default: "2createにようこそ！"
+      t.integer :theme_image_id, null: false
 
       t.timestamps
     end

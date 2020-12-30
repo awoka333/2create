@@ -1,2 +1,48 @@
-<h1>Works#modify</h1>
-<p>Find me in app/views/works/modify.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>サークル作品一覧</h2>
+    </div>
+  </div>
+  <!--サークル作品一覧を表示w-->
+  <div class="row">
+    <div class="col-sm-3 ml-4">
+      <table class="table table-hover table-inverse">
+        <thead>
+          <tr>
+            <th></th>
+            <th>タイトル</th>
+            <th>公開ステータス</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @works.each do |work| %>
+          <tr>
+            <td>
+              <%= attachment_image_tag(work, :work_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %>
+            </td>
+            <td><%= work.title %></td>
+            <% if work.is_masking == false %>
+              <td>
+                <%= link_to works_mask_path do %>
+                  <button type="button" class="btn btn-danger">非公開にする</button>
+                <% end %>
+              </td>
+            <% else %>
+            <td>
+              <%= link_to works_share_path do %>
+                <button type="button" class="btn btn-secondary">公開にする</button>
+              <% end %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <p><%= paginate @works_paginate %></p>
+    </div>
+  </div>
+</div>
