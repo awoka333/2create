@@ -1,10 +1,4 @@
 Rails.application.routes.draw do
-  get 'themes/edit'
-  get 'works/new'
-  get 'works/index'
-  get 'works/show'
-  get 'works/modify'
-  get 'works/edit'
   devise_for :users
 
   root 'homes#top'
@@ -20,4 +14,10 @@ Rails.application.routes.draw do
 
   resources :groups, only:[:show, :create, :update, :destroy]
 
+  resources :works
+  get 'works/modify'
+  patch 'works/mask'
+  patch 'works/share'
+
+  resources :themes, only:[:edit, :update]
 end
