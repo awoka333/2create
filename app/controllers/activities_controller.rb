@@ -8,9 +8,17 @@ class ActivitiesController < ApplicationController
   end
 
   def show
+    @activity = Activity.find(params[:id])
+    @works = Work.find(activity_id: @activity.id).order(created_at: :desc).limit(2)
+    @groups = Group.where(activity_id: @activity.id)
+    seniors = @groups.where(member_status: 'シニア')
+    leaders = @groups.where(member_status: 'リーダー')
+    juniors = @groups.where(member_status: 'メンバー')
+    pre_members = @groups.where(member_status: '承認待ち')
+    @comments = @activity.comments.order(created_at: :desc)
   end
 
-  def public
+  def modify
   end
 
   def create

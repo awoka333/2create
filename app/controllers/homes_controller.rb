@@ -1,9 +1,9 @@
 class HomesController < ApplicationController
   def top
-    @lastworks = Work.last(3).order('id')
+    @lastworks = Work.order(created_at: :desc).limit(3)
   end
 
   def about
-    @lastworks = Work.first(2).order('id DESC')
+    @firstworks = Work.order('created_at').limit(2)
   end
 end
