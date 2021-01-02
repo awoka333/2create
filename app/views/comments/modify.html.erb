@@ -1,0 +1,18 @@
+<%#= render 'themes/theme_bar', theme: @theme %>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>サークルコメント欄への連絡</h2>
+    </div>
+  </div>
+  <%= form_with model:@comment, url: comments_path, local: true do |f| %>
+    <div class="row">
+      <div class="col-sm-8">
+          <%= f.text_area :sentence %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.submit "メッセージを送る", :class=>"btn btn-secondary" %>
+      </div>
+    </div>
+  <% end %>
+</div>
