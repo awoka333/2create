@@ -5,7 +5,7 @@
       <h2><%= @activity.name %></h2>
     </div>
   </div>
-  <%= form_with model:@work, url:  work_path(@work), local: true do |f| %>
+  <%= form_with model: @work, url: works_path, local: true do |f| %>
     <div class="row">
       <div class="col-sm-6 ml-4">
           <%= f.attachment_field :work_image %>
@@ -30,9 +30,7 @@
 
     <div class="row">
       <div class="col-sm-12">
-        <%= link_to works_path do %>
-          <button type="button" class="btn btn-secondary">投稿する</button>
-        <% end %>
+        <%= f.submit "投稿する", :class=>"btn btn-secondary" %>
       </div>
     </div>
   <% end %>

@@ -20,4 +20,9 @@ Rails.application.routes.draw do
   patch 'works/share'
 
   resources :themes, only:[:edit, :update]
+
+  resources :comments, only:[:index, :create, :update, :destroy]
+  get 'comments/modify'
+
+  resources :favoretes, only:[:create, :destroy]
 end
