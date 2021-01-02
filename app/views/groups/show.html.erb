@@ -20,7 +20,7 @@
     </div>
   </div>
   <!--user登録情報の編集フォーム-->
-  <% form_with model:group, url: group_path, local: true do |f| %>
+  <%= form_with model:group, url: group_path, local: true do |f| %>
     <% @groups.each do |group| %>
       <div class="row">
         <div class="col-sm-8">
