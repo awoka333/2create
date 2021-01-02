@@ -78,3 +78,6 @@ gem "bullet"
 # レイアウト
 gem 'bootstrap', '~> 4.5.3'
 gem 'jquery-rails'
+
+# ページネーション
+gem 'kaminari','~> 1.2.1'

@@ -4,6 +4,7 @@ class ActivitiesController < ApplicationController
   end
 
   def index
+    @activities = Activity.all
     @activities_paginate = Activity.page(params[:page]).per(10)
   end
 

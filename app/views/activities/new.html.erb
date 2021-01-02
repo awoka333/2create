@@ -1,6 +1,6 @@
 <div class="container">
   <!--user登録情報の入力フォーム-->
-  <% form_with model: @activity, url: activities_path, local: true do |f| %>
+  <%= form_with model: @activity, url: activities_path, local: true do |f| %>
     <div class="row">
       <div class="col-sm-8">
         <h2><%= f.text_field :name, placeholder: "サークル名" %></h2>
@@ -26,7 +26,7 @@
     </div>
     <div class="row">
       <div class="col-sm-12 text-center">
-        <%= f.submit "更新する", :class=>"btn btn-primary" %>
+        <%= f.submit "作成する", :class=>"btn btn-primary" %>
       </div>
     </div>
   <% end %>

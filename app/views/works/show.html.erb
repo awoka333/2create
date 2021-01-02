@@ -1,2 +1,34 @@
-<h1>Works#show</h1>
-<p>Find me in app/views/works/show.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2><%= @activity.name %></h2>
+    </div>
+    <div class="col-sm-4">
+      <%= link_to edit_work_path(@work) do %>
+        <button type="button" class="btn btn-secondary">作品を編集する</button>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 ml-4">
+      <table>
+        <tr><%= attachment_image_tag @work, :work_image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></tr>
+        <tr>
+          <td><%= @work.title %></td>
+          <td id="favorite-<%= @work.id %>"><%= render 'favorites/favorite', work: @work %></td>
+        </tr>
+        <tr><%= @work.created_at %></tr>
+      </table>
+    </div>
+    <div class="col-sm-6">
+      <h3>2creator</h3>
+      <%= @work.creators1 %>
+      <br>
+      <h3>Special thanks</h3>
+      <%= @work.creators2 %>
+      <br>
+      <h3>ポイント</h3>
+      <%= @work.point %>
+    </div>
+  </div>
+</div>

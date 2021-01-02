@@ -1,6 +1,6 @@
 <div class="container">
   <!--user登録情報の編集フォーム-->
-  <% form_with model: @activity, url: activities_path, local: true do |f| %>
+  <%= form_with model: @activity, url: activities_path, local: true do |f| %>
     <div class="row">
       <div class="col-sm-6">
         <h2><%= f.text_field :name, placeholder: "サークル名" %></h2>

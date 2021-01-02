@@ -1,2 +1,27 @@
-<h1>Works#index</h1>
-<p>Find me in app/views/works/index.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>作品一覧</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3 ml-4">
+      <!--2個横並びで折り返す-->
+      <% @works.each do |work| %>
+        <table>
+          <tr><%= attachment_image_tag work, :work_image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></tr>
+          <tr>
+            <td><%= work.title %></td>
+            <td id="favorite-<%= work.id %>"><%= render 'favorites/favorite', work: work %></td>
+          </tr>
+          <tr><%= work.activities.name %></tr>
+        </table>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <p><%= paginate @works_paginate %></p>
+    </div>
+  </div>
+</div>
