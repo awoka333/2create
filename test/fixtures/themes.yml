@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  month: MyString
+  theme1: MyString
+  theme2: MyString
+  theme3: MyString
+  theme_sentence: MyText
+  theme_image_id: 1
+
+two:
+  month: MyString
+  theme1: MyString
+  theme2: MyString
+  theme3: MyString
+  theme_sentence: MyText
+  theme_image_id: 1

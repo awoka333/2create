@@ -1,2 +1,84 @@
-<h1>Activities#show</h1>
-<p>Find me in app/views/activities/show.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+
+        <div class="row">
+          <div class="col-sm-12">
+            <h2><%= @activity.name %> 次回日程</h2>
+            <%= link_to edit_activity_path(@activity.id) do %>
+              <button type="button" class="btn btn-danger">ページを編集する</button>
+            <% end %>
+            <br>
+            <p><%= @activity.to_do %></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <h2><%= @activity.name %> 新着作品</h2>
+            <%= link_to new_work_path(@activity.id) do %>
+              <button type="button" class="btn btn-danger">作品を投稿する</button>
+            <% end %>
+            <%= link_to works_path(@activity.id) do %>
+              <button type="button" class="btn btn-danger">もっとみる</button>
+            <% end %>
+          </div>
+          <div class="col-sm-12">
+            <% @works.each do |work| %>
+              <table>
+                <tr><%= attachment_image_tag work, :image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></tr>
+                <tr>
+                  <td><%= work.title %></td>
+                  <td id="favorite-<%= work.id %>"><%= render 'favorites/favorite', work: work %></td>
+                </tr>
+                <tr><%= work.creators1 %></tr>
+              </table>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <h2><%= @activity.name %> メンバー</h2>
+            <% if current_user.groups.where(act_id: @activity.id).exists? %> <!--現在のユーザーと@activityが紐づくgroupsレコードが存在しない時-->
+              <%= link_to works_path(@activity.id) do %>
+                <button type="button" class="btn btn-danger">メンバーになる</button>
+              <% end %>
+            <% end %>
+            <br>
+            <% if @pre_members.count > 0 %>
+              <p class="text-danger">申請中：<%= @activity.groups.member_status.count %>名</p>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <h2>シニア</h2>
+            <!--メンバーステータスごとに表示-->
+            <% @seniors.each do |senior| %>
+              <!---->
+            <% end %>
+          </div>
+        </div>
+
+    </div>
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>新着コメント</h2>
+        </div>
+      </div>
+      <% @comments.each do |comment| %>
+        <div class="row">
+          <div class="col-sm-12">
+            <p><%= comment.sentence %></p>
+          </div>
+          <div class="col-sm-12 border-bottom">
+            <p><%= comment.user.name %> <%= comment.created_at %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>

@@ -1,2 +1,33 @@
-<h1>Activities#new</h1>
-<p>Find me in app/views/activities/new.html.erb</p>
+<div class="container">
+  <!--user登録情報の入力フォーム-->
+  <%= form_with model: @activity, url: activities_path, local: true do |f| %>
+    <div class="row">
+      <div class="col-sm-8">
+        <h2><%= f.text_field :name, placeholder: "サークル名" %></h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8">
+        <h2><%= f.label :to_create, "作るもの" %></h2>
+        <%= f.text_field :to_create %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8">
+        <h2><%= f.label :to_study, "勉強すること" %></h2>
+        <%= f.text_field :to_study %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8">
+        <h2><%= f.label :to_do, "次回日程" %></h2>
+        <%= f.text_field :to_do, placeholder: "XX年XX月XX日 XX時～　xxxにて活動します" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <%= f.submit "作成する", :class=>"btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -78,3 +78,12 @@ gem "bullet"
 # レイアウト
 gem 'bootstrap', '~> 4.5.3'
 gem 'jquery-rails'
+
+# ページネーション
+gem 'kaminari','~> 1.2.1'
+
+# デプロイ
+gem 'dotenv-rails'
+group :production do
+  gem 'mysql2'
+end

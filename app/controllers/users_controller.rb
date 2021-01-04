@@ -8,6 +8,12 @@ class UsersController < ApplicationController
     @user = current_user(id: current_user.id)
   end
 
+  def update
+  end
+
   def unsubscribe
+  end
+
+  def withdraw
   end
 end

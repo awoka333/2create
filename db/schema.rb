@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_27_062054) do
+ActiveRecord::Schema.define(version: 2021_01_02_163851) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name", null: false
@@ -21,11 +21,37 @@ ActiveRecord::Schema.define(version: 2020_12_27_062054) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "act_id", null: false
+    t.text "sentence", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "work_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "groups", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "act_id", null: false
     t.integer "member_status", default: 0, null: false
     t.integer "graduate_status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "themes", force: :cascade do |t|
+    t.string "month", null: false
+    t.string "theme1", null: false
+    t.string "theme2", null: false
+    t.string "theme3", null: false
+    t.text "sentence", null: false
+    t.integer "theme_image_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -43,6 +69,19 @@ ActiveRecord::Schema.define(version: 2020_12_27_062054) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "works", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "act_id", null: false
+    t.string "title", null: false
+    t.string "point", null: false
+    t.string "creator1", null: false
+    t.string "creator2"
+    t.boolean "is_masking", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "work_image_id", null: false
   end
 
 end
