@@ -10,13 +10,23 @@ class ActivitiesController < ApplicationController
 
   def show
     @activity = Activity.find(params[:id])
-    @works = Work.find(activity_id: @activity.id).order(created_at: :desc).limit(2)
-    @groups = Group.where(activity_id: @activity.id)
-    seniors = @groups.where(member_status: 'シニア')
+    if Work.where(act_id: @activity_id).count > 1
+      @works = Work.find(act_id: @activity.id).order(created_at: :desc).limit(2)
+    elsif Work.where(act_id: @activity_id).count == 1
+      @works = Work.find_by(act_id: @activity.id)
+    else
+      @works = Work.none
+    end
+    @groups = Group.where(act_id: @activity.id)
+    @seniors = @groups.where(member_status: 'シニア')
     leaders = @groups.where(member_status: 'リーダー')
     juniors = @groups.where(member_status: 'メンバー')
-    pre_members = @groups.where(member_status: '承認待ち')
-    @comments = @activity.comments.order(created_at: :desc)
+    @pre_members = @groups.where(member_status: '承認待ち')
+    if Comment.where(act_id: @activity_id).exists?
+      @comments = @activity.comments.order(created_at: :desc)
+    else
+      @comments = Comment.none
+    end
   end
 
   def modify
@@ -25,6 +35,10 @@ class ActivitiesController < ApplicationController
   def create
     @activity = Activity.new(activity_params)
     if @activity.save
+      leader = Group.new(group_params)
+      leader.user_id = current_user.id
+      leader.act_id = @activity.id
+      leader.save
       redirect_to activity_path(@activity.id)
     else
       render "edit"
@@ -33,23 +47,32 @@ class ActivitiesController < ApplicationController
 
   def edit
     @activity = Activity.find(params[:id])
-    @users = User.where(activity_id: @activity.id)
+    if Group.where(act_id: @activity.id).count > 0
+      @users = User.where(act_id: @activity.id)
+    else
+      @users = User.none
+    end
   end
 
   def update
     @activity = Activity.find(params[:id])
-    @group = Group.find(activity_id: @activity.id)
+    @group = Group.find(act_id: @activity.id)
     @group.member_status = 'メンバー'
   end
 
   def destroy
     @activity = Activity.find(params[:id])
-    @group = Group.find(activity_id: @activity.id)
+    @group = Group.find(act_id: @activity.id)
     @group.destroy
   end
 
   private
+
   def activity_params
     params.require(:activity).permit(:name, :to_create, :to_study, :to_do)
+  end
+
+  def group_params
+    params.require(:group).permit(:user_id, :act_id)
   end
 end
