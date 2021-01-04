@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   resources :themes, only:[:edit, :update]
 
-  resources :comments, only:[:index, :create, :update, :destroy]
+  resources :comments, only:[:index, :edit, :create, :update, :destroy]
   get 'comments/modify'
 
   resources :favoretes, only:[:create, :destroy]

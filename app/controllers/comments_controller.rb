@@ -6,6 +6,10 @@ class CommentsController < ApplicationController
     @comments_paginate = Comment.page(params[:page]).per(3)
   end
 
+  def edit
+    @comment = Comment.find(params[:id])
+  end
+
   def modify
     @activity = Activity.find(params[:id])
     @comments = Comment.where(act_id: @activity.id)
@@ -19,7 +23,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    @comment = Comment.find(params[:id])
+    @comment = Comment.find(comment_params)
     @comment.save
     redirect_to request.referer
   end
