@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2021_01_02_163851) do
     t.string "theme1", null: false
     t.string "theme2", null: false
     t.string "theme3", null: false
-    t.text "sentence", default: "2createにようこそ！", null: false
+    t.text "sentence", null: false
     t.integer "theme_image_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
