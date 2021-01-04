@@ -1,2 +1,60 @@
-<h1>Groups#show</h1>
-<p>Find me in app/views/groups/show.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>会員情報詳細</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-8">
+      <p>ニックネーム</p>
+      <br>
+      <p><%= user.name %></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-8">
+      <p>メールアドレス</p>
+      <br>
+      <p><%= user.email %></p>
+    </div>
+  </div>
+  <!--user登録情報の編集フォーム-->
+  <%= form_with model:group, url: group_path, local: true do |f| %>
+    <% @groups.each do |group| %>
+      <div class="row">
+        <div class="col-sm-8">
+          <table>
+            <tr>
+              <th>サークル</th>
+              <th>ステータス</th>
+            </tr>
+            <tr>
+              <td><%= group.name %></td>
+              <td>
+                <%= radio_button_tag(:member_status, 0) %>
+                <%= f.label :承認待ち %>
+                <%= radio_button_tag(:member_status, 1) %>
+                <%= f.label :ジュニア %>
+                <%= radio_button_tag(:member_status, 2) %>
+                <%= f.label :シニア %>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <%= f.submit "更新する", :class=>"btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  <div class="row">
+    <div class="col-sm-8">
+      <%= link_to users_unsubscribe_path do %>
+        <button type="button" class="btn btn-danger">退会させる</button>
+      <% end %>
+    </div>
+  </div>
+</div>

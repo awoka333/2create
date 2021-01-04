@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>コメント</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <% @comments.each do |comment| %>
+        <table>
+          <tr>
+            <td>
+              <%= comment.sentence %>
+              <br>
+              <%= link_to "編集", comment_path(@comment), method: :patch %> | <%= link_to "削除", comment_path(@comment), method: :delete, class: link-danger %>
+            </td>
+            <td><%= comment.user.name %> <%= comment.created_at %></td>
+          </tr>
+        </table>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>コメント送信</h2>
+    </div>
+  </div>
+  <div class="row">
+    <%= form_with model: @comment, local: true do |f| %>
+      <div class="col-sm-8">
+        <%= f.text_area :sentence, placeholder: "コメントをここに入力" %>
+      </div>
+      <div class="col-sm-4">
+        <% f.submit "コメントする" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <p><%= paginate @comments_paginate %></p>
+    </div>
+  </div>
+</div>

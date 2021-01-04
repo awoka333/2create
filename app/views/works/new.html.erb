@@ -1,0 +1,37 @@
+<%#= render 'themes/theme_bar', theme: @theme %>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2><%= @activity.name %></h2>
+    </div>
+  </div>
+  <%= form_with model: @work, url: works_path, local: true do |f| %>
+    <div class="row">
+      <div class="col-sm-6 ml-4">
+          <%= f.attachment_field :work_image %>
+          <h2><%= f.text_field :title, placeholder: "タイトルを入力" %></h2>
+      </div>
+      <div class="col-sm-6">
+        <h3>2creator</h3>
+        <%#= form.label :creator1 %>  <!--カラム名と一致している時は、ラベルを使用するならこの表記-->
+        <% [@users].each do |user| %>
+          <%= form.check_box :creator1, {multiple: true}, creator1, nil %><%= user.name %>
+        <% end %>
+        <br>
+        <h3>Special thanks</h3>
+        <% [@users].each do |user| %>
+          <%= form.check_box :creator2, {multiple: true}, creator1, nil %><%= user.name %>
+        <% end %>
+        <br>
+        <h3>ポイント</h3>
+        <%= f.text_field :point, placeholder: "一言コメント" %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <%= f.submit "投稿する", :class=>"btn btn-secondary" %>
+      </div>
+    </div>
+  <% end %>
+</div>
