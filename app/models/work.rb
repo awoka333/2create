@@ -5,5 +5,5 @@ class Work < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :works, through: :favorites
 
-  attachment :work_image_id
+  attachment :work_image
 end

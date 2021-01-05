@@ -12,16 +12,16 @@
           <h2><%= f.text_field :title, placeholder: "タイトルを入力" %></h2>
       </div>
       <div class="col-sm-6">
-        <h3>2creator</h3>
+        <!--<h3>2creator</h3>-->
         <%#= form.label :creator1 %>  <!--カラム名と一致している時は、ラベルを使用するならこの表記-->
-        <% [@users].each do |user| %>
-          <%= form.check_box :creator1, {multiple: true}, creator1, nil %><%= user.name %>
-        <% end %>
-        <br>
-        <h3>Special thanks</h3>
-        <% [@users].each do |user| %>
-          <%= form.check_box :creator2, {multiple: true}, creator1, nil %><%= user.name %>
-        <% end %>
+        <!--<%# [@groups.users].each do |user| %>-->
+        <!--  <%#= f.check_box :creator1, {multiple: true}, creator1, nil %><%#= user.name %>-->
+        <!--<%# end %>-->
+        <!--<br>-->
+        <!--<h3>Special thanks</h3>-->
+        <!--<%# [@groups.users].each do |user| %>-->
+        <!--  <%#= f.check_box :creator2, {multiple: true}, creator1, nil %><%#= user.name %>-->
+        <!--<%# end %>-->
         <br>
         <h3>ポイント</h3>
         <%= f.text_field :point, placeholder: "一言コメント" %>

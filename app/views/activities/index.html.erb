@@ -30,11 +30,11 @@
             <tr>
               <td>
                 <%= link_to activity_path(activity) do %>
-                  <%= attachment_image_tag(work, :work_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %>
+                  <%= attachment_image_tag activity, :act_image, format: 'jpeg', fallback: "no-image.jpg", size: '50x50' %>
                 <% end %>
               </td>
               <td><%= link_to activity.name, activity_path(activity) %></td>
-              <td><%= activity.user.count %>人</td>
+              <td><%= activity.users.count %>人</td>
               <td><%= activity.to_create %></td>
               <td><%= activity.to_study %></td>
             </tr>
