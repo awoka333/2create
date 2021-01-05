@@ -75,6 +75,10 @@ gem 'pry-byebug'
 # N + 1問題の検出
 gem "bullet"
 
+# 画像の表示
+gem "refile", require: "refile/rails", github: 'manfe/refile'
+gem "refile-mini_magick"
+
 # レイアウト
 gem 'bootstrap', '~> 4.5.3'
 gem 'jquery-rails'

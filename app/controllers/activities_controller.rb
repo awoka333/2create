@@ -69,7 +69,7 @@ class ActivitiesController < ApplicationController
   private
 
   def activity_params
-    params.require(:activity).permit(:name, :to_create, :to_study, :to_do)
+    params.require(:activity).permit(:name, :act_image, :to_create, :to_study, :to_do)
   end
 
   def group_params

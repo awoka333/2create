@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>コメント編集</h2>
+    </div>
+  </div>
+  <div class="row">
+    <%= form_with model: @comment, url: comment_path(@comment), method: :patch, local: true do |f| %>
+      <div class="col-sm-8">
+        <%= f.text_area :sentence %>
+      </div>
+      <div class="col-sm-4">
+        <% f.submit "コメントを修正する" %>
+      </div>
+    <% end %>
+  </div>
+</div>

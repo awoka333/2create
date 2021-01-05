@@ -7,15 +7,17 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-8">
+      <div class="col-sm-6">
         <h2><%= f.label :to_create, "作るもの" %></h2>
         <%= f.text_field :to_create %>
+        <h2><%= f.label :to_study, "勉強すること" %></h2>
+        <%= f.text_field :to_study %>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-8">
-        <h2><%= f.label :to_study, "勉強すること" %></h2>
-        <%= f.text_field :to_study %>
+      <div class="col-sm-6">
+        <%#= attachment_image_tag @activity, :act_image, fallback: "no_image_square.jpg", id: "img_prev", style: "height: 200px; width:200px;" %><br>
+        <%= f.attachment_field :act_image_id %>
       </div>
     </div>
     <div class="row">
