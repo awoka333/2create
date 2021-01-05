@@ -10,13 +10,15 @@
       </div>
       <div class="row">
         <div class="col-sm-3 ml-4">
-          <!--おすすめサークルをラスト3つ並べる-->
-          <% @recommends.each do |recommend| %>
-            <table>
-              <tr><%= attachment_image_tag recommend.activities, :image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></tr>
-              <tr><%= recommend.activities.name %></tr>
-              <tr><%= recommend.activities.to_create %></tr>
-            </table>
+          <!--オススメテーブルにレコードがある場合、おすすめサークルをラスト3つ並べる（数はコントローラ参照）-->
+          <% unless @recommends.nil? %>
+            <% @recommends.each do |recommend| %>
+              <table>
+                <tr><%= attachment_image_tag recommend.activities, :image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></tr>
+                <tr><%= recommend.activities.name %></tr>
+                <tr><%= recommend.activities.to_create %></tr>
+              </table>
+            <% end %>
           <% end %>
         </div>
       </div>

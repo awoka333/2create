@@ -5,16 +5,30 @@
         <%= image_tag('logo.JPG', class: 'navbar mt-4 mb-4', :size =>'320x180') %>
       <% end %>
     </div>
-    <div class="col-sm-6">
-      <nav>
-        <ul>
-          <li><%= link_to 'Activity', activities_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
-          <li><%= link_to 'Work', works_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
-          <li><%= link_to 'About', homes_about_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
-          <li><%= link_to 'Join', new_user_registration_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
-          <li><%= link_to 'Login', new_user_session_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
-        </ul>
-      </nav>
-    </div>
+    <% if user_signed_in? %>
+      <div class="col-sm-6">
+        <nav>
+          <ul>
+            <li><%= link_to 'Top', root_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
+            <li><%= link_to 'My Page', my_page_path(current_user), class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
+            <li><%= link_to 'Activity', activities_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
+            <li><%= link_to 'Work', works_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
+            <li><%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
+          </ul>
+        </nav>
+      </div>
+    <% else %>
+      <div class="col-sm-6">
+        <nav>
+          <ul>
+            <li><%= link_to 'Activity', activities_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
+            <li><%= link_to 'Work', works_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
+            <li><%= link_to 'About', homes_about_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
+            <li><%= link_to 'Join', new_user_registration_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
+            <li><%= link_to 'Login', new_user_session_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
+          </ul>
+        </nav>
+      </div>
+    <% end %>
   </div>
 </div>

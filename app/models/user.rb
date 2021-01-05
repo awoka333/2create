@@ -7,5 +7,12 @@ class User < ApplicationRecord
   has_many :groups, dependent: :destroy
   has_many :activities, through: :groups
 
-  enum status: { 'member': 0, 'admin': 1 }
+  has_many :comments, dependent: :destroy
+  has_many :activities, through: :comments
+
+  has_many :works
+  has_many :favorites, dependent: :destroy
+  has_many :works, through: :favorites
+
+  enum status: { 'ユーザー': 0, '管理者': 1 }
 end

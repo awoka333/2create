@@ -25,4 +25,6 @@ Rails.application.routes.draw do
   get 'comments/modify'
 
   resources :favoretes, only:[:create, :destroy]
+
+  resources :recommends, only:[:create, :update]
 end
