@@ -1,5 +1,5 @@
 <div class="container">
-  
+
   <div class="row">
     <div class="col-sm-8">
       <h2>登録情報の編集</h2>
@@ -7,7 +7,7 @@
   </div>
 
   <!--user登録情報の編集フォーム-->
-  <% form_with model: @user, url: user_path, local: true do |f| %>
+  <%= form_with model: @user, url: user_path(current_user), method: :patch, local: true do |f| %>
     <div class="row">
       <div class="col-sm-8">
         <table>

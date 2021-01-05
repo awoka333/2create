@@ -15,7 +15,7 @@
         <div class="row">
           <div class="col-sm-12">
             <h2><%= @activity.name %> 新着作品</h2>
-            <%= link_to new_work_path(@activity.id) do %>
+            <%= link_to new_work_path(activity_id: @activity) do %>
               <button type="button" class="btn btn-danger">作品を投稿する</button>
             <% end %>
             <%= link_to works_path(@activity.id) do %>
@@ -39,14 +39,14 @@
         <div class="row">
           <div class="col-sm-12">
             <h2><%= @activity.name %> メンバー</h2>
-            <% if current_user.groups.where(act_id: @activity.id).exists? %> <!--現在のユーザーと@activityが紐づくgroupsレコードが存在しない時-->
+            <% if current_user.groups.where(activity_id: @activity.id).exists? %> <!--現在のユーザーと@activityが紐づくgroupsレコードが存在しない時-->
               <%= link_to works_path(@activity.id) do %>
                 <button type="button" class="btn btn-danger">メンバーになる</button>
               <% end %>
             <% end %>
             <br>
             <% if @pre_members.count > 0 %>
-              <p class="text-danger">申請中：<%= @activity.groups.member_status.count %>名</p>
+              <p class="text-danger">申請中：<%= @pre_members.count %>名</p>
             <% end %>
           </div>
         </div>

@@ -1,16 +1,17 @@
 class WorksController < ApplicationController
-   before_action :creator1_string, only: [:create, :update]
-   before_action :creator2_string, only: [:create, :update]
+  before_action :creator1_string, only: [:create, :update]
+  before_action :creator2_string, only: [:create, :update]
 
   def new
     @work = Work.new
-    @activity = Activity.find(params[:id])
+    @activity = Activity.find(params[:activity_id])
+    @groups = Group.where(activity_id: @activity.id)
   end
 
   def create
     @work = Work.new(work_params)
     @activity = Activity.find(params[:id])
-    @work.act_id = @activity.id
+    @work.activity_id = @activity.id
   end
 
   def index
@@ -19,13 +20,13 @@ class WorksController < ApplicationController
   end
 
   def show
-    @work = Work.find(params[:id])
+    @work = Work.where(user_id: current_user.id)
     @activity = @work.activity
   end
 
   def modify
     @activity = Activity.find(params[:id])
-    @works = Work.where(act_id: @activity.id)
+    @works = Work.where(activity_id: @activity.id)
     @works_paginate = @works.page(params[:page]).per(10)
   end
 

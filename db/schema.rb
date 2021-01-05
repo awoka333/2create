@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2021_01_05_073821) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "act_id", null: false
+    t.integer "activity_id", null: false
     t.text "sentence", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2021_01_05_073821) do
 
   create_table "groups", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "act_id", null: false
+    t.integer "activity_id", null: false
     t.integer "member_status", default: 0, null: false
     t.integer "graduate_status", default: 0, null: false
     t.datetime "created_at", null: false
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2021_01_05_073821) do
 
   create_table "recommends", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "act_id", null: false
+    t.integer "activity_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 2021_01_05_073821) do
 
   create_table "works", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "act_id", null: false
+    t.integer "activity_id", null: false
     t.string "title", null: false
     t.string "point", null: false
     t.string "creator1", null: false

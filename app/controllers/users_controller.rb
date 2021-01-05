@@ -9,19 +9,30 @@ class UsersController < ApplicationController
     else
       @reccomends = Recommend.none
     end
-    @activities = current_user.activities
+    @groups = current_user.groups
   end
 
   def edit
-    @user = current_user(id: current_user.id)
+    @user = current_user
   end
 
   def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      redirect_to my_page_path
+    else
+      render 'edit'
+    end
   end
 
   def unsubscribe
   end
 
   def withdraw
+  end
+
+  private
+  def user_params
+    params.require(:user).permit(:name, :email)
   end
 end
