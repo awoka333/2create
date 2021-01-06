@@ -6,20 +6,22 @@
         <h2><%= f.text_field :name, placeholder: "サークル名" %></h2>
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-4">
       <div class="col-sm-6">
         <h2><%= f.label :to_create, "作るもの" %></h2>
         <%= f.text_field :to_create %>
-        <h2><%= f.label :to_study, "勉強すること" %></h2>
+        <h2 class="mt-4"><%= f.label :to_study, "勉強すること" %></h2>
         <%= f.text_field :to_study %>
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-4">
       <div class="col-sm-6">
+        <h2><%= f.label :act_image, "サークル画像の選択" %></h2>
+        <p>※activity表示用の画像として表示されます。</p>
         <%= f.attachment_field :act_image %>
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-4">
       <div class="col-sm-8">
         <h2><%= f.label :to_do, "次回日程" %></h2>
         <%= f.text_field :to_do, placeholder: "XX年XX月XX日 XX時～　xxxにて活動します" %>

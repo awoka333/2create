@@ -17,12 +17,12 @@
         <h3>2creator</h3>
         <%#= form.label :creators1 %>  <!--カラム名と一致している時は、ラベルを使用するならこの表記-->
         <% [@users].each do |user| %>
-          <%= form.check_box :creators1, {multiple: true}, creator1, nil %><%= user.name %>
+          <%= f.check_box :creators1, {multiple: true}, creator1, nil %><%= user.name %>
         <% end %>
         <br>
         <h3>Special thanks</h3>
         <% [@users].each do |user| %>
-          <%= form.check_box :creators2, {multiple: true}, creator1, nil %><%= user.name %>
+          <%= f.check_box :creators2, {multiple: true}, creator1, nil %><%= user.name %>
         <% end %>
         <br>
         <h3>ポイント</h3>

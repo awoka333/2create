@@ -1,14 +1,18 @@
 class WorksController < ApplicationController
-  before_action :creator1_string, only: [:create, :update]
-  before_action :creator2_string, only: [:create, :update]
+  #before_action :creator1_string, only: [:create, :update]
+  #before_action :creator2_string, only: [:create, :update]
 
   def new
     @work = Work.new
     @activity = Activity.find(params[:activity_id])
     @groups = Group.where(activity_id: @activity.id)
+    user_ids = @groups.map(&:user_id)
+    @users = User.where(id: user_ids)
   end
 
   def create
+    # p "create"
+    # p params[:work][:creator1]
     @work = Work.new(work_params)
     @activity = Activity.find(params[:id])
     @work.activity_id = @activity.id
@@ -52,7 +56,7 @@ class WorksController < ApplicationController
 
   private
   def work_params
-    params.require(:work).permit(:user_id, :act_id, :title, :point, :creator1, :creator2, :work_image_id)
+    params.require(:work).permit(:user_id, :act_id, :title, :point, :work_image, creator1:[], creator2:[])
   end
 
   def creators1_string

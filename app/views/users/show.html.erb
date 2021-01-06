@@ -8,51 +8,53 @@
           <h2>おすすめサークル</h2>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-3 ml-4">
-          <!--オススメテーブルにレコードがある場合、おすすめサークルをラスト3つ並べる（数はコントローラ参照）-->
-          <% unless @recommends.nil? %>
-            <% @recommends.each do |recommend| %>
-              <table>
-                <tr><%= attachment_image_tag recommend.activities, :image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></tr>
-                <tr><%= recommend.activities.name %></tr>
-                <tr><%= recommend.activities.to_create %></tr>
-              </table>
-            <% end %>
+      <div class="row justify-content-center mt-3">
+        <% if @recommends.nil? %>
+          <%= link_to activities_path do %>
+            <button type="button" class="btn btn-info">サークルを探しにいく！</button>
           <% end %>
-        </div>
+        <!--オススメテーブルにレコードがある場合、おすすめサークルをラスト3つ並べる（数はコントローラ参照）-->
+        <% else %>
+          <% @recommends.each do |recommend| %>
+            <table>
+              <tr><%= attachment_image_tag recommend.activities, :image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></tr>
+              <tr><%= recommend.activities.name %></tr>
+              <tr><%= recommend.activities.to_create %></tr>
+            </table>
+          <% end %>
+        <% end %>
       </div>
-      <div class="row">
+      <div class="row mt-4">
         <div class="col-sm-8">
           <h2>あなたのサークル</h2>
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-3 ml-4">
-          <% @groups.each do |group| %>
-            <table>
-              <tr>
-                <th>サークル名</th>
-                <th>ステータス</th>
-                <th></th>
-              </tr>
+        <div class="col-sm-11 ml-4">
+          <table>
+            <tr>
+              <th>サークル名</th>
+              <th>ステータス</th>
+              <th></th>
+            </tr>
+            <% @groups.each do |group| %>
               <tr>
                 <td><%= group.activity.name %></td>
                 <td><%= group.member_status %></td>
                 <td>
                   <% if group.member_status == '承認待ち' %>
                     <%= link_to group_path(group), method: :delete do %>
-                      <button type="button" class="btn btn-danger">申請取消</button>
+                      <button type="button" class="btn-sm btn btn-danger">申請取消</button>
                     <% end %>
                   <% elsif group.member_status != '承認待ち' %>
                     <%= link_to group_path(group, order_sort: 99), method: :patch do %>
-                      <button type="button" class="btn btn-info">卒業依頼</button>
+                      <button type="button" class="btn-sm btn btn-secondary">卒業依頼</button>
                     <% end %>
                   <% end %>
                 </td>
               </tr>
-            </table>
-          <% end %>
+            <% end %>
+          </table>
         </div>
       </div>
     </div>
@@ -60,38 +62,34 @@
     <!--ここから右サイドのエリア-->
     <div class="col-sm-4">
       <div class="row">
-        <div class="col-sm-11">
+        <div class="col-sm-6">
           <h2>登録情報</h2>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-11">
-          <table>
-            <tr>ニックネーム</tr>
-            <tr><%= current_user.name %></tr>
-          </table>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-11">
-          <table>
-            <tr>メールアドレス</tr>
-            <tr><%= current_user.email %></tr>
-          </table>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-11">
-          <%= link_to edit_user_path do %>
-              <button type="button" class="btn btn-secondary">編集する</button>
+        <div class="col-sm-6 mt-1">
+          <%= link_to edit_user_path(current_user) do %>
+              <button type="button" class="btn-sm btn btn-secondary">編集する</button>
           <% end %>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-11">
+          <table>
+            <tr>
+              <td>ニックネーム</td>
+              <td><%= current_user.name %></td>
+            </tr>
+            <tr>
+              <td>メールアドレス</td>
+              <td><%= current_user.email %></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-sm-11">
           <!--ordersortでパラメーター渡す-->
           <%= link_to works_path do %>
-              <button type="button" class="btn btn-secondary">あなたの作品をみる</button>
+              <button type="button" class="btn btn-info">あなたの作品をみる</button>
           <% end %>
         </div>
       </div>

@@ -10,15 +10,17 @@
   </head>
 
   <body>
-    <header>
-      <%= render 'layouts/header' %>
+    <header class="header-footer-visual">
+      <div class="bg-mask">
+        <%= render 'layouts/header' %>
+      </div>
     </header>
-    <main>
+    <main class="main-bg">
       <%= yield %>
     </main>
-    <footer>
-      <div class ="container-fluid">
-        <p class="text-center mb-0">© 2create</p>
+    <footer class="header-footer-visual">
+      <div class ="container-fluid bg-mask">
+        <h3 class="text-center mb-0">© 2create</h3>
       </div>
     </footer>
   </body>

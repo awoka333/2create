@@ -11,8 +11,11 @@
     </div>
     <div class="row">
         <div class="col-sm-8">
-            <%= link_to users_withdraw_path do %>
-                <button type="button" class="btn btn-danger">退会する</button>
+            <%= link_to edit_user_path(@user) do %>
+                <button type="button", class="btn-sm btn btn-secondary">戻る</button>
+            <% end %>
+            <%= link_to users_withdraw_path, method: :patch do %>
+                <button type="button", class="btn-sm btn btn-danger">退会する</button>
             <% end %>
         </div>
     </div>
