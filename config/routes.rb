@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'homes/about'
 
   resources :users, only:[:index, :edit, :update]
-  get 'users/my_page/:id' => 'users#show', as: 'my_page'
+  get 'users/my_page' => 'users#show', as: 'my_page'
   get 'users/unsubscribe'
   patch 'users/withdraw'
 

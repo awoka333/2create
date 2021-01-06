@@ -1,16 +1,16 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-4">
-      <%= link_to root_path(order_sort: 1) do %>
-        <%= image_tag('logo.JPG', class: 'navbar mt-4 mb-4', :size =>'320x180') %>
+    <div class="col-sm-4 ml-5">
+      <%= link_to root_path do %>
+        <%= image_tag('logo.png', class: 'navbar mt-4 mb-4', :size =>'340x180') %>
       <% end %>
     </div>
     <% if user_signed_in? %>
-      <div class="col-sm-6">
+      <div class="col-sm-6 d-flex align-items-end mb-3">
         <nav>
-          <ul>
+          <ul class="navbar", style="list-style:none;">
             <li><%= link_to 'Top', root_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
-            <li><%= link_to 'My Page', my_page_path(current_user), class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
+            <li><%= link_to 'My Page', my_page_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
             <li><%= link_to 'Activity', activities_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
             <li><%= link_to 'Work', works_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
             <li><%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
@@ -18,9 +18,9 @@
         </nav>
       </div>
     <% else %>
-      <div class="col-sm-6">
+      <div class="col-sm-6 d-flex align-items-end mb-3">
         <nav>
-          <ul>
+          <ul class="navbar", style="list-style:none;">
             <li><%= link_to 'Activity', activities_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
             <li><%= link_to 'Work', works_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>
             <li><%= link_to 'About', homes_about_path, class: 'btn btn-outline-secondary btn-lg ml-1' %></li>

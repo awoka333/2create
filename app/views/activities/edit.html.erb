@@ -24,13 +24,13 @@
       <div class="col-sm-6">
         <h2><%= f.label :to_do, "メンバー申請" %></h2>
         <!--メンバー申請を出している人のリストを表示-->
-        <% @users.each do |user| %>
+        <% @groups.each do |group| %>
 
         <!--if文でラジオボタンの方がよい？？？？？？？？？？？？？？？？？？？？-->
           <table>
             <tr>
-              <td><%= user.groups.member_status %></td>
-              <td><%= user.name %></td>
+              <td><%= group.member_status %></td>
+              <td><%= group.user.name %></td>
               <td>
                 <%= link_to group_path(group, order_sort: 1), method: :patch do %>
                   <button type="button" class="btn btn-danger">承認する</button>
@@ -52,9 +52,14 @@
         <h2>リーダー</h2>
         <table>
           <tr>
-            <td><%= collection_check_boxes(:group, :names, @users.all, :member_status, :label ) do |t|  %>
-                  <% t.label { t.check_box + t.text } %>
-                <% end %>
+            <td>
+              <% @groups.each do |group| %>
+                <%= f.check_box :group, {multiple: true}, group, nil %>
+                <%= f.label :group.users.name %>
+              <% end %>
+              <%#= collection_check_boxes(:group, :names, @groups, :member_status, :label ) do |t|  %>
+                  <%# t.label { t.check_box + t.text } %>
+                <%# end %>
 
                 <%#= f.radio_button :name, :名前 %></td>
             <td><%#= f.label :名前 %></td>
@@ -69,11 +74,11 @@
         <table>
           <tr>
             <td><%= f.submit "更新する", class: "btn-sm btn-secondary" %></td>
-            <!--<td>-->
-            <!--  <%#= link_to users_unsubscribe_path do %>-->
-            <!--    <button type="button" class="btn btn-danger">退会する</button>-->
-            <!--  <%# end %>-->
-            <!--</td>-->
+            <td>
+              <%= link_to users_unsubscribe_path do %>
+                <button type="button" class="btn btn-danger">退会する</button>
+              <% end %>
+            </td>
           </tr>
         </table>
       </div>

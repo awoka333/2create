@@ -19,8 +19,8 @@ class ActivitiesController < ApplicationController
     end
     @groups = Group.where(activity_id: @activity.id)
     @seniors = @groups.where(member_status: 'シニア')
-    leaders = @groups.where(member_status: 'リーダー')
-    juniors = @groups.where(member_status: 'メンバー')
+    @leaders = @groups.where(member_status: 'リーダー')
+    @juniors = @groups.where(member_status: 'メンバー')
     @pre_members = @groups.where(member_status: '承認待ち')
     if Comment.where(activity_id: @activity_id).exists?
       @comments = @activity.comments.order(created_at: :desc)
@@ -49,12 +49,7 @@ class ActivitiesController < ApplicationController
 
   def edit
     @activity = Activity.find(params[:id])
-    @group = Group.where(activity_id: @activity.id)
-    if @groups.count > 0
-      @users = @group.users
-    else
-      @users = User.none
-    end
+    @groups = Group.where(activity_id: @activity.id)
   end
 
   def update

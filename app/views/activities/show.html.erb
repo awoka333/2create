@@ -1,12 +1,12 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-7">
 
         <div class="row">
           <div class="col-sm-12">
             <h2><%= @activity.name %> 次回日程</h2>
             <%= link_to edit_activity_path(@activity.id) do %>
-              <button type="button" class="btn btn-danger">ページを編集する</button>
+              <button type="button" class="btn btn-secondary">ページを編集する</button>
             <% end %>
             <br>
             <p><%= @activity.to_do %></p>
@@ -15,11 +15,14 @@
         <div class="row">
           <div class="col-sm-12">
             <h2><%= @activity.name %> 新着作品</h2>
-            <%= link_to new_work_path(activity_id: @activity) do %>
-              <button type="button" class="btn btn-danger">作品を投稿する</button>
+            <!--現在のユーザーと@activityが紐づくgroupsレコードが存在する時-->
+            <% if current_user.groups.where(activity_id: @activity.id).exists? %>
+              <%= link_to new_work_path(activity_id: @activity) do %>
+                <button type="button" class="btn btn-info">作品を投稿する</button>
+              <% end %>
             <% end %>
             <%= link_to works_path(@activity.id) do %>
-              <button type="button" class="btn btn-danger">もっとみる</button>
+              <button type="button" class="btn btn-info">もっとみる</button>
             <% end %>
           </div>
           <div class="col-sm-12">
@@ -39,9 +42,9 @@
         <div class="row">
           <div class="col-sm-12">
             <h2><%= @activity.name %> メンバー</h2>
-            <% if current_user.groups.where(activity_id: @activity.id).exists? %> <!--現在のユーザーと@activityが紐づくgroupsレコードが存在しない時-->
+            <% unless current_user.groups.where(activity_id: @activity.id).exists? %> <!--現在のユーザーと@activityが紐づくgroupsレコードが存在しない時-->
               <%= link_to works_path(@activity.id) do %>
-                <button type="button" class="btn btn-danger">メンバーになる</button>
+                <button type="button" class="btn btn-info">メンバーになる！</button>
               <% end %>
             <% end %>
             <br>
@@ -53,16 +56,37 @@
 
         <div class="row">
           <div class="col-sm-12">
-            <h2>シニア</h2>
             <!--メンバーステータスごとに表示-->
+            <h4>申請中</h4>
+            <% @pre_members.each do |pre| %>
+              <table>
+                <tr>
+                  <td><%= pre.user.name %></td>
+                  <td>
+                    <%= link_to groups_path(pre, order_sort: 1) do %>
+                      <button type="button" class="btn btn-info">メンバー承認</button>
+                    <% end %>
+                  </td>
+                </tr>
+              </table>
+            <% end %>
+            <h4>リーダー</h4>
+            <% @leaders.each do |leader| %>
+              <%= leader.user.name %>
+            <% end %>
+            <h4>メンバー</h4>
+            <% @juniors.each do |junior| %>
+              <%= junior.user.name %>
+            <% end %>
+            <h4>シニア</h4>
             <% @seniors.each do |senior| %>
-              <!---->
+              <%= senior.user.name %>
             <% end %>
           </div>
         </div>
 
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-5">
       <div class="row">
         <div class="col-sm-12">
           <h2>新着コメント</h2>
