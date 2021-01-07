@@ -5,10 +5,12 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :groups, dependent: :destroy
-  has_many :activities, through: :groups
+  # has_many :activities, through: :groups
+  has_many  :group_activities, source: :activity
 
   has_many :comments, dependent: :destroy
-  has_many :activities, through: :comments
+  # has_many :activities, through: :comments
+  has_many :comment_activities, source: :activity
 
   has_many :works
   has_many :favorites, dependent: :destroy

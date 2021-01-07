@@ -17,11 +17,15 @@
 @import 'bootstrap';
 
 // 背景画像の設定
-.header-footer-visual{
+.header-visual{
   background-image: image-url('white-bg.jpg');
   background-size: cover;
 }
 
+.footer-visual{
+  background-image: image-url('white-bg.jpg');
+  background-size: cover;
+}
 .bg-mask {
   height: 100%;
   background: rgba(255,255,255,0.2);
@@ -29,7 +33,7 @@
 
 .main-bg{
   // background-color: #bc8f8f;
-  background-image: image-url('art-bg.jpg');
+  background-image: image-url('flower-bg.jpg');
   background-size: cover;
 }
 

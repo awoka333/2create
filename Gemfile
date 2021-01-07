@@ -86,6 +86,9 @@ gem 'jquery-rails'
 # ページネーション
 gem 'kaminari','~> 1.2.1'
 
+# 検索機能
+gem 'ransack'
+
 # デプロイ
 gem 'dotenv-rails'
 group :production do
