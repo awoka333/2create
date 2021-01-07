@@ -5,23 +5,34 @@
         </div>
     </div>
     <div class="row">
-        <!--新着workを3つ並べる-->
-        <div class="col-sm-3 ml-4">
-            <% @lastworks.each do |lastwork| %>
-                <table>
-                    <tr><%= attachment_image_tag lastwork, :image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></tr>
-                    <tr>
-                        <td><%= lastwork.title %></td>
-                        <td id="favorite-<%= lastwork.id %>"><%= render 'favorites/favorite', lastwork: work %></td>
-                    </tr>
-                    <tr><%= lastwork.activities.name %></tr>
-                </table>
-            <% end %>
+        <div class="col-sm-8">
+            <%= render 'search/search' %>
         </div>
     </div>
     <div class="row">
+        <% @lastworks.each do |lastwork| %>
+            <!--新着workを3つ並べる-->
+            <div class="col-sm-4">
+                <table>
+                    <tr>
+                        <td colspan="2", style="width:100%", class="text-center">
+                            <%= attachment_image_tag lastwork, :work_image, format: 'jpeg', fallback: "no_image.jpg", size: "300x200" %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:80%", class="text-center"><%= lastwork.title %></td>
+                        <% if user_signed_in? %>
+                            <td id="favorite-<%= lastwork.id %>", style="width:20%"><%= render 'favorites/favorite', work: lastwork %></td>
+                        <% end %>
+                    </tr>
+                    <tr><td style="width:100%", class="text-center"><%= lastwork.activity.name %></td></tr>
+                </table>
+            </div>
+        <% end %>
+    </div>
+    <div class="row justify-content-center">
         <%= link_to works_path do %>
-            <button type="button" class="btn btn-secondary">もっとみる</button>
+            <button type="button" class="btn btn-info mb-4">もっとみる</button>
         <% end %>
     </div>
 </div>

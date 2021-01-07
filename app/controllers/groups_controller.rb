@@ -3,16 +3,28 @@ class GroupsController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def create
+    @activity = Activity.find(params[:activity_id])
+    @group = Group.new(user_id: current_user.id)
+    @group.activity_id = @activity.id
+    if @group.save
+      redirect_to activity_path(@activity)
+    else
+      render 'activities/show'
+    end
+  end
+
   def update
     @group = Group.find(params[:id])
     # update内容を分類する。groupモデルのreturn_statusメソッド参照。
-    if params[:order_sort] < 50
-      @group.graduate_status = Group.return_status(params[:order_sort])
-    elsif params[:order_sort] > 50
+    if params[:order_sort].to_i < 50
+      @group.member_status = Group.return_status(params[:order_sort])
+    elsif params[:order_sort].to_i > 50
       @group.graduate_status = Group.return_status(params[:order_sort])
     else
       redirect_to 'users/show'
     end
+    @group.save
     redirect_to request.referer
     # 1行で書く場合
     # if params[:order_sort] < 50
@@ -22,21 +34,16 @@ class GroupsController < ApplicationController
     # else
     #   redirect_to 'users/show'
     # end
-    
+
     # updateのブロックでの書き方
     # @group.update({
-      
+
     # })
   end
 
   def destroy
     @group = Group.find(params[:id])
     @group.destroy
-    redirect_to my_page_path
-  end
-
-  private
-  def group_params
-    params.require(:group).permit(:member_status, :graduate_status)
+    redirect_to request.referer
   end
 end

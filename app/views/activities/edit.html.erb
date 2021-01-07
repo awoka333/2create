@@ -1,87 +1,122 @@
 <div class="container">
+  <div class="row">
+    <% if @activity.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger">
+        <ul>
+          <% @activity.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
   <!--user登録情報の編集フォーム-->
-  <%= form_with model: @activity, url: activities_path(@activity), local: true do |f| %>
-    <div class="row">
-      <div class="col-sm-6">
-        <h2><%= f.text_field :name, placeholder: "サークル名" %></h2>
-      </div>
-      <div class="col-sm-3">
-        <h2><%= f.label :to_create, "作るもの" %></h2><br>
-        <%= f.text_field :to_create %>
-      </div>
-      <div class="col-sm-3">
-        <h2><%= f.label :to_study, "勉強すること" %></h2><br>
-        <%= f.text_field :to_study %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <h2><%= f.label :to_do, "次回日程" %></h2><br>
-        <%= f.text_field :to_do, placeholder: "XX年XX月XX日 XX時～　オンラインにて活動します" %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <h2><%= f.label :to_do, "メンバー申請" %></h2>
-        <!--メンバー申請を出している人のリストを表示-->
-        <% @groups.each do |group| %>
+  <%= form_with model: @activity, url: activity_path(@activity), method: :patch, local: true do |f| %>
+    <div class="row mt-4">
 
-        <!--if文でラジオボタンの方がよい？？？？？？？？？？？？？？？？？？？？-->
-          <table>
-            <tr>
-              <td><%= group.member_status %></td>
-              <td><%= group.user.name %></td>
-              <td>
-                <%= link_to group_path(group, order_sort: 1), method: :patch do %>
-                  <button type="button" class="btn btn-danger">承認する</button>
-                <% end %>
-              </td>
-              <td>
-                <%= link_to group_path(@activity.id), method: :delete do %>
-                  <button type="button" class="btn btn-danger">承認しない</button>
-                <% end %>
-              </td>
-            </tr>
-          </table>
-        <% end %>
+      <div class="col-sm-5">
+        <div class="row">
+          <div class="col-sm-12">
+            <h2><%= f.text_field :name, placeholder: "サークル名" %></h2>
+            <h4 class="mb-0"><%= f.label :act_image, "サークル画像の選択" %></h4>
+            <p>※Activity表示用の画像として表示されます。</p>
+            <%= f.attachment_field :act_image %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <h4 class="mb-0"><%= f.label :to_create, "作るもの" %></h4>
+            <%= f.text_field :to_create %>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-sm-12">
+            <h4 class="mb-0"><%= f.label :to_study, "勉強すること" %></h4>
+            <%= f.text_field :to_study %>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-sm-12">
+            <h4 class="mb-0"><%= f.label :to_do, "次回日程" %></h4>
+            <%= f.text_field :to_do, placeholder: "XX年XX月XX日 XX時～　オンラインにて活動します" %>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-6">
-        <h2>リーダー</h2>
-        <table>
-          <tr>
-            <td>
-              <% @groups.each do |group| %>
-                <%= f.check_box :group, {multiple: true}, group, nil %>
-                <%= f.label :group.users.name %>
+      <div class="col-sm-5">
+        <div class="row mt-5">
+          <div class="col-sm-12">
+            <h4><%= f.label :to_do, "メンバー申請" %></h4>
+            <% unless @pre_members.nil? %> <!--@pre_memberに値があるときのみ-->
+              <!--メンバー申請を出している人のリストを表示-->
+              <% @pre_members.each do |pre| %>
+                <table>
+                  <tr>
+                    <td><%= pre.member_status %></td>
+                    <td><%= pre.user.name %></td>
+                    <td>
+                      <%= link_to group_path(group, order_sort: 1), method: :patch do %>
+                        <button type="button" class="btn btn-danger">承認する</button>
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= link_to group_path(@activity.id), method: :delete do %>
+                        <button type="button" class="btn btn-danger">承認しない</button>
+                      <% end %>
+                    </td>
+                  </tr>
+                </table>
               <% end %>
-              <%#= collection_check_boxes(:group, :names, @groups, :member_status, :label ) do |t|  %>
-                  <%# t.label { t.check_box + t.text } %>
-                <%# end %>
+                <p>承認待ちのメンバーはいません</p>
+            <% end %>
+          </div>
+        </div>
 
-                <%#= f.radio_button :name, :名前 %></td>
-            <td><%#= f.label :名前 %></td>
-          </tr>
-        </table>
+        <div class="row mt-3">
+          <div class="col-sm-12 flex-wrap">
+            <h4>リーダー</h4>
+            <% if @leaders == nil || @leaders.count == 0%>
+              <p>現在リーダーはいません。</p>
+            <% else %>
+              <p class="mb-1">現在のリーダー：</p>
+              <span class="ml-2">
+                <% @leaders.each do |leader| %>
+                  <%= leader.user.name %>
+                <% end %>
+              </span>
+            <% end %>
+            <p class="mt-2">リーダーにチェックを入れてください ↓</p>
+            <p> <!--meember_statusをリーダーにしたいuserにチェックを入れるためのcheck_box-->
+              <% @users.each do |user| %>
+                <%= f.check_box :leader, {multiple: true}, user.id, nil %>
+                <%= user.name %>
+              <% end %>
+            </p>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-sm-8">
+            <h4>卒業申請</h4>
+            <table>
+              <tr>
+                <td>名前</td>
+                <td>作品数</td>
+                <td>卒業申請</td>
+              </tr>
+              <% @pre_graduates.each do |pre_graduate| %>
+                <tr>
+                  <td><%= pre_graduate.user.name %></td>
+                  <td><%= pre_graduate.activity.works.where(user_id: pre_graduate.user.id).count %></td>  <!--activityに紐づくworksの中から、userのものだけ抽出する-->
+                  <td><%= link_to "卒業する", group_path(pre_graduate, order_sort: 100), method: :patch %></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-sm-8">
-        <h2>卒業申請</h2>
-        <table>
-          <tr>
-            <td><%= f.submit "更新する", class: "btn-sm btn-secondary" %></td>
-            <td>
-              <%= link_to users_unsubscribe_path do %>
-                <button type="button" class="btn btn-danger">退会する</button>
-              <% end %>
-            </td>
-          </tr>
-        </table>
-      </div>
+    <div class="row justify-content-center">
+      <%= f.submit "更新する", class: "btn-sm btn btn-secondary mt-4 mb-4" %>
     </div>
   <% end %>
 </div>

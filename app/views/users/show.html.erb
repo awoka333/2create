@@ -2,7 +2,7 @@
   <div class="row">
 
     <!--ここから真ん中のエリア-->
-    <div class="col-sm-7">
+    <div class="col-sm-7 mt-4">
       <div class="row">
         <div class="col-sm-8">
           <h2>おすすめサークル</h2>
@@ -60,7 +60,7 @@
     </div>
 
     <!--ここから右サイドのエリア-->
-    <div class="col-sm-4">
+    <div class="col-sm-4 mt-4">
       <div class="row">
         <div class="col-sm-6">
           <h2>登録情報</h2>
@@ -88,7 +88,7 @@
       <div class="row mt-4">
         <div class="col-sm-11">
           <!--ordersortでパラメーター渡す-->
-          <%= link_to works_path do %>
+          <%= link_to works_path(order_sort: 3) do %>
               <button type="button" class="btn btn-info">あなたの作品をみる</button>
           <% end %>
         </div>

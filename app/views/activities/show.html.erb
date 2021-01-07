@@ -4,11 +4,12 @@
 
         <div class="row">
           <div class="col-sm-12">
-            <h2><%= @activity.name %> 次回日程</h2>
-            <%= link_to edit_activity_path(@activity.id) do %>
-              <button type="button" class="btn btn-secondary">ページを編集する</button>
+            <% if current_user.groups.where(activity_id: @activity.id).exists? %>
+              <%= link_to edit_activity_path(@activity) do %>
+                <button type="button" class="btn btn-secondary">ページを編集する</button>
+              <% end %>
             <% end %>
-            <br>
+            <h2><%= @activity.name %> 次回日程</h2>
             <p><%= @activity.to_do %></p>
           </div>
         </div>
@@ -21,7 +22,7 @@
                 <button type="button" class="btn btn-info">作品を投稿する</button>
               <% end %>
             <% end %>
-            <%= link_to works_path(@activity.id) do %>
+            <%= link_to works_path(activity_id: @activity.id, order_sort: 4) do %>
               <button type="button" class="btn btn-info">もっとみる</button>
             <% end %>
           </div>
@@ -43,7 +44,7 @@
           <div class="col-sm-12">
             <h2><%= @activity.name %> メンバー</h2>
             <% unless current_user.groups.where(activity_id: @activity.id).exists? %> <!--現在のユーザーと@activityが紐づくgroupsレコードが存在しない時-->
-              <%= link_to works_path(@activity.id) do %>
+              <%= link_to groups_path(activity_id: @activity), method: :post do %>
                 <button type="button" class="btn btn-info">メンバーになる！</button>
               <% end %>
             <% end %>
@@ -63,8 +64,11 @@
                 <tr>
                   <td><%= pre.user.name %></td>
                   <td>
-                    <%= link_to groups_path(pre, order_sort: 1) do %>
+                    <%= link_to group_path(pre, order_sort: 1), method: :patch do %>
                       <button type="button" class="btn btn-info">メンバー承認</button>
+                    <% end %>
+                    <%= link_to group_path(pre), method: :delete do %>
+                      <button type="button" class="btn btn-danger">承認しない</button>
                     <% end %>
                   </td>
                 </tr>

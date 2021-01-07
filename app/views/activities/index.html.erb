@@ -1,10 +1,10 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-8 mt-4">
       <h2>サークル一覧</h2>
     </div>
     <% if user_signed_in? %>
-      <div class="col-sm-4">
+      <div class="col-sm-4 mt-4">
         <%= link_to new_activity_path do %>
           <button type="button" class="btn btn-secondary">サークルをつくる</button>
         <% end %>
@@ -12,41 +12,49 @@
     <% end %>
   </div>
 
-  <!--サークル一覧を表示w-->
-  <div class="row">
-    <div class="col-sm-11 ml-4">
-      <table class="table table-hover table-inverse">
-        <thead>
-          <tr>
-            <th></th>
-            <th>サークル名</th>
-            <th>メンバー数</th>
-            <th>作るもの</th>
-            <th>勉強すること</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @activities.each do |activity| %>
+  <% unless @activities.count > 0 %>
+    <div class="row">
+      <div class="col-sm-11 ml-4 mt-3 mb-5">
+        <p>サークルはありません</p>
+      </div>
+    </div>
+  <% else %>
+    <!--サークル一覧を表示w-->
+    <div class="row">
+      <div class="col-sm-11 ml-4">
+        <table class="table table-hover table-inverse">
+          <thead>
             <tr>
-              <td>
-                <%= link_to activity_path(activity) do %>
-                  <%= attachment_image_tag activity, :act_image, format: 'jpeg', fallback: "no-image.jpg", size: '50x50' %>
-                <% end %>
-              </td>
-              <td class="align-middle"><%= link_to activity.name, activity_path(activity) %></td>
-              <td class="align-middle"><%= activity.groups.count %>人</td>
-              <td class="align-middle"><%= activity.to_create %></td>
-              <td class="align-middle"><%= activity.to_study %></td>
+              <th></th>
+              <th>サークル名</th>
+              <th>メンバー数</th>
+              <th>作るもの</th>
+              <th>勉強すること</th>
             </tr>
-            <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% @activities.each do |activity| %>
+              <tr>
+                <td>
+                  <%= link_to activity_path(activity) do %>
+                    <%= attachment_image_tag activity, :act_image, format: 'jpeg', fallback: "no-image.jpg", size: '50x50' %>
+                  <% end %>
+                </td>
+                <td class="align-middle"><%= link_to activity.name, activity_path(activity) %></td>
+                <td class="align-middle"><%= activity.groups.count %>人</td>
+                <td class="align-middle"><%= activity.to_create %></td>
+                <td class="align-middle"><%= activity.to_study %></td>
+              </tr>
+              <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-12">
-      <p><%= paginate @activities_paginate %></p>
+    <div class="row">
+      <div class="col-sm-12">
+        <p><%= paginate @activities_paginate %></p>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>

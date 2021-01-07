@@ -23,9 +23,9 @@
         <div class="col-sm-3 ml-4">
             <% @firstworks.each do |firstwork| %>
                 <table>
-                    <tr><%= attachment_image_tag firstwork, :image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></tr>
-                    <tr><%= firstwork.title %></tr>
-                    <tr><%= firstwork.activities.name %></tr>
+                    <tr><td><%= attachment_image_tag firstwork, :work_image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></td></tr>
+                    <tr><td><%= firstwork.title %></td></tr>
+                    <tr><td><%= firstwork.activity.name %></td></tr>
                 </table>
             <% end %>
         </div>
