@@ -24,7 +24,10 @@ Rails.application.routes.draw do
   resources :comments, only:[:index, :edit, :create, :update, :destroy]
   get 'comments/modify'
 
-  resources :favoretes, only:[:create, :destroy]
+  resources :favorites, only:[:create, :destroy]
 
   resources :recommends, only:[:create, :update]
+
+  get 'search', to: 'search#activity_search', as: 'activity_search'
+  get 'search', to: 'search#work_search', as: 'work_search'
 end
