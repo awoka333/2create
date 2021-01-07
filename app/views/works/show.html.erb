@@ -12,20 +12,20 @@
   <div class="row">
     <div class="col-sm-6 ml-4">
       <table>
-        <tr><%= attachment_image_tag @work, :work_image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></tr>
+        <tr><td colspan="2"><%= attachment_image_tag @work, :work_image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></td></tr>
         <tr>
           <td><%= @work.title %></td>
           <td id="favorite-<%= @work.id %>"><%= render 'favorites/favorite', work: @work %></td>
         </tr>
-        <tr><%= @work.created_at %></tr>
+        <tr><td clospan="2"><%= @work.created_at %></td></tr>
       </table>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-5">
       <h3>2creator</h3>
-      <%= @work.creators1 %>
+      <%= @work.creator1 %>
       <br>
       <h3>Special thanks</h3>
-      <%= @work.creators2 %>
+      <%= @work.creator2 %>
       <br>
       <h3>ポイント</h3>
       <%= @work.point %>

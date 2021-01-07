@@ -5,7 +5,7 @@
       <h2><%= @activity.name %></h2>
     </div>
   </div>
-  <%= form_with model: @work, url: works_path, local: true do |f| %>
+  <%= form_with model: @work, url: works_path(activity_id: @activity.id), local: true do |f| %>
     <div class="row">
       <div class="col-sm-6 ml-4">
           <%= f.attachment_field :work_image %>
@@ -13,7 +13,6 @@
       </div>
       <div class="col-sm-6">
         <h3>2creator</h3>
-        <%= f.label :creator1 %>  <!--カラム名と一致している時は、ラベルを使用するならこの表記-->
         <% @users.each do |user| %>
           <%= f.check_box :creator1, {multiple: true}, user.id, nil %><%= user.name %>
         <% end %>

@@ -1,0 +1,11 @@
+<%= search_form_for @q, url: activities_path(order_sort: 1) do |f| %>
+  <%= f.label :name_cont, 'サークル名から探す' %>
+  <%= f.search_field :name_cont %>
+  <%= f.submit "サークル検索", :class=>"btn btn-dark" %>
+<% end %>
+<br>
+<%= search_form_for @w, url: works_path(order_sort: 2) do |f| %>
+  <%= f.label :title_cont, '作品名から探す' %>
+  <%= f.search_field :title_cont %>
+  <%= f.submit "作品検索", :class=>"btn btn-dark" %>
+<% end %>

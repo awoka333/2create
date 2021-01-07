@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+  def index
+    @users = User.all
+  end
+
   def show
     if Recommend.where(user_id: current_user.id).count > 2
       @reccomends = Recommend.limit(3).where(user_id: current_user.id)
