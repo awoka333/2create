@@ -15,11 +15,11 @@
           <% end %>
         <!--オススメテーブルにレコードがある場合、おすすめサークルをラスト3つ並べる（数はコントローラ参照）-->
         <% else %>
-          <% @recommends.each do |recommend| %>
+          <% @activities.each do |activity| %>
             <table>
-              <tr><%= attachment_image_tag recommend.activities, :image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></tr>
-              <tr><%= recommend.activities.name %></tr>
-              <tr><%= recommend.activities.to_create %></tr>
+              <tr><%= attachment_image_tag activity, :act_image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></tr>
+              <tr><%= activity.name %></tr>
+              <tr><%= activity.to_create %></tr>
             </table>
           <% end %>
         <% end %>

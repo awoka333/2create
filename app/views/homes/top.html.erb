@@ -16,7 +16,9 @@
                 <table>
                     <tr>
                         <td colspan="2", style="width:100%", class="text-center">
-                            <%= attachment_image_tag lastwork, :work_image, format: 'jpeg', fallback: "no_image.jpg", size: "300x200" %>
+                            <%= link_to work_path(lastwork) do %>
+                                <%= attachment_image_tag lastwork, :work_image, format: 'jpeg', fallback: "no_image.jpg", size: "300x200" %>
+                            <% end %>
                         </td>
                     </tr>
                     <tr>

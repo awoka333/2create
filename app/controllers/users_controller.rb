@@ -5,13 +5,18 @@ class UsersController < ApplicationController
 
   def show
     if Recommend.where(user_id: current_user.id).count > 2
-      @reccomends = Recommend.limit(3).where(user_id: current_user.id)
+      @recommends = Recommend.limit(3).where(user_id: current_user.id)
+      activity_ids = @recommends.map(&:activity_id)   # 配列でactivity_idを全て取得
+      @activities = Activity.where(id: activity_ids)  # idがactivity_idsと合致するActivityのレコードを全て取得
     elsif Recommend.where(user_id: current_user.id).count > 1
-      @reccomends = Recommend.limit(2).where(user_id: current_user.id)
+      @recommends = Recommend.limit(2).where(user_id: current_user.id)
+      activity_ids = @recommends.map(&:activity_id)
+      @activities = Activity.where(id: activity_ids)
     elsif Recommend.where(user_id: current_user.id).count == 1
-      @reccomends = Recommend.find_by(user_id: current_user.id)
+      @recommends = Recommend.find_by(user_id: current_user.id)
+      @activities = Activity.find(id: @recommends.activity_id)
     else
-      @reccomends = Recommend.none
+      @recommends = Recommend.none
     end
     @groups = current_user.groups
   end

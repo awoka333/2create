@@ -1,16 +1,17 @@
 class HomesController < ApplicationController
   def top
-    if Work.all.count > 2
-      @lastworks = Work.order(created_at: :desc).limit(3)
-    elsif Work.all.count > 1
-      @lastworks = Work.order(created_at: desc).limit(2)
-    elsif Work.all.count == 1
-      @lastworks = Work.all
+    if Work.includes(:activity).count > 2
+      @lastworks = Work.order('created_at DESC').limit(3)
+    elsif Work.includes(:activity).count > 1
+      @lastworks = Work.order('created_at DESC').limit(2)
+    elsif Work.includes(:activity).count == 1
+      @lastworks = Work.includes(:activity)
     end
     # 検索機能ransack用に準備
     @q = Activity.ransack(params[:q])
     @activities = @q.result(distinct: true) #Activityの検索
-    @w = Work.ransack(params[:w])
+    # @different_search = Work.ransack(params[:w], search_key: :w)
+    @w = Work.ransack(params[:w], search_key: :w)
     @works = @w.result(distinct: true)      #Workの検索
   end
 

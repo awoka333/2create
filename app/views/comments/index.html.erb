@@ -12,7 +12,7 @@
             <td>
               <%= comment.sentence %>
               <br>
-              <%= link_to "編集", comment_path(@comment), method: :patch %> | <%= link_to "削除", comment_path(@comment), method: :delete, class: link-danger %>
+              <%= link_to "編集", edit_comment_path(comment) %> | <%= link_to "削除", comment_path(comment), method: :delete, class: "link-danger" %>
             </td>
             <td><%= comment.user.name %> <%= comment.created_at %></td>
           </tr>
@@ -26,12 +26,12 @@
     </div>
   </div>
   <div class="row">
-    <%= form_with model: @comment, local: true do |f| %>
+    <%= form_with model: @comment, url: comments_path(activity_id: @activity.id), local: true do |f| %>
       <div class="col-sm-8">
         <%= f.text_area :sentence, placeholder: "コメントをここに入力" %>
       </div>
       <div class="col-sm-4">
-        <% f.submit "コメントする" %>
+        <%= f.submit "コメントする", class: "btn-sm btn btn-secondary" %>
       </div>
     <% end %>
   </div>

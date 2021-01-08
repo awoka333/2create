@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-8 mt-4">
-      <h2>サークル一覧</h2>
+      <h2><%= @q.name_cont %>を含むサークル一覧</h2>
     </div>
     <% if user_signed_in? %>
       <div class="col-sm-4 mt-4">
@@ -12,7 +12,7 @@
     <% end %>
   </div>
 
-  <% unless @activities.count > 0 %>
+  <% if @activities.nil? %>
     <div class="row">
       <div class="col-sm-11 ml-4 mt-3 mb-5">
         <p>サークルはありません</p>

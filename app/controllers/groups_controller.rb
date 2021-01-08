@@ -8,6 +8,8 @@ class GroupsController < ApplicationController
     @group = Group.new(user_id: current_user.id)
     @group.activity_id = @activity.id
     if @group.save
+      @recommend = Recommend.find_by(user_id: current_user.id, activity_id: @activity.id)
+      @recommend.destroy
       redirect_to activity_path(@activity)
     else
       render 'activities/show'

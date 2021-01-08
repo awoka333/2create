@@ -54,7 +54,7 @@
                     <td><%= pre.member_status %></td>
                     <td><%= pre.user.name %></td>
                     <td>
-                      <%= link_to group_path(group, order_sort: 1), method: :patch do %>
+                      <%= link_to group_path(pre, order_sort: 1), method: :patch do %>
                         <button type="button" class="btn btn-danger">承認する</button>
                       <% end %>
                     </td>
