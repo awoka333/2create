@@ -22,10 +22,16 @@
     </div>
     <div class="col-sm-5">
       <h3>2creator</h3>
-      <%= @work.creator1 %>
-      <br>
-      <h3>Special thanks</h3>
-      <%= @work.creator2 %>
+      <% @creator1.each do |creator| %>
+        <p><%= creator.name %></p>
+      <% end %>
+      <% if @creator2.present? %>
+        <br>
+        <h3>Special thanks</h3>
+        <% @creator2.each do |creator| %>
+          <p><%= creator.name %></p>
+        <% end %>
+      <% end %>
       <br>
       <h3>ポイント</h3>
       <%= @work.point %>

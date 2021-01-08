@@ -4,12 +4,12 @@ class ActivitiesController < ApplicationController
   end
 
   def index
-    if params[:order_sort] == '1'
-      @q = Activity.search(activity_search_params)
-      @activities = @q.result(distinct: true)
-    else
+    # if params[:q][:order_sort] == '1'    # トップページ(root)(検索)から来た場合
+    #   @q = Activity.search(activity_search_params)
+    #   @activities = @q.result(distinct: true)
+    # else
       @activities = Activity.all
-    end
+    # end
     @activities_paginate = @activities.page(params[:page]).per(10)
   end
 
@@ -27,8 +27,12 @@ class ActivitiesController < ApplicationController
     @leaders = @groups.where(member_status: 'リーダー')
     @juniors = @groups.where(member_status: 'メンバー')
     @pre_members = @groups.where(member_status: '承認待ち')
-    if Comment.where(activity_id: @activity_id).exists?
-      @comments = @activity.comments.order(created_at: :desc)
+    if Comment.where(activity_id: @activity_id).count > 2
+      @comments = @activity.comments.order(created_at: :desc).limit(3)
+    elsif Comment.where(activity_id: @activity_id).count > 1
+      @comments = @activity.comments.order(created_at: :desc).limit(2)
+    elsif Comment.where(activity_id: @activity_id).count == 1
+      @comments = @activity.comments
     else
       @comments = Comment.none
     end
@@ -72,17 +76,21 @@ class ActivitiesController < ApplicationController
   def update
     @activity = Activity.find(params[:id])
     @leaders = params[:activity][:leader]
-    # transaction処理で、値を一気に書き換えていく。eにはエラー内容が入る。
-    # 一度全てメンバーに書き換えた後、@leadersで受け取ったuserをリーダーとして登録する。
-    begin
-      Group.transaction do
-        @group = Group.where(activity_id: @activity.id)
-        @group.update(member_status: "メンバー")
-        @group = @group.where(user_id: @leaders)
-        @group.update(member_status: "リーダー")
+    if @activity.update(activity_params)
+      # transaction処理で、値を一気に書き換えていく。eにはエラー内容が入る。
+      # 一度全てメンバーに書き換えた後、@leadersで受け取ったuserをリーダーとして登録する。
+      begin
+        Group.transaction do
+          @group = Group.where(activity_id: @activity.id)
+          @group.update(member_status: "メンバー")
+          @group = @group.where(user_id: @leaders)
+          @group.update(member_status: "リーダー")
+        end
+        redirect_to activity_path(@activity)
+      rescue => e
+        render 'edit'
       end
-      redirect_to activity_path(@activity)
-    rescue => e
+    else
       render 'edit'
     end
   end
@@ -95,12 +103,11 @@ class ActivitiesController < ApplicationController
   end
 
   private
-
   def activity_params
     params.require(:activity).permit(:name, :act_image, :to_create, :to_study, :to_do)
   end
   # ransack用のストロングパラメータ
   def activity_search_params
-    params.require(:q).permit(:name_cont)
+    params.require(:q).permit(:name_cont, :order_sort)
   end
 end

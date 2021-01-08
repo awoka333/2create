@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_05_073821) do
+ActiveRecord::Schema.define(version: 2021_01_08_114224) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name", null: false
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 2021_01_05_073821) do
     t.boolean "is_masking", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "work_image_id", null: false
+    t.string "work_image_id", null: false
   end
 
 end
