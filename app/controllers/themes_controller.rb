@@ -7,6 +7,21 @@ class ThemesController < ApplicationController
     redirect_to new_user_registration_path
   end
 
-  def edit
+  def new
+    @theme = Theme.new
+  end
+
+  def create
+    @theme = Theme.new(theme_params)
+    if @theme.save
+      redirect_to my_page_path
+    else
+      render 'new'
+    end
+  end
+
+  private
+  def theme_params
+    params.require(:theme).permit(:month, :theme1, :theme2, :theme3, :sentence)
   end
 end

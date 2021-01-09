@@ -1,5 +1,6 @@
 class SearchController < ApplicationController
   def search_result
+    @theme = Theme.find(1)
     if params[:q].present?
       @q = Activity.ransack(search_activity_params)
       @activities = @q.result(distinct: true)

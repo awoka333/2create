@@ -59,7 +59,6 @@ ActiveRecord::Schema.define(version: 2021_01_05_073821) do
     t.string "theme2", null: false
     t.string "theme3", null: false
     t.text "sentence", null: false
-    t.string "theme_image_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

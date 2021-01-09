@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @theme = Theme.find(1)
     @recommends = Recommend.order('created_at DESC').limit(3).where(user_id: current_user.id) # 最大3つのレコードを配列として取得
     activity_ids = @recommends.map(&:activity_id)   # 配列でactivity_idを全て取得
     @activities = Activity.where(id: activity_ids)  # idがactivity_idsと合致するActivityのレコードを全て取得
@@ -36,11 +37,11 @@ class UsersController < ApplicationController
   end
 
   def withdraw
-    @user = current_customer
+    @user = current_user
     # usersテーブルis_deletedのステータスを変更
     @user.is_deleted = true
     sign_out
-    # redirect_to root_path
+    redirect_to root_path
   end
 
   private

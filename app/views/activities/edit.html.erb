@@ -1,17 +1,9 @@
 <div class="container">
-  <div class="row">
-    <% if @activity.errors.any? %>
-      <div id="error_explanation" class="alert alert-danger">
-        <ul>
-          <% @activity.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-  </div>
   <!--user登録情報の編集フォーム-->
   <%= form_with model: @activity, url: activity_path(@activity), method: :patch, local: true do |f| %>
+  <div class="row">
+    <%= render 'layouts/error_messages', model: f.object %>
+  </div>
     <div class="row mt-4">
 
       <div class="col-sm-5">

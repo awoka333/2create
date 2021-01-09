@@ -1,17 +1,20 @@
 <div class="container">
+    <div class="row">
+        <%= render 'themes/theme_bar', theme: @theme %>
+    </div>
     <!--@lastworksの中身の有無で表示画面を分ける-->
     <% if @lastworks.nil? %>
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-12 mt-4">
                 <h2>検索フォームから探す</h2>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-8 ml-5 pl-5">
                 <%= render 'search/search' %>
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mt-4">
             <%= link_to new_activity_path do %>
                 <button type="button" class="btn btn-info mb-4">サークルを作る！</button>
             <% end %>

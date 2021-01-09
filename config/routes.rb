@@ -9,18 +9,17 @@ Rails.application.routes.draw do
   get 'users/my_page' => 'users#show', as: 'my_page'
   get 'users/unsubscribe'
 
-
-  resources :activities
   get 'activities/modify'
+  resources :activities
 
   resources :groups, only:[:show, :create, :update, :destroy]
 
-  resources :works
   get 'works/modify'
+  resources :works
   patch 'works/mask'
   patch 'works/share'
 
-  resources :themes, only:[:edit, :update]
+  resources :themes, only:[:new, :create]
 
   resources :comments, only:[:index, :edit, :create, :update, :destroy]
   get 'comments/modify'

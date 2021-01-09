@@ -20,7 +20,6 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :encrypted_password, presence: true, length: { minimum:8 }
   validates :authority, presence: true
-  validates :is_deleted, presence: true
 
   enum status: { 'ユーザー': 0, '管理者': 1 }
 end
