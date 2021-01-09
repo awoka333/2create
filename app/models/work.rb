@@ -7,7 +7,7 @@ class Work < ApplicationRecord
 
   validates :user_id, presence: true
   validates :activity_id, presence: true
-  validates :work_image_id, presence: true
+  validates :work_image, presence: true
   validates :title, presence: true
   validates :point, presence: true
   validates :creator1, presence: true

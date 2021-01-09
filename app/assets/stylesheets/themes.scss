@@ -1,3 +1,29 @@
 // Place all the styles related to the Themes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.theme-window{
+  position: relative;
+  width: 800px;
+}
+.theme-window img{
+  width: 100%;
+}
+
+.theme-window p{
+  position: absolute;
+  top: 25%;
+  left: 39%;
+  font-size: 60px;
+  color: #ffffff;
+}
+
+.theme-bg{
+  // background-color: #BC8F8F;
+  // background-color: #F5F5F5;
+  background-color: #A9A9A9;
+}
+
+.theme-letter{
+  color: #2F4F4F;
+}

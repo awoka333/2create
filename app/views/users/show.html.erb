@@ -1,5 +1,8 @@
 <div class="container">
   <div class="row">
+    <%= render 'themes/theme_bar', theme: @theme %>
+  </div>
+  <div class="row">
 
     <!--ここから真ん中のエリア-->
     <div class="col-sm-12 mt-4">
@@ -30,34 +33,42 @@
           <h2>あなたのサークル</h2>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-11 ml-4">
-          <table>
-            <tr>
-              <th>サークル名</th>
-              <th>ステータス</th>
-              <th></th>
-            </tr>
-            <% @groups.each do |group| %>
+      <% if @groups.present? %>
+        <div class="row">
+          <div class="col-sm-11 ml-4">
+            <table>
               <tr>
-                <td><%= group.activity.name %></td>
-                <td><%= group.member_status %></td>
-                <td>
-                  <% if group.member_status == '承認待ち' %>
-                    <%= link_to group_path(group), method: :delete do %>
-                      <button type="button" class="btn-sm btn btn-danger">申請取消</button>
-                    <% end %>
-                  <% elsif group.member_status != '承認待ち' %>
-                    <%= link_to group_path(group, order_sort: 99), method: :patch do %>
-                      <button type="button" class="btn-sm btn btn-secondary">卒業依頼</button>
-                    <% end %>
-                  <% end %>
-                </td>
+                <th>サークル名</th>
+                <th>ステータス</th>
+                <th></th>
               </tr>
-            <% end %>
-          </table>
+              <% @groups.each do |group| %>
+                <tr>
+                  <td><%= group.activity.name %></td>
+                  <td><%= group.member_status %></td>
+                  <td>
+                    <% if group.member_status == '承認待ち' %>
+                      <%= link_to group_path(group), method: :delete do %>
+                        <button type="button" class="btn-sm btn btn-danger">申請取消</button>
+                      <% end %>
+                    <% elsif group.member_status != '承認待ち' %>
+                      <%= link_to group_path(group, order_sort: 99), method: :patch do %>
+                        <button type="button" class="btn-sm btn btn-secondary">卒業依頼</button>
+                      <% end %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
         </div>
-      </div>
+      <% else %>
+        <div class="row">
+          <div class="col-sm-11 ml-5 pl-5">
+            <p>サークルに参加していません</p>
+          </div>
+        </div>
+      <% end %>
     </div>
 
     <!--ここから右サイドのエリア-->

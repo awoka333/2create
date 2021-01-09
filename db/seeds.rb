@@ -17,5 +17,4 @@ Theme.create!(
             公園を散歩したら、出会った生き物を改めて観察してみたり。
             いつもの食事に遊びを取り入れたり。
             あなたの目に映るひと時を、2createで伝えてみよう。',
-  theme_image_id: open("./app/assets/images/flower-bg.jpg")
 )

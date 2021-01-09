@@ -11,6 +11,7 @@ class ActivitiesController < ApplicationController
   end
 
   def index
+    @theme = Theme.find(1)
     @activities = Activity.all
     @activities_paginate = @activities.page(params[:page]).per(10)
   end
@@ -37,6 +38,8 @@ class ActivitiesController < ApplicationController
   end
 
   def modify
+    @activities = Activity.all
+    @activities_paginate = @activities.page(params[:page]).per(10)
   end
 
   def create
@@ -50,7 +53,7 @@ class ActivitiesController < ApplicationController
       leader.save
       redirect_to activity_path(@activity.id)
     else
-      render "edit"
+      render "new"
     end
   end
 

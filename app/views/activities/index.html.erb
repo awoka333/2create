@@ -1,5 +1,8 @@
 <div class="container">
   <div class="row">
+    <%= render 'themes/theme_bar', theme: @theme %>
+  </div>
+  <div class="row">
     <div class="col-sm-8 mt-4">
       <h2>サークル一覧</h2>
     </div>
@@ -12,7 +15,7 @@
     <% end %>
   </div>
 
-  <% unless @activities.count > 0 %>
+  <% if @activities.count == 0 %>
     <div class="row">
       <div class="col-sm-11 pl-5 ml-5 mt-3 mb-5">
         <p>サークルはありません</p>

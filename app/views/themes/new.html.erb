@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>テーマの作成</h2>
+        </div>
+    </div>
+    <%= form_with model: @theme, url: themes_path, method: :post, local: true do |f| %>
+        <div class="row theme-bg pt-4 theme-letter">
+            <div class="col-sm-12">
+                <p><%= f.text_field :month, placeholder: "10" %>月のテーマは</p>
+            </div>
+        </div>
+        <div class="row theme-bg pt-4 theme-letter">
+            <div class="col-sm-12">
+                <h3><%= f.text_field :theme1, placeholder: "テーマ1" %></h3>
+            </div>
+        </div>
+        <div class="row theme-bg pt-4 theme-letter">
+            <div class="col-sm-12">
+                <h3><%= f.text_field :theme2, placeholder: "テーマ2" %></h3>
+            </div>
+        </div>
+        <div class="row theme-bg pt-4 theme-letter">
+            <div class="col-sm-12">
+                <h3><%= f.text_field :theme3, placeholder: "テーマ3" %></h3>
+            </div>
+        </div>
+        <div class="row justify-content-center theme-bg">
+            <div class="col-10 mt-3 mb-3">
+            <p class="theme-letter"><%= f.text_area :sentence, placeholder: "ここにテキストを入力してください" %></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 text-center mt-4 mb-4">
+                <%= f.submit "create！", :class=>"btn-lg btn btn-outline-danger" %>
+            </div>
+        </div>
+    <% end %>
+</div>

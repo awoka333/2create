@@ -1,6 +1,6 @@
 class HomesController < ApplicationController
   def top
-    @theme = Theme.order(updated_at: :desc).limit(1)
+    @theme = Theme.find(1)
     if Work.includes(:activity).count > 2
       @lastworks = Work.order('created_at DESC').limit(3)
     elsif Work.includes(:activity).count > 1

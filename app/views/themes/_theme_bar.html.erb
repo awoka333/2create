@@ -1,23 +1,23 @@
 <div class="container">
-  <div class="row">
-    <div class="col-sm-3">
+  <div class="row theme-bg pt-4 theme-letter">
+    <div class="col-sm-2 ml-4">
       <p><%= theme.month %>月のテーマは</p>
     </div>
     <div class="col-sm-3">
-      <%= theme.theme1 %>
+      <h3><%= theme.theme1 %></h3>
     </div>
     <div class="col-sm-3">
-      <%= theme.theme2 %>
+      <h3><%= theme.theme2 %></h3>
     </div>
     <div class="col-sm-3">
-      <%= theme.theme3 %>
+      <h3><%= theme.theme3 %></h3>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row justify-content-center theme-bg">
     <div class="col-10 mt-3 mb-3">
       <%#= attachment_image_tag theme, :theme_image, format: 'jpeg', fallback: "no_image.jpg", size: "800x250" %>
-      <p><%= theme.sentence %></p>
+      <p class="theme-letter"><%= theme.sentence %></p>
     </div>
   </div>
 </div>
