@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_08_114224) do
+ActiveRecord::Schema.define(version: 2021_01_05_073821) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "act_image_id", null: false
+    t.string "act_image_id", null: false
     t.string "to_create", null: false
     t.string "to_study", null: false
     t.string "to_do"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 2021_01_08_114224) do
     t.string "theme2", null: false
     t.string "theme3", null: false
     t.text "sentence", null: false
-    t.integer "theme_image_id", null: false
+    t.string "theme_image_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 2021_01_08_114224) do
   create_table "works", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "activity_id", null: false
+    t.string "work_image_id", null: false
     t.string "title", null: false
     t.string "point", null: false
     t.string "creator1", null: false
@@ -89,7 +90,6 @@ ActiveRecord::Schema.define(version: 2021_01_08_114224) do
     t.boolean "is_masking", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "work_image_id", null: false
   end
 
 end

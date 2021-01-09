@@ -1,4 +1,11 @@
 class ActivitiesController < ApplicationController
+  before_action :authenticate_user!, except: [:index]
+
+  def not_user
+    sign_out
+    redirect_to new_user_registration_path
+  end
+
   def new
     @activity = Activity.new
   end
@@ -38,9 +45,12 @@ class ActivitiesController < ApplicationController
     end
     # ログイン時は、Recommendテーブルに同じものがある または Groupテーブルに同じものがある という場合を除き、Recommendレコードを作る
     if user_signed_in?
-      unless Recommend.where(user_id: current_user.id, activity_id: @activity.id).exists? || Group.where(user_id: current_user.id, activity_id: @activity.id).exists?
+      if Recommend.where(user_id: current_user.id, activity_id: @activity.id).empty? || Group.where(user_id: current_user.id, activity_id: @activity.id).empty?
         @recommend = Recommend.new(user_id: current_user.id, activity_id: @activity.id)
         @recommend.save
+      elsif Recommend.where(user_id: current_user.id, activity_id: @activity.id).exists? && Group.where(user_id: current_user.id, activity_id: @activity.id).empty?
+        @recommend = Recommend.where(user_id: current_user.id, activity_id: @activity.id)
+        @recommend.update
       end
     end
   end
@@ -105,9 +115,5 @@ class ActivitiesController < ApplicationController
   private
   def activity_params
     params.require(:activity).permit(:name, :act_image, :to_create, :to_study, :to_do)
-  end
-  # ransack用のストロングパラメータ
-  def activity_search_params
-    params.require(:q).permit(:name_cont, :order_sort)
   end
 end

@@ -2,7 +2,7 @@
   <!--user登録情報の入力フォーム-->
   <%= form_with model: @activity, url: activities_path, local: true do |f| %>
     <div class="row">
-      <div class="col-sm-8">
+      <div class="col-sm-8 mt-4">
         <h2><%= f.text_field :name, placeholder: "サークル名" %></h2>
       </div>
     </div>
