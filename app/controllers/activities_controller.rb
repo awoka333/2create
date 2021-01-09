@@ -11,38 +11,19 @@ class ActivitiesController < ApplicationController
   end
 
   def index
-    # if params[:q][:order_sort] == '1'    # トップページ(root)(検索)から来た場合
-    #   @q = Activity.search(activity_search_params)
-    #   @activities = @q.result(distinct: true)
-    # else
-      @activities = Activity.all
-    # end
+    @activities = Activity.all
     @activities_paginate = @activities.page(params[:page]).per(10)
   end
 
   def show
     @activity = Activity.find(params[:id])
-    if Work.where(activity_id: @activity_id).count > 1
-      @works = Work.find(activity_id: @activity.id).order(created_at: :desc).limit(2)
-    elsif Work.where(activity_id: @activity_id).count == 1
-      @works = Work.find_by(activity_id: @activity.id)
-    else
-      @works = Work.none
-    end
+    @works = Work.find(activity_id: @activity.id).order(created_at: :desc).limit(2) # 最大2つのレコードを配列として取得
     @groups = Group.where(activity_id: @activity.id)
     @seniors = @groups.where(member_status: 'シニア')
     @leaders = @groups.where(member_status: 'リーダー')
     @juniors = @groups.where(member_status: 'メンバー')
     @pre_members = @groups.where(member_status: '承認待ち')
-    if Comment.where(activity_id: @activity_id).count > 2
-      @comments = @activity.comments.order(created_at: :desc).limit(3)
-    elsif Comment.where(activity_id: @activity_id).count > 1
-      @comments = @activity.comments.order(created_at: :desc).limit(2)
-    elsif Comment.where(activity_id: @activity_id).count == 1
-      @comments = @activity.comments
-    else
-      @comments = Comment.none
-    end
+    @comments = @activity.comments.order(created_at: :desc).limit(3) # 最大3つのレコードを配列として取得
     # ログイン時は、Recommendテーブルに同じものがある または Groupテーブルに同じものがある という場合を除き、Recommendレコードを作る
     if user_signed_in?
       if Recommend.where(user_id: current_user.id, activity_id: @activity.id).empty? || Group.where(user_id: current_user.id, activity_id: @activity.id).empty?

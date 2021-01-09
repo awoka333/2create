@@ -39,7 +39,6 @@ class UsersController < ApplicationController
     @user = current_customer
     # usersテーブルis_deletedのステータスを変更
     @user.is_deleted = true
-    # ログアウトさせてrootに画面遷移
     sign_out
     # redirect_to root_path
   end

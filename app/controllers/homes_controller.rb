@@ -17,5 +17,8 @@ class HomesController < ApplicationController
 
   def about
     @firstworks = Work.order('created_at').limit(2)
+    @theme = Theme.find(1)
+    # @array = Theme.order(created_at: :desc).limit(1) # インスタンスで最新1件を取得したい！！！！！
+    # @theme = Theme.find(id: @array)
   end
 end
