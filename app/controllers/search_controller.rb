@@ -1,5 +1,5 @@
 class SearchController < ApplicationController
-  def search_activity
+  def search_result
     if params[:q].present?
       @q = Activity.ransack(search_activity_params)
       @activities = @q.result(distinct: true)
@@ -11,19 +11,6 @@ class SearchController < ApplicationController
       @works_paginate = @works.page(params[:page]).per(10)
     end
   end
-
-  def search_work
-    @w = Work.ransack(params[:w], search_key: :w)
-    # @w = Work.ransack(search_work_params)
-    @works = @w.result(distinct: true)
-    @works_paginate = @works.page(params[:page]).per(10)
-  end
-  # def search_work
-  #   @w = Work.ransack(params[:w], search_key: :w)
-  #   # @w = Work.ransack(search_work_params)
-  #   @works = @w.result(distinct: true)
-  #   @works_paginate = @works.page(params[:page]).per(10)
-  # end
 
   private
   def search_activity_params

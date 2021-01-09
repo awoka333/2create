@@ -29,6 +29,5 @@ Rails.application.routes.draw do
 
   resources :recommends, only:[:create, :update]
 
-  get 'search', to: 'search#search_activity', as: 'search_activity'
-  get 'search', to: 'search#search_work', as: 'search_work'
+  get 'search', to: 'search#search_result'
 end

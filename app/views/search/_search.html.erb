@@ -1,14 +1,12 @@
-<%= search_form_for @q, url: search_activity_path do |fq| %>
+<%= search_form_for @q, url: search_path do |fq| %>
   <%= fq.label :name_cont, 'サークル名から探す' %>
   <%= fq.search_field :name_cont %>
-  <%#= fq.hidden_field :search_flag, value: "activity" %>
+  <%#= fq.hidden_field :search_flag, value: "activity" %> <!--hiddenでパラメータを送る時はこの方式-->
   <%= fq.submit "サークル検索", :class=>"btn btn-dark" %>
 <% end %>
 <br>
-<%= search_form_for @w, as: :w, url: search_activity_path do |fw| %>
-  <%= fw.label :title_cont, '作品名から探す' %>
+<%= search_form_for @w, as: :w, url: search_path do |fw| %>
+  <%= fw.label :title_cont, '作品名から探す　　' %>
   <%= fw.search_field :title_cont %>
-  <%#= fw.hidden_field :search_flag, value: "work" %>
-  <%#s= f.search_form_for @search, as: :log_search %>
   <%= fw.submit "作品検索", :class=>"btn btn-dark" %>
 <% end %>

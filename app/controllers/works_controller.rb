@@ -1,7 +1,7 @@
 class WorksController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :creator1_string, only: [:create, :update]  # 配列展開
-  before_action :creator2_string, only: [:create, :update], if: proc { params[:work][:creator2].present? }
+  before_action :creator2_string, only: [:create, :update], if: proc { params[:work][:creator2].present? } # [:work][:creator2]が送られてきているか確認
 
   def not_user
     sign_out
@@ -34,9 +34,6 @@ class WorksController < ApplicationController
   end
 
   def index
-    # if params[:order_sort] == '2'    # トップページ(root)(検索)から来た場合
-    #   @w = Activity.search(activity_search_params)
-    #   @works = @w.result(distinct: true)
     if params[:order_sort] == '3' # マイページ(users/show)から来た場合
       @works = current_user.works
     elsif params[:order_sort] == '4' # サークル詳細ページ(activities/show)から来た場合
@@ -104,7 +101,6 @@ class WorksController < ApplicationController
       redirect_to request.referer
     elsif params[:order_sort] == '2'
       @work.update(work_params)
-      # binding.pry
       redirect_to work_path(@work)
     else
       render 'edit'
