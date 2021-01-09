@@ -2,8 +2,11 @@ class Group < ApplicationRecord
   belongs_to :user
   belongs_to :activity
 
+  validates :user_id, presence: true
+  validates :activity_id, presence: true
+
   enum member_status: { '承認待ち': 0, 'メンバー': 1, 'リーダー': 2, 'シニア': 3 }
-  enum graduate_status: { '卒業しない':0, '卒業依頼':1, '卒業':2 }
+  enum graduate_status: { '卒業しない': 0, '卒業依頼': 1, '卒業': 2 }
 
   # returnは書いても書かなくてもよい
   # 10行目でorder_sortという変数を宣言、コントローラのreturn_statusメソッドから値を貰う

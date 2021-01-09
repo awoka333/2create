@@ -1,40 +1,59 @@
 <div class="container">
-    <div class="row">
-        <div class="col-sm-8">
-            <h2>新着作品</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-8">
-            <%= render 'search/search' %>
-        </div>
-    </div>
-    <div class="row">
-        <% @lastworks.each do |lastwork| %>
-            <!--新着workを3つ並べる-->
-            <div class="col-sm-4">
-                <table>
-                    <tr>
-                        <td colspan="2", style="width:100%", class="text-center">
-                            <%= link_to work_path(lastwork) do %>
-                                <%= attachment_image_tag lastwork, :work_image, format: 'jpeg', fallback: "no_image.jpg", size: "300x200" %>
-                            <% end %>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:80%", class="text-center"><%= lastwork.title %></td>
-                        <% if user_signed_in? %>
-                            <td id="favorite-<%= lastwork.id %>", style="width:20%"><%= render 'favorites/favorite', work: lastwork %></td>
-                        <% end %>
-                    </tr>
-                    <tr><td style="width:100%", class="text-center"><%= lastwork.activity.name %></td></tr>
-                </table>
+    <!--@lastworksの中身の有無で表示画面を分ける-->
+    <% if @lastworks.nil? %>
+        <div class="row">
+            <div class="col-sm-8">
+                <h2>検索フォームから探す</h2>
             </div>
-        <% end %>
-    </div>
-    <div class="row justify-content-center">
-        <%= link_to works_path do %>
-            <button type="button" class="btn btn-info mb-4">もっとみる</button>
-        <% end %>
-    </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <%= render 'search/search' %>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <%= link_to new_activity_path do %>
+                <button type="button" class="btn btn-info mb-4">サークルを作る！</button>
+            <% end %>
+        </div>
+    <% else %>
+        <div class="row">
+            <div class="col-sm-8">
+                <h2>新着作品</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <%= render 'search/search' %>
+            </div>
+        </div>
+        <div class="row">
+            <% @lastworks.each do |lastwork| %>
+                <!--新着workを3つ並べる-->
+                <div class="col-sm-4">
+                    <table>
+                        <tr>
+                            <td colspan="2", style="width:100%", class="text-center">
+                                <%= link_to work_path(lastwork) do %>
+                                    <%= attachment_image_tag lastwork, :work_image, format: 'jpeg', fallback: "no_image.jpg", size: "300x200" %>
+                                <% end %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:80%", class="text-center"><%= lastwork.title %></td>
+                            <% if user_signed_in? %>
+                                <td id="favorite-<%= lastwork.id %>", style="width:20%"><%= render 'favorites/favorite', work: lastwork %></td>
+                            <% end %>
+                        </tr>
+                        <tr><td style="width:100%", class="text-center"><%= lastwork.activity.name %></td></tr>
+                    </table>
+                </div>
+            <% end %>
+        </div>
+        <div class="row justify-content-center">
+            <%= link_to works_path do %>
+                <button type="button" class="btn btn-info mb-4">もっとみる</button>
+            <% end %>
+        </div>
+    <% end %>
 </div>

@@ -40,3 +40,20 @@
 .container{
   background-color: #fff;
 }
+
+.theme-window{
+  position: relative;
+  width: 800px;
+}
+
+.theme-window img{
+  width: 100%;
+}
+
+.theme-window p{
+  position: absolute;
+  top: 25%;
+  left: 39%;
+  font-size: 60px;
+  color: #ffffff;
+}

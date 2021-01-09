@@ -1,6 +1,12 @@
 class WorksController < ApplicationController
-  before_action :creator1_string, only: [:create, :update]
-  before_action :creator2_string, only: [:create, :update]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :creator1_string, only: [:create, :update]  # 配列展開
+  before_action :creator2_string, only: [:create, :update], if: proc { params[:work][:creator2].present? }
+
+  def not_user
+    sign_out
+    redirect_to new_user_registration_path
+  end
 
   def new
     @work = Work.new
@@ -47,9 +53,13 @@ class WorksController < ApplicationController
     @activity = @work.activity
     # before_actionがある時
     @creator1 = User.where(id: @work.creator1.split(',')) # @work.creator1の中身を配列にして、展開した配列の値すべてをidとして取得する
-    @creator2 = User.where(id: @work.creator2.split(',')) # 配列の形式は["1", "2"]なので、','で区切ると配列になる
-    # @creator1 = User.where(id: @work.creator1)  # creator1: "[\"1\", \"2\"]"
-    # @creator2 = User.where(id: @work.creator2)  # creator2: "[\"2\", \"3\"]"という値を["2", "3"]に出来るなら、こちらを使いたい(creator1/2_stringを参照しないで済む)
+    if @work.creator2.present?
+      @creator2 = User.where(id: @work.creator2.split(',')) # 配列の形式は["1", "2"]なので、','で区切ると配列になる
+      # @creator1 = User.where(id: @work.creator1)  # creator1: "[\"1\", \"2\"]"
+      # @creator2 = User.where(id: @work.creator2)  # creator2: "[\"2\", \"3\"]"という値を["2", "3"]に出来るなら、こちらを使いたい(creator1/2_stringを参照しないで済む)
+    else
+      @creator2 = User.none
+    end
   end
 
   def modify
@@ -94,6 +104,7 @@ class WorksController < ApplicationController
       redirect_to request.referer
     elsif params[:order_sort] == '2'
       @work.update(work_params)
+      # binding.pry
       redirect_to work_path(@work)
     else
       render 'edit'
@@ -119,9 +130,5 @@ class WorksController < ApplicationController
   end
   def creator2_string
     params[:work][:creator2] = params[:work][:creator2].join(", ")  # DB保存の前に配列を展開する
-  end
-  # ransack用のストロングパラメータ
-  def work_search_params
-    params.require(:w).permit(:title_cont)
   end
 end
