@@ -66,9 +66,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # ログイン認証
 gem 'devise'
 
-# 権限設定
-gem 'cancancan'
-
 # デバッグツール
 gem 'pry-byebug'
 

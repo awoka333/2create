@@ -45,7 +45,7 @@
                     <td><%= pre.member_status %></td>
                     <td><%= pre.user.name %></td>
                     <td>
-                      <%= link_to group_path(pre, group_sort: 1), method: :patch do %>
+                      <%= link_to group_path(pre, group_sort: :accept), method: :patch do %>
                         <button type="button" class="btn btn-danger">承認する</button>
                       <% end %>
                     </td>
@@ -76,7 +76,7 @@
               </span>
             <% end %>
             <p class="mt-2">リーダーにチェックを入れてください ↓</p>
-            <p> <!--meember_statusをリーダーにしたいuserにチェックを入れるためのcheck_box-->
+            <p> <!--member_statusをリーダーにしたいuserにチェックを入れるためのcheck_box-->
               <% @users.each do |user| %>
                 <%= f.check_box :leader, {multiple: true}, user.id, nil %>
                 <%= user.name %>
@@ -98,8 +98,8 @@
                 <tr>
                   <td><%= pre_graduate.user.name %></td>
                   <td><%= pre_graduate.activity.works.where(user_id: pre_graduate.user.id).count %></td>  <!--activityに紐づくworksの中から、userのものだけ抽出する-->
-                  <td><%= link_to "卒業する", group_path(pre_graduate, group_sort: 100), method: :patch, class: 'btn-sm btn btn-danger' %></td>
-                  <td><%= link_to "卒業申請取消", group_path(pre_graduate, group_sort: 98), method: :patch, class: 'btn-sm btn btn-info' %></td>
+                  <td><%= link_to "卒業する", group_path(pre_graduate, group_sort: :senior), method: :patch, class: 'btn-sm btn btn-danger' %></td>
+                  <td><%= link_to "卒業申請取消", group_path(pre_graduate, group_sort: :no_graduate), method: :patch, class: 'btn-sm btn btn-info' %></td>
                 </tr>
               <% end %>
             </table>
