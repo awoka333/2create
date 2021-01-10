@@ -1,17 +1,16 @@
-<%#= render 'themes/theme_bar', theme: @theme %>
 <div class="container">
   <%= form_with model: @work, url: work_path(@work), method: :patch, local: true do |f| %>
     <div class="row">
       <%= render 'layouts/error_messages', model: f.object %>
     </div>
     <div class="row">
-      <div class="col-sm-8">
+      <div class="col-sm-8 mt-4">
         <h2><%= @activity.name %></h2>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-6 ml-4">
-        <%= attachment_image_tag @work, :work_image, fallback: "no_image.jpg", id: "img_preview", style: "height: 200px; width:200px;" %><br>
+        <%= attachment_image_tag @work, :work_image, fallback: "no_image.jpg", id: "img_preview", style: "height: 200px; width:300px;" %><br>
         <%= f.attachment_field :work_image %>
         <h2><%= f.text_field :title %></h2>
         <br>
@@ -29,12 +28,12 @@
         <% end %>
         <br>
         <h3>ポイント</h3>
-        <%= f.text_field :point %>
+        <%= f.text_field :point, size: "80x10" %>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-12 text-center mt-4 mb-4">
         <%= f.submit "更新する", :class=>"btn btn-secondary" %>
         <%= link_to work_path(@work), method: :delete do %>
           <button type="button" class="btn btn-danger">削除する</button>

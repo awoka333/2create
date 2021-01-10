@@ -3,13 +3,11 @@ class SearchController < ApplicationController
     @theme = Theme.last
     if params[:q].present?
       @q = Activity.ransack(search_activity_params)
-      @activities = @q.result(distinct: true)
-      @activities_paginate = @activities.page(params[:page]).per(10)
+      @activities = @q.result(distinct: true).page(params[:page]).per(25)
     else
       @w = Work.ransack(params[:w], search_key: :w)
       # @w = Work.ransack(search_work_params)
-      @works = @w.result(distinct: true)
-      @works_paginate = @works.page(params[:page]).per(10)
+      @works = @w.result(distinct: true).page(params[:page]).per(10)
     end
   end
 

@@ -4,18 +4,16 @@
       <%= render 'themes/theme_bar', theme: @theme %>
     </div>
   <% end %>
-  <div class="row">
-
-    <!--ここから真ん中のエリア-->
-    <% if @user.authority == "管理者" %>
-    <!--adminの専用画面リンク集-->
+  <!--ここから真ん中のエリア-->
+  <% if @user.authority == "管理者" %>
+  <!--adminの専用画面リンク集-->
+    <div class="row">
       <div class="col-sm-12 mt-4">
-        <div class="row">
-        <div class="col-sm-8">
-          <h2>管理者専用ページリンク</h2>
-        </div>
+        <h2>管理者専用ページリンク</h2>
       </div>
-      <div class="row justify-content-center mt-3">
+    </div>
+    <div class="row mt-3">
+      <div class="col-sm-12 mt-4 text-center">
         <%= link_to users_path do %>
           <button type="button" class="btn btn-outline-info">会員一覧</button>
         <% end %>
@@ -26,7 +24,10 @@
           <button type="button" class="btn btn-outline-info">テーマ編集</button>
         <% end %>
       </div>
-    <% end %>
+    </div>
+  <% end %>
+
+  <div class="row">
     <div class="col-sm-12 mt-4">
       <div class="row">
         <div class="col-sm-8">
@@ -55,6 +56,8 @@
         <% end %>
       </div>
     </div>
+  </div>
+  <div class="row">
     <div class="col-sm-6 mt-4">
       <div class="row mt-4">
         <div class="col-sm-8">
@@ -66,12 +69,18 @@
           <div class="col-sm-11 ml-4">
             <table>
               <tr>
+                <th></th>
                 <th>サークル名</th>
                 <th>ステータス</th>
                 <th></th>
               </tr>
               <% @groups.each do |group| %>
                 <tr>
+                  <td class="align-middle">
+                    <%= link_to activity_path(id: group.activity_id) do %>
+                      <%= attachment_image_tag group.activity, :act_image, format: 'jpeg', size: '50x50' %>
+                    <% end %>
+                  </td>
                   <td><%= group.activity.name %></td>
                   <td><%= group.member_status %></td>
                   <td>
@@ -113,7 +122,7 @@
         </div>
         <div class="col-sm-12 mt-1">
           <%= link_to edit_user_path(current_user) do %>
-              <button type="button" class="btn-sm btn btn-secondary">編集する</button>
+              <button type="button" class="btn-sm btn btn-outline-secondary">編集する</button>
           <% end %>
         </div>
       </div>
@@ -135,7 +144,7 @@
         <div class="col-sm-11 mb-4">
           <!--work_sortでパラメーター渡す-->
           <%= link_to works_path(work_sort: 1) do %>
-              <button type="button" class="btn btn-info">あなたの作品をみる</button>
+              <button type="button" class="btn btn-dark">あなたの作品をみる</button>
           <% end %>
         </div>
       </div>

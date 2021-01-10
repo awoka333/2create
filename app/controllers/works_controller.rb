@@ -2,6 +2,7 @@ class WorksController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :creator1_string, only: [:create, :update]  # 配列展開
   before_action :creator2_string, only: [:create, :update], if: proc { params[:work][:creator2].present? } # [:work][:creator2]が送られてきているか確認
+  before_action :modify, :mask, if: proc { current_user.authority == "管理者" }
 
   def not_user
     sign_out
@@ -36,14 +37,13 @@ class WorksController < ApplicationController
   def index
     @theme = Theme.last
     if params[:work_sort] == '1' # マイページ(users/show)から来た場合
-      @works = current_user.works
+      @works = current_user.works.page(params[:page]).per(10)
     elsif params[:work_sort] == '2' # サークル詳細ページ(activities/show)から来た場合
       @activity = Activity.find(params[:activity_id])
-      @works = @activity.works
+      @works = @activity.works.page(params[:page]).per(10)
     else
-      @works = Work.includes(:activity)
+      @works = Work.includes(:activity).page(params[:page]).per(10)
     end
-    @works_paginate = @works.page(params[:page]).per(10)
   end
 
   def show
@@ -62,18 +62,17 @@ class WorksController < ApplicationController
 
   def modify
     @activity = Activity.find(params[:activity_id])
-    @works = Work.where(activity_id: @activity.id)
-    @works_paginate = @works.page(params[:page]).per(10)
+    @works = Work.where(activity_id: @activity.id).page(params[:page]).per(10)
   end
 
   def edit
     @work = Work.find(params[:id])
     @activity = @work.activity
     @groups = @activity.groups
-    user_ids = @groups.map(&:user_id)
-    @users = User.where(id: user_ids)
+    # user_ids = @groups.map(&:user_id)
+    # @users = User.where(id: user_ids)
     # sourceでモデルの記述が成功した場合
-    # @users = @activities.group_users
+    @users = @activity.group_users
   end
 
   def update
@@ -88,10 +87,8 @@ class WorksController < ApplicationController
   def mask
     @work = Work.find(params[:work_id])
     if params[:work_sort] == '0'    # 作品を非公開状態にする（管理者,works/modifyから)
-      # @work.is_masking = true      #代入と更新を1行で行うなら、下行
       @work.update(is_masking: true)
     elsif params[:work_sort] == '1' # 作品を公開状態にする（管理者,works/modifyから)
-      # @work.is_masking = false     #代入と更新を1行で行うなら、下行
       @work.update(is_masking: false)
     end
     redirect_to request.referer

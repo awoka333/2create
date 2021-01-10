@@ -1,5 +1,6 @@
 class ActivitiesController < ApplicationController
   before_action :authenticate_user!, except: [:index]
+  before_action :modify, :destroy, if: proc { current_user.authority == "管理者" }
 
   def not_user
     sign_out
@@ -12,18 +13,11 @@ class ActivitiesController < ApplicationController
 
   def index
     @theme = Theme.last
-    @activities = Activity.all
-    @activities_paginate = @activities.page(params[:page]).per(10)
+    @activities = Activity.all.page(params[:page]).per(25)
   end
 
   def show
     @activity = Activity.find(params[:id])
-    # binding.pry
-    # @works = Work.find(activity_id: @activity.id).last(2)
-    # @works = Work.find_by(activity_id: @activity.id)
-    # if @works != nil
-    #   @works = @works.order(created_at: :desc).limit(2) # 最大2つのレコードを配列として取得
-    # end
     @groups = Group.where(activity_id: @activity.id)
     @seniors = @groups.where(member_status: 'シニア')
     @leaders = @groups.where(member_status: 'リーダー')
@@ -33,10 +27,11 @@ class ActivitiesController < ApplicationController
     @comments = @activity.comments.order(created_at: :desc).limit(3) # 最大3つのレコードを配列として取得
     # ログイン時は、Recommendテーブルに同じものがある または Groupテーブルに同じものがある という場合を除き、Recommendレコードを作る
     if user_signed_in?
-      if Recommend.where(user_id: current_user.id, activity_id: @activity.id).empty? || Group.where(user_id: current_user.id, activity_id: @activity.id).empty?
+      @group_user = Group.where(activity_id: @activity.id, user_id: current_user.id)
+      if Recommend.where(user_id: current_user.id, activity_id: @activity.id).nil? || Group.where(user_id: current_user.id, activity_id: @activity.id).nil?
         @recommend = Recommend.new(user_id: current_user.id, activity_id: @activity.id)
         @recommend.save
-      elsif Recommend.where(user_id: current_user.id, activity_id: @activity.id).exists? && Group.where(user_id: current_user.id, activity_id: @activity.id).empty?
+      elsif Recommend.where(user_id: current_user.id, activity_id: @activity.id).present? && Group.where(user_id: current_user.id, activity_id: @activity.id).nil?
         @recommend = Recommend.where(user_id: current_user.id, activity_id: @activity.id)
         @recommend.update
       end
@@ -44,13 +39,12 @@ class ActivitiesController < ApplicationController
   end
 
   def modify
-    @activities = Activity.all
-    @activities_paginate = @activities.page(params[:page]).per(10)
+    @activities = Activity.all.order(created_at: :desc).page(params[:page]).per(10)
+    @activities_paginate = @activities
   end
 
   def create
     @activity = Activity.new(activity_params)
-    # binding.pry
     if @activity.save
       leader = Group.new(
         user_id: current_user.id,

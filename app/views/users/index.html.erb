@@ -1,40 +1,52 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-8 mt-4">
-      <h2>会員情報一覧</h2>
+      <h2>サークル会員情報一覧</h2>
     </div>
   </div>
-
-  <!--user登録情報の編集フォーム-->
-  <% @users.each do |user| %>
+  <% if @users.empty? %>
     <div class="row justify-content-center">
       <div class="col-sm-11 ml-4">
-        <table class="table table-hover table-inverse">
-          <tr class="table-dark">
-            <th>ニックネーム</th>
-            <th>メールアドレス</th>
-            <th>ステータス</th>
-            <th></th>
-          </tr>
-          <tr>
-            <td class="align-middle"><%= user.name %></td>
-            <td class="align-middle"><%= user.email %></td>
-            <td>
-              <% if user.is_deleted == false %>
-                <p class="green-letter pt-3">有効会員</p>
-              <% else %>
-                <p class="gray-letter pt-3">退会済み</p>
-              <% end %>
-            </td>
-            <td class="align-middle">
-              <%= link_to group_path(user.id) do %>
-                <button type="button" class="btn btn-info">編集する</button>
-              <% end %>
-            </td>
-          </tr>
-        </table>
+        <p>会員がいません</p>
       </div>
     </div>
+  <% else %>
+    <!--user登録情報の編集フォーム-->
+    <% @users.each do |user| %>
+      <div class="row justify-content-center">
+        <div class="col-sm-11 ml-4">
+          <table class="table table-hover table-inverse">
+            <tr class="table-dark">
+              <th>ニックネーム</th>
+              <th>メールアドレス</th>
+              <th>ステータス</th>
+              <th></th>
+            </tr>
+            <tr>
+              <td class="align-middle"><%= user.name %></td>
+              <td class="align-middle"><%= user.email %></td>
+              <td>
+                <% if user.is_deleted == false %>
+                  <p class="green-letter pt-3">有効会員</p>
+                <% else %>
+                  <p class="gray-letter pt-3">退会済み</p>
+                <% end %>
+              </td>
+              <td class="align-middle">
+                <%= link_to group_path(user.id) do %>
+                  <button type="button" class="btn btn-info">編集する</button>
+                <% end %>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 
+  <div class="row">
+    <div class="col-sm-12">
+      <p><%= paginate @users %></p>
+    </div>
+  </div>
 </div>

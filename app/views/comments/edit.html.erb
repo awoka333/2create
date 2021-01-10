@@ -1,16 +1,16 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-12  mt-4">
       <h2>コメント編集</h2>
     </div>
   </div>
-  <div class="row">
+  <div class="row mt-3 justify-content-center">
     <%= form_with model: @comment, url: comment_path(@comment), method: :patch, local: true do |f| %>
-      <div class="col-sm-8">
-        <%= f.text_area :sentence %>
+      <div class="col-sm-12">
+        <%= f.text_area :sentence, size: "80x10" %>
       </div>
-      <div class="col-sm-4">
-        <%= f.submit "コメントを修正する", class: "btn-sm btn btn-info" %>
+      <div class="col-sm-12 mt-1 mb-3 text-center">
+        <%= f.submit "コメントを修正する", class: "btn-sm btn btn-secondary" %>
       </div>
     <% end %>
   </div>

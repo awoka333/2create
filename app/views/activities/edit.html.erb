@@ -17,19 +17,19 @@
         <div class="row">
           <div class="col-sm-12">
             <h4 class="mb-0"><%= f.label :to_create, "作るもの" %></h4>
-            <%= f.text_field :to_create %>
+            <%= f.text_field :to_create, size: "45x10" %>
           </div>
         </div>
         <div class="row mt-3">
           <div class="col-sm-12">
             <h4 class="mb-0"><%= f.label :to_study, "勉強すること" %></h4>
-            <%= f.text_field :to_study %>
+            <%= f.text_field :to_study, size: "45x10" %>
           </div>
         </div>
         <div class="row mt-3">
           <div class="col-sm-12">
             <h4 class="mb-0"><%= f.label :to_do, "次回日程" %></h4>
-            <%= f.text_field :to_do, placeholder: "XX年XX月XX日 XX時～　オンラインにて活動します" %>
+            <%= f.text_field :to_do, placeholder: "XX年XX月XX日 XX時～　オンラインにて活動します", size: "45x10" %>
           </div>
         </div>
       </div>

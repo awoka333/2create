@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :not_user, if: proc { current_user.is_deleted == true }
+  before_action :modify, if: proc { current_user.authority == "管理者" }
 
   def not_user
     sign_out
@@ -9,9 +10,8 @@ class CommentsController < ApplicationController
 
   def index
     @activity = Activity.find(params[:activity_id])
-    @comments = Comment.where(activity_id: @activity.id)
+    @comments = Comment.where(activity_id: @activity.id).order(created_at: :desc).page(params[:page]).per(25)
     @comment = Comment.new
-    @comments_paginate = Comment.page(params[:page]).per(3)
   end
 
   def edit
@@ -19,8 +19,9 @@ class CommentsController < ApplicationController
   end
 
   def modify
-    @activity = Activity.find(params[:id])
-    @comments = Comment.where(activity_id: @activity.id)
+    # 自然言語処理機能 導入予定
+    @activity = Activity.find(params[:activity_id])
+    @comments = Comment.where(activity_id: @activity.id).order(created_at: :desc).page(params[:page]).per(25)
     @comment = Comment.new
   end
 
