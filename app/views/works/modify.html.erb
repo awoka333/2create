@@ -1,45 +1,61 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-8">
-      <h2>サークル作品一覧</h2>
+    <div class="col-sm-8 mt-4">
+      <h2><%= @activity.name %> 作品一覧</h2>
     </div>
   </div>
-  <!--サークル作品一覧を表示w-->
-  <div class="row">
-    <div class="col-sm-3 ml-4">
-      <table class="table table-hover table-inverse">
-        <thead>
-          <tr>
-            <th></th>
-            <th>タイトル</th>
-            <th>公開ステータス</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @works.each do |work| %>
-          <tr>
-            <td>
-              <%= attachment_image_tag(work, :work_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %>
-            </td>
-            <td><%= work.title %></td>
-            <% if work.is_masking == false %>
-              <td>
-                <%= link_to works_mask_path do %>
-                  <button type="button" class="btn btn-danger">非公開にする</button>
-                <% end %>
+  <% if @works.empty? %>
+    <div class="row">
+      <div class="col-sm-11 pl-5 ml-5 mt-3 mb-5">
+        <p>作品はありません</p>
+      </div>
+    </div>
+  <% else %>
+    <!--サークル作品一覧を表示w-->
+    <div class="row justify-content-center">
+      <div class="col-sm-11 ml-4">
+        <table class="table table-hover table-inverse">
+          <thead>
+            <tr class="table-dark">
+              <th></th>
+              <th class="align-middle">タイトル</th>
+              <th class="align-middle">公開ステータス</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @works.each do |work| %>
+            <tr>
+              <td class="align-middle">
+                <%= attachment_image_tag(work, :work_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %>
               </td>
-            <% else %>
-            <td>
-              <%= link_to works_share_path do %>
-                <button type="button" class="btn btn-secondary">公開にする</button>
+              <td class="align-middle"><%= work.title %></td>
+              <% if work.is_masking == false %>
+                <td class="align-middle">
+                  <span>公開</span>
+                </td>
+                <td class="align-middle">
+                  <%= link_to works_mask_path(work_id: work, work_sort: 0), method: :patch do %>
+                    <button type="button" class="btn btn-danger">非公開にする</button>
+                  <% end %>
+                </td>
+              <% else %>
+                <td class="align-middle">
+                  <span>非公開</span>
+                </td>
+                <td class="align-middle">
+                  <%= link_to works_mask_path(work_id: work, work_sort: 1), method: :patch do %>
+                    <button type="button" class="btn btn-dark">公開にする</button>
+                  <% end %>
+                </td>
               <% end %>
-            </td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
+  <% end %>
   <div class="row">
     <div class="col-sm-12">
       <p><%= paginate @works_paginate %></p>

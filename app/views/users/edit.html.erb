@@ -2,6 +2,9 @@
   <!--user登録情報の編集フォーム-->
   <%= form_with model: @user, url: user_path(current_user), method: :patch, local: true do |f| %>
     <div class="row">
+      <%= render 'layouts/error_messages', model: f.object %>
+    </div>
+    <div class="row">
       <div class="col-sm-12 mt-4">
         <h2>登録情報の編集</h2>
       </div>

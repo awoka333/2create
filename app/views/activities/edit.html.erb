@@ -1,12 +1,11 @@
 <div class="container">
   <!--user登録情報の編集フォーム-->
   <%= form_with model: @activity, url: activity_path(@activity), method: :patch, local: true do |f| %>
-  <div class="row">
-    <%= render 'layouts/error_messages', model: f.object %>
-  </div>
+    <div class="row">
+      <%= render 'layouts/error_messages', model: f.object %>
+    </div>
     <div class="row mt-4">
-
-      <div class="col-sm-5">
+      <div class="col-sm-6">
         <div class="row">
           <div class="col-sm-12">
             <h2><%= f.text_field :name, placeholder: "サークル名" %></h2>
@@ -34,7 +33,7 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-5">
+      <div class="col-sm-6">
         <div class="row mt-5">
           <div class="col-sm-12">
             <h4><%= f.label :to_do, "メンバー申請" %></h4>
@@ -87,7 +86,7 @@
         </div>
 
         <div class="row mt-3">
-          <div class="col-sm-8">
+          <div class="col-sm-12">
             <h4>卒業申請</h4>
             <table>
               <tr>
@@ -99,8 +98,8 @@
                 <tr>
                   <td><%= pre_graduate.user.name %></td>
                   <td><%= pre_graduate.activity.works.where(user_id: pre_graduate.user.id).count %></td>  <!--activityに紐づくworksの中から、userのものだけ抽出する-->
-                  <td><%= link_to "卒業する", group_path(pre_graduate, group_sort: 100), method: :patch %></td>
-                  <td><%= link_to "卒業申請取消", group_path(pre_graduate, group_sort: 98), method: :patch %></td>
+                  <td><%= link_to "卒業する", group_path(pre_graduate, group_sort: 100), method: :patch, class: 'btn-sm btn btn-danger' %></td>
+                  <td><%= link_to "卒業申請取消", group_path(pre_graduate, group_sort: 98), method: :patch, class: 'btn-sm btn btn-info' %></td>
                 </tr>
               <% end %>
             </table>
@@ -109,10 +108,11 @@
       </div>
     </div>
     <div class="row justify-content-center">
-      <%= f.submit "更新する", class: "btn-sm btn btn-secondary mt-4 mb-4" %>
+      <%= f.submit "更新する", class: "btn-sm btn btn-dark mt-4 mb-4 mr-2" %>
       <%= link_to activity_path(@activity) do %>
-          <button type="button" class="btn-sm btn btn-secondary">サークルページに戻る</button>
+          <button type="button" class="btn-sm btn btn-secondary mt-4 mb-4 ml-2">サークルページに戻る</button>
       <% end %>
+
     </div>
   <% end %>
 </div>

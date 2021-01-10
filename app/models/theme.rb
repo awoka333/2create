@@ -1,5 +1,4 @@
 class Theme < ApplicationRecord
-  validates :theme_image_id, presence: true
   validates :month, presence: true
   validates :theme1, presence: true
   validates :theme2, presence: true

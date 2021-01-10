@@ -18,7 +18,11 @@ class ActivitiesController < ApplicationController
 
   def show
     @activity = Activity.find(params[:id])
-    @works = Work.find(activity_id: @activity.id).order(created_at: :desc).limit(2) # 最大2つのレコードを配列として取得
+    # @works = Work.find(activity_id: @activity.id).last(2)
+    @works = Work.find_by(activity_id: @activity.id)
+    if @works != nil
+      @works = @work.order(created_at: :desc).limit(2) # 最大2つのレコードを配列として取得
+    end
     @groups = Group.where(activity_id: @activity.id)
     @seniors = @groups.where(member_status: 'シニア')
     @leaders = @groups.where(member_status: 'リーダー')
@@ -45,6 +49,7 @@ class ActivitiesController < ApplicationController
 
   def create
     @activity = Activity.new(activity_params)
+    # binding.pry
     if @activity.save
       leader = Group.new(
         user_id: current_user.id,
@@ -92,8 +97,8 @@ class ActivitiesController < ApplicationController
 
   def destroy
     @activity = Activity.find(params[:id])
-    @group = Group.find(activity_id: @activity.id)
-    @group.destroy
+    # @group = Group.find(activity_id: @activity.id)
+    @activity.destroy
     redirect_to activities_modify_path
   end
 

@@ -1,10 +1,13 @@
 <div class="container">
-    <div class="row">
-        <div class="col-sm-8">
-            <h2>テーマの作成</h2>
-        </div>
-    </div>
     <%= form_with model: @theme, url: themes_path, method: :post, local: true do |f| %>
+        <div class="row">
+            <%= render 'layouts/error_messages', model: f.object %>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <h2>テーマの作成</h2>
+            </div>
+        </div>
         <div class="row theme-bg pt-4 theme-letter">
             <div class="col-sm-12">
                 <p><%= f.text_field :month, placeholder: "10" %>月のテーマは</p>

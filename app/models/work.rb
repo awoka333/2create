@@ -11,7 +11,6 @@ class Work < ApplicationRecord
   validates :title, presence: true
   validates :point, presence: true
   validates :creator1, presence: true
-  validates :is_masking, presence: true
 
   attachment :work_image
 

@@ -1,11 +1,14 @@
 <%#= render 'themes/theme_bar', theme: @theme %>
 <div class="container">
-  <div class="row">
-    <div class="col-sm-8">
-      <h2><%= @activity.name %></h2>
+  <%= form_with model: @work, url: work_path(@work), method: :patch, local: true do |f| %>
+    <div class="row">
+      <%= render 'layouts/error_messages', model: f.object %>
     </div>
-  </div>
-  <%= form_with model: @work, url: work_path(@work, order_sort: 2), method: :patch, local: true do |f| %>
+    <div class="row">
+      <div class="col-sm-8">
+        <h2><%= @activity.name %></h2>
+      </div>
+    </div>
     <div class="row">
       <div class="col-sm-6 ml-4">
         <%= attachment_image_tag @work, :work_image, fallback: "no_image.jpg", id: "img_preview", style: "height: 200px; width:200px;" %><br>

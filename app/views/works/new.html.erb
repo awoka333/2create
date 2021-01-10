@@ -1,17 +1,20 @@
 <%#= render 'themes/theme_bar', theme: @theme %>
 <div class="container">
-  <div class="row">
-    <div class="col-sm-8">
-      <h2><%= @activity.name %></h2>
-    </div>
-  </div>
   <%= form_with model: @work, url: works_path(activity_id: @activity.id), local: true do |f| %>
+    <div class="row">
+      <%= render 'layouts/error_messages', model: f.object %>
+    </div>
+    <div class="row">
+      <div class="col-sm-8 mt-4">
+        <h2><%= @activity.name %></h2>
+      </div>
+    </div>
     <div class="row">
       <div class="col-sm-6 ml-4">
           <%= f.attachment_field :work_image %>
           <h2><%= f.text_field :title, placeholder: "タイトルを入力" %></h2>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-6 ml-4 mt-4">
         <h3>2creator</h3>
         <% @users.each do |user| %>
           <%= f.check_box :creator1, {multiple: true}, user.id, nil %><%= user.name %>
@@ -28,7 +31,7 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-12 mt-4 mb-4 text-center">
         <%= f.submit "create！", :class=>"btn-lg btn btn-outline-danger" %>
       </div>
     </div>
