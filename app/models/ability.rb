@@ -32,5 +32,40 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
+
+
+    # class Ability
+    #   include CanCan::Ability
+
+    #   def initialize(user)
+    #     user ||= User.new  # ログインしていない場合は、からユーザーを用意し判定に用いる
+
+    #     # default parmission
+    #     cannot :buy, Product
+
+    #     if user.sys_admin?
+    #       can :manage, :all
+    #     end
+
+    #     if user.product_manager?
+    #       can :manage, Stockpile, owner: user # 自分がオーナーの倉庫には全権限を持つ
+    #       can :read, Stockpile                 # そうでなくても、読み取り権限を持つ
+
+    #       # 自分の倉庫にある製品に対してすべての権限を持つ
+    #       can :manage, Product, stockpile: {owner: user}
+    #       # ただし、新規登録、削除はできない
+    #       cannot [:create, :destroy], Product
+    #     end
+
+    #     if user.customer?
+    #       # 複数のモデルに権限を付与できる
+    #       can :read, [Stockpile, Product]
+
+    #       # 独自権限も作れる
+    #       can :buy, Procuct, stockpile: nil # 倉庫から出されている製品を買える
+    #     end
+    #   end
+    # end
+
   end
 end

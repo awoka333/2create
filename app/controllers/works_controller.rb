@@ -17,6 +17,7 @@ class WorksController < ApplicationController
   end
 
   def create
+    # binding.pry
     @work = Work.new(work_params)
     @activity = Activity.find(params[:activity_id])
     @work.user_id = current_user.id
@@ -61,7 +62,7 @@ class WorksController < ApplicationController
   end
 
   def modify
-    @activity = Activity.find(params[:id])
+    @activity = Activity.find(params[:activity_id])
     @works = Work.where(activity_id: @activity.id)
     @works_paginate = @works.page(params[:page]).per(10)
   end
@@ -92,20 +93,23 @@ class WorksController < ApplicationController
 
   def update
     @work = Work.find(params[:id])
-    if params[:order_sort] == '0'    # 作品を非公開状態にする
-      # @work.is_masking = true      #代入と更新を1行で行うなら、下行
-      @work.update(is_masking: true)
-      redirect_to request.referer
-    elsif params[:order_sort] == '1' # 作品を公開状態にする
-      # @work.is_masking = false     #代入と更新を1行で行うなら、下行
-      @work.update(is_masking: false)
-      redirect_to request.referer
-    elsif params[:order_sort] == '2'
-      @work.update(work_params)
+    if @work.update(work_params)
       redirect_to work_path(@work)
     else
       render 'edit'
     end
+  end
+
+  def mask
+    @work = Work.find(params[:work_id])
+    if params[:work_sort] == '0'    # 作品を非公開状態にする（管理者,works/modifyから)
+      # @work.is_masking = true      #代入と更新を1行で行うなら、下行
+      @work.update(is_masking: true)
+    elsif params[:work_sort] == '1' # 作品を公開状態にする（管理者,works/modifyから)
+      # @work.is_masking = false     #代入と更新を1行で行うなら、下行
+      @work.update(is_masking: false)
+    end
+    redirect_to request.referer
   end
 
   def destroy

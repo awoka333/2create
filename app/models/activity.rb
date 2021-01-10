@@ -10,7 +10,7 @@ class Activity < ApplicationRecord
   has_many :works, dependent: :destroy
 
   validates :name, presence: true
-  validates :act_image_id, presence: true
+  validates :act_image, presence: true
   validates :to_create, presence: true
   validates :to_study, presence: true
 

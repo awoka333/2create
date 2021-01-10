@@ -15,9 +15,8 @@ Rails.application.routes.draw do
   resources :groups, only:[:show, :create, :update, :destroy]
 
   get 'works/modify'
-  resources :works
   patch 'works/mask'
-  patch 'works/share'
+  resources :works
 
   resources :themes, only:[:new, :create]
 

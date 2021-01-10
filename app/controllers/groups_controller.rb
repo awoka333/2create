@@ -9,6 +9,7 @@ class GroupsController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @groups = Group.all
   end
 
   def create
@@ -34,6 +35,19 @@ class GroupsController < ApplicationController
     elsif params[:group_sort].to_i == 100
       @group.member_status = 'シニア'
       @group.graduate_status = Group.return_status(params[:group_sort])
+    # 管理者が編集した時(groups/show)
+    elsif params[:group_sort].to_i == 101
+      m_status = params[:member_status]
+      if m_status == "0"
+        @group.member_status = '承認待ち'
+      elsif m_status == "1"
+        @group.member_status = 'メンバー'
+      elsif m_status == "2"
+        @group.member_status = 'リーダー'
+      else
+        @group.member_status = 'シニア'
+      end
+    # group_sortを持たない時
     else
       redirect_to 'users/show'
     end

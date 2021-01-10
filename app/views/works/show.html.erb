@@ -1,19 +1,21 @@
 <div class="container">
+  <% if @theme.present? %>
+    <div class="row">
+      <%= render 'themes/theme_bar', theme: @theme %>
+    </div>
+  <% end %>
   <div class="row">
-    <%= render 'themes/theme_bar', theme: @theme %>
-  </div>
-  <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-8 mt-4">
       <h2><%= @activity.name %></h2>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-4 mt-4">
       <%= link_to edit_work_path(@work) do %>
         <button type="button" class="btn btn-secondary">作品を編集する</button>
       <% end %>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-6 ml-4">
+    <div class="col-sm-6 ml-4 mb-4 mt-3">
       <table>
         <tr><td colspan="2"><%= attachment_image_tag @work, :work_image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></td></tr>
         <tr>
@@ -23,7 +25,7 @@
         <tr><td clospan="2"><%= @work.created_at %></td></tr>
       </table>
     </div>
-    <div class="col-sm-5">
+    <div class="col-sm-5 mb-4">
       <h3>2creator</h3>
       <% @creator1.each do |creator| %>
         <p><%= creator.name %></p>

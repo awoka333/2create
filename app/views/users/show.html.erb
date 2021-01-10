@@ -7,6 +7,26 @@
   <div class="row">
 
     <!--ここから真ん中のエリア-->
+    <%# if user_signed_in? && { user.authority == 99 } %>
+    <!--adminの専用画面リンク集-->
+      <div class="col-sm-12 mt-4">
+        <div class="row">
+        <div class="col-sm-8">
+          <h2>管理者専用ページリンク</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center mt-3">
+        <%= link_to users_path do %>
+          <button type="button" class="btn btn-outline-info">会員一覧</button>
+        <% end %>
+        <%= link_to activities_modify_path do %>
+          <button type="button" class="btn btn-outline-info ml-2 mr-2">サークル一覧</button>
+        <% end %>
+        <%= link_to new_theme_path do %>
+          <button type="button" class="btn btn-outline-info">テーマ編集</button>
+        <% end %>
+      </div>
+    <%# end %>
     <div class="col-sm-12 mt-4">
       <div class="row">
         <div class="col-sm-8">
@@ -22,7 +42,13 @@
         <% else %>
           <% @activities.each do |activity| %>
             <table>
-              <tr><td><%= attachment_image_tag activity, :act_image, format: 'jpeg', fallback: "no_image.jpg", size: "300x200" %></td></tr>
+              <tr>
+                <td>
+                  <%= link_to activity_path(activity) do %>
+                    <%= attachment_image_tag activity, :act_image, format: 'jpeg', size: "300x200" %>
+                  <% end %>
+                </td>
+              </tr>
               <tr><td><%= activity.name %></td></tr>
             </table>
           <% end %>
@@ -53,10 +79,16 @@
                       <%= link_to group_path(group), method: :delete do %>
                         <button type="button" class="btn-sm btn btn-danger">申請取消</button>
                       <% end %>
-                    <% elsif group.member_status != '承認待ち' %>
+                    <% elsif group.graduate_status == '卒業しない' %>
                       <%= link_to group_path(group, group_sort: 99), method: :patch do %>
-                        <button type="button" class="btn-sm btn btn-secondary">卒業依頼</button>
+                        <button type="button" class="btn-sm btn btn-danger">卒業依頼</button>
                       <% end %>
+                    <% elsif group.graduate_status == '卒業依頼' %>
+                      <%= link_to group_path(group, group_sort: 98), method: :patch do %>
+                        <button type="button" class="btn-sm btn btn-info">卒業依頼取り消し</button>
+                      <% end %>
+                    <% elsif group.graduate_status == '卒業' %>
+                        <p>卒業生</p>
                     <% end %>
                   </td>
                 </tr>

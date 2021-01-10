@@ -11,6 +11,8 @@ class Group < ApplicationRecord
   # returnは書いても書かなくてもよい
   # 10行目でgroup_sortという変数を宣言、コントローラのreturn_statusメソッドから値を貰う
   def self.return_status(group_sort)
+    # if group_sort == '0'      # 使わない
+    #   return '承認待ち'
     if group_sort == '1'      # サークル編集ページ(activities/edit)から来る
       return 'メンバー'
     # elsif group_sort == '2' # サークル編集ページ(activities/edit)のcheck_boxの値から、トランザクション処理する

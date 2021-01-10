@@ -15,5 +15,9 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :name])
   end
+  
+  def current_ability
+    @current_ability ||= ::Group.new(current_user)
+  end
 
 end
