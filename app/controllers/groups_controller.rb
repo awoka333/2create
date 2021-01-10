@@ -27,10 +27,13 @@ class GroupsController < ApplicationController
   def update
     @group = Group.find(params[:id])
     # update内容を分類する。groupモデルのreturn_statusメソッド参照。
-    if params[:order_sort].to_i < 50
-      @group.member_status = Group.return_status(params[:order_sort])
-    elsif params[:order_sort].to_i > 50
-      @group.graduate_status = Group.return_status(params[:order_sort])
+    if params[:group_sort].to_i < 50
+      @group.member_status = Group.return_status(params[:group_sort])
+    elsif params[:group_sort].to_i < 100
+      @group.graduate_status = Group.return_status(params[:group_sort])
+    elsif params[:group_sort].to_i == 100
+      @group.member_status = 'シニア'
+      @group.graduate_status = Group.return_status(params[:group_sort])
     else
       redirect_to 'users/show'
     end

@@ -1,6 +1,6 @@
 class HomesController < ApplicationController
   def top
-    @theme = Theme.find(1)
+    @theme = Theme.last
     if Work.includes(:activity).count > 2
       @lastworks = Work.order('created_at DESC').limit(3)
     elsif Work.includes(:activity).count > 1
@@ -17,7 +17,7 @@ class HomesController < ApplicationController
 
   def about
     @firstworks = Work.order('created_at').limit(2)
-    @theme = Theme.find(1)
+    @theme = Theme.last
     # @array = Theme.order(created_at: :desc).limit(1) # インスタンスで最新1件を取得したい！！！！！
     # @theme = Theme.find(id: @array)
   end

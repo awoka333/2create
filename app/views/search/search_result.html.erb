@@ -1,7 +1,9 @@
 <div class="container">
-  <div class="row">
-    <%= render 'themes/theme_bar', theme: @theme %>
-  </div>
+  <% if @theme.present? %>
+    <div class="row">
+      <%= render 'themes/theme_bar', theme: @theme %>
+    </div>
+  <% end %>
   <!--rootのサークル検索フォームから@qを持ってきた時-->
   <% if @q.present? %>
     <div class="row">
@@ -17,7 +19,7 @@
       <% end %>
     </div>
 
-    <% if @activities.nil? %>
+    <% if @activities.empty? %>
       <div class="row">
         <div class="col-sm-11 ml-4 mt-3 mb-5">
           <p>サークルはありません</p>

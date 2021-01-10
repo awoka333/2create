@@ -34,10 +34,10 @@ class WorksController < ApplicationController
   end
 
   def index
-    @theme = Theme.find(1)
-    if params[:order_sort] == '3' # マイページ(users/show)から来た場合
+    @theme = Theme.last
+    if params[:work_sort] == '1' # マイページ(users/show)から来た場合
       @works = current_user.works
-    elsif params[:order_sort] == '4' # サークル詳細ページ(activities/show)から来た場合
+    elsif params[:work_sort] == '2' # サークル詳細ページ(activities/show)から来た場合
       @activity = Activity.find(params[:activity_id])
       @works = @activity.works
     else

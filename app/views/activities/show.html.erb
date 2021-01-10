@@ -22,14 +22,14 @@
                 <button type="button" class="btn btn-info">作品を投稿する</button>
               <% end %>
             <% end %>
-            <%= link_to works_path(activity_id: @activity.id, order_sort: 4) do %>
+            <%= link_to works_path(activity_id: @activity.id, work_sort: 2) do %>
               <button type="button" class="btn btn-info">もっとみる</button>
             <% end %>
           </div>
           <div class="col-sm-12">
             <% @works.each do |work| %>
               <table>
-                <tr><%= attachment_image_tag work, :image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></tr>
+                <tr><%= attachment_image_tag work, :image, format: 'jpeg', size: "400x250" %></tr>
                 <tr>
                   <td><%= work.title %></td>
                   <td id="favorite-<%= work.id %>"><%= render 'favorites/favorite', work: work %></td>
@@ -50,7 +50,7 @@
             <% end %>
             <br>
             <% if @pre_members.count > 0 %>
-              <p class="text-danger">申請中：<%= @pre_members.count %>名</p>
+              <p class="text-danger">メンバー申請中：<%= @pre_members.count %>名</p>
             <% end %>
           </div>
         </div>
@@ -64,7 +64,7 @@
                 <tr>
                   <td><%= pre.user.name %></td>
                   <td>
-                    <%= link_to group_path(pre, order_sort: 1), method: :patch do %>
+                    <%= link_to group_path(pre, group_sort: 1), method: :patch do %>
                       <button type="button" class="btn btn-info">メンバー承認</button>
                     <% end %>
                     <%= link_to group_path(pre), method: :delete do %>
@@ -79,6 +79,9 @@
               <%= leader.user.name %>
             <% end %>
             <h4>メンバー</h4>
+            <% if @pre_graduate.count > 0 %>
+              <p class="text-danger">卒業承認待ち：<%= @pre_graduates.count %>名</p>
+            <% end %>
             <% @juniors.each do |junior| %>
               <%= junior.user.name %>
             <% end %>

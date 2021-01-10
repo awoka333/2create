@@ -1,7 +1,9 @@
 <div class="container">
-    <div class="row">
-        <%= render 'themes/theme_bar', theme: @theme %>
-    </div>
+    <% if @theme.present? %>
+        <div class="row">
+            <%= render 'themes/theme_bar', theme: @theme %>
+        </div>
+  <% end %>
     <!--@lastworksの中身の有無で表示画面を分ける-->
     <% if @lastworks.nil? %>
         <div class="row">
