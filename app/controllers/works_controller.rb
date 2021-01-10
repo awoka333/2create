@@ -17,7 +17,6 @@ class WorksController < ApplicationController
   end
 
   def create
-    # binding.pry
     @work = Work.new(work_params)
     @activity = Activity.find(params[:activity_id])
     @work.user_id = current_user.id
@@ -76,20 +75,6 @@ class WorksController < ApplicationController
     # sourceでモデルの記述が成功した場合
     # @users = @activities.group_users
   end
-
-  # def mask
-  #   @work = Work.find(params[:id])
-  #   # boolean型カラムis_maskingdのステータスをfalseからtrueに変更
-  #   @work.is_masking = true
-  #   @work.save
-  # end
-
-  # def share
-  #   @work = Work.find(params[:id])
-  #   # boolean型カラムis_maskingdのステータスをtrueからfalseに変更
-  #   @work.is_masking = false
-  #   @work.save
-  # end
 
   def update
     @work = Work.find(params[:id])

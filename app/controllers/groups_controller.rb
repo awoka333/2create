@@ -27,32 +27,33 @@ class GroupsController < ApplicationController
 
   def update
     @group = Group.find(params[:id])
+    @group.update_status(params[:group_sort])
     # update内容を分類する。groupモデルのreturn_statusメソッド参照。
-    if params[:group_sort].to_i < 50
-      @group.member_status = Group.return_status(params[:group_sort])
-    elsif params[:group_sort].to_i < 100
-      @group.graduate_status = Group.return_status(params[:group_sort])
-    elsif params[:group_sort].to_i == 100
-      @group.member_status = 'シニア'
-      @group.graduate_status = Group.return_status(params[:group_sort])
+    # if params[:group_sort].to_i < 50
+    #   @group.member_status = Group.return_status(params[:group_sort])
+    # elsif params[:group_sort].to_i < 100
+    #   @group.graduate_status = Group.return_status(params[:group_sort])
+    # elsif params[:group_sort].to_i == 100
+    #   @group.member_status = 'シニア'
+    #   @group.graduate_status = Group.return_status(params[:group_sort])
     # 管理者が編集した時(groups/show)
-    elsif params[:group_sort].to_i == 101
-      m_status = params[:member_status]
-      if m_status == "0"
-        @group.member_status = '承認待ち'
-      elsif m_status == "1"
-        @group.member_status = 'メンバー'
-      elsif m_status == "2"
-        @group.member_status = 'リーダー'
-      else
-        @group.member_status = 'シニア'
-      end
+    # elsif params[:group_sort].to_i == 101
+    #   m_status = params[:member_status]
+    #   if m_status == "0"
+    #     @group.member_status = '承認待ち'
+    #   elsif m_status == "1"
+    #     @group.member_status = 'メンバー'
+    #   elsif m_status == "2"
+    #     @group.member_status = 'リーダー'
+    #   else
+    #     @group.member_status = 'シニア'
+    #   end
     # group_sortを持たない時
+    if @group.save
+    redirect_to request.referer
     else
       redirect_to 'users/show'
     end
-    @group.save
-    redirect_to request.referer
     # 1行で書く場合
     # if params[:order_sort] < 50
     #   @group.member_status = Group.member_statuses.find {|k, v| v == params[:order_sort].to_i}[0]

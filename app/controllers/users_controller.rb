@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user = current_user
     @theme = Theme.last
     @recommends = Recommend.order('created_at DESC').limit(3).where(user_id: current_user.id) # 最大3つのレコードを配列として取得
     activity_ids = @recommends.map(&:activity_id)   # 配列でactivity_idを全て取得

@@ -6,11 +6,11 @@ class User < ApplicationRecord
 
   has_many :groups, dependent: :destroy
   # has_many :activities, through: :groups とすると、commentsと区別がつかないので下記
-  has_many  :group_activities, source: :activity
+  has_many  :group_activities, source: :activity, through: :groups
 
   has_many :comments, dependent: :destroy
   # has_many :activities, through: :comments とすると、groupsと区別がつかないので下記
-  has_many :comment_activities, source: :activity
+  has_many :comment_activities, source: :activity, through: :comments
 
   has_many :works
   has_many :favorites, dependent: :destroy
@@ -21,5 +21,5 @@ class User < ApplicationRecord
   validates :encrypted_password, presence: true, length: { minimum:8 }
   validates :authority, presence: true
 
-  enum status: { 'ユーザー': 0, '管理者': 1 }
+  enum authority: { 'ユーザー': 0, '管理者': 1 }
 end

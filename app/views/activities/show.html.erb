@@ -27,17 +27,15 @@
             <% end %>
           </div>
           <div class="col-sm-12">
-            <% if @works != nil %>
-              <% @works.each do |work| %>
-                <table>
-                  <tr><%= attachment_image_tag work, :work_image, format: 'jpeg', size: "400x250" %></tr>
-                  <tr>
-                    <td><%= work.title %></td>
-                    <td id="favorite-<%= work.id %>"><%= render 'favorites/favorite', work: work %></td>
-                  </tr>
-                  <tr><%= work.creators1 %></tr>
-                </table>
-              <% end %>
+            <% @activity.works.order(created_at: :desc).limit(2).each do |work| %>
+              <table>
+                <tr><%= attachment_image_tag work, :work_image, format: 'jpeg', size: "400x250" %></tr>
+                <tr>
+                  <td><%= work.title %></td>
+                  <td id="favorite-<%= work.id %>"><%= render 'favorites/favorite', work: work %></td>
+                </tr>
+                <tr><%= work.creator1 %></tr>
+              </table>
             <% end %>
           </div>
         </div>

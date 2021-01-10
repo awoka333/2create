@@ -23,13 +23,13 @@
               <td class="align-middle"><%= group.activity.name %></td>
               <td class="align-middle"><%= group.member_status %></td>
               <td class="align-middle">
-                <%= radio_button_tag(:member_status, 0) %>
+                <%= radio_button_tag(:group_sort, :waiting_accept) %>
                 <%= f.label :承認待ち %>
-                <%= radio_button_tag(:member_status, 1) %>
+                <%= radio_button_tag(:member_status, :accept) %>
                 <%= f.label :メンバー %>
-                <%= radio_button_tag(:member_status, 2) %>
+                <%= radio_button_tag(:member_status, :leader) %>
                 <%= f.label :リーダー %>
-                <%= radio_button_tag(:member_status, 3) %>
+                <%= radio_button_tag(:member_status, :senior) %>
                 <%= f.label :シニア %>
               </td>
               <td class="align-middle"><%= f.submit "更新する", :class=>"btn btn-info" %></td>
