@@ -32,11 +32,15 @@
 }
 
 .main-bg{
-  // background-color: #bc8f8f;
   background-image: image-url('flower-bg.jpg');
   background-size: cover;
 }
 
 .container{
   background-color: #fff;
+}
+
+// ページネーションすべてを中央寄せにする
+.pagination {
+  justify-content: center;
 }

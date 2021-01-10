@@ -1,4 +1,3 @@
-<%#= render 'themes/theme_bar', theme: @theme %>
 <div class="container">
   <%= form_with model: @work, url: works_path(activity_id: @activity.id), local: true do |f| %>
     <div class="row">
@@ -11,8 +10,9 @@
     </div>
     <div class="row">
       <div class="col-sm-6 ml-4">
-          <%= f.attachment_field :work_image %>
-          <h2><%= f.text_field :title, placeholder: "タイトルを入力" %></h2>
+        <%= attachment_image_tag @work, :work_image, fallback: "no_image.jpg", id: "img_preview", style: "height: 200px; width:300px;" %><br>
+        <%= f.attachment_field :work_image %>
+        <h2><%= f.text_field :title, placeholder: "タイトルを入力" %></h2>
       </div>
       <div class="col-sm-6 ml-4 mt-4">
         <h3>2creator</h3>
@@ -26,7 +26,7 @@
         <% end %>
         <br>
         <h3>ポイント</h3>
-        <%= f.text_field :point, placeholder: "一言コメント" %>
+        <%= f.text_field :point, placeholder: "一言コメント", size: "80x10" %>
       </div>
     </div>
 

@@ -1,14 +1,15 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :not_user, if: proc { current_user.is_deleted == true }
+  before_action :index, if: proc { current_user.authority == "管理者" }
 
   def not_user
     sign_out
     redirect_to new_user_registration_path
   end
 
-  def index
-    @users = User.all
+  def index  # 管理者専用画面
+    @users = User.where("authority == 'ユーザー' or authority is null").order(created_at: :desc).page(params[:page]).per(25)
   end
 
   def show

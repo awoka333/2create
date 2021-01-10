@@ -1,0 +1,26 @@
+
+[1mFrom:[0m /home/ec2-user/environment/two2create/app/controllers/activities_controller.rb:40 ActivitiesController#show:
+
+    [1;34m19[0m: [32mdef[0m [1;34mshow[0m
+    [1;34m20[0m:   @activity = [1;34;4mActivity[0m.find(params[[33m:id[0m])
+    [1;34m21[0m:   @groups = [1;34;4mGroup[0m.where([35mactivity_id[0m: @activity.id)
+    [1;34m22[0m:   @seniors = @groups.where([35mmember_status[0m: [31m[1;31m'[0m[31mシニア[1;31m'[0m[31m[0m)
+    [1;34m23[0m:   @leaders = @groups.where([35mmember_status[0m: [31m[1;31m'[0m[31mリーダー[1;31m'[0m[31m[0m)
+    [1;34m24[0m:   @juniors = @groups.where([35mmember_status[0m: [31m[1;31m'[0m[31mメンバー[1;31m'[0m[31m[0m)
+    [1;34m25[0m:   @pre_members = @groups.where([35mmember_status[0m: [31m[1;31m'[0m[31m承認待ち[1;31m'[0m[31m[0m)
+    [1;34m26[0m:   @pre_graduates = @groups.where([35mgraduate_status[0m: [31m[1;31m'[0m[31m卒業依頼[1;31m'[0m[31m[0m)
+    [1;34m27[0m:   @comments = @activity.comments.order([35mcreated_at[0m: [33m:desc[0m).limit([1;34m3[0m) [1;34m# 最大3つのレコードを配列として取得[0m
+    [1;34m28[0m:   [1;34m# ログイン時は、Recommendテーブルに同じものがある または Groupテーブルに同じものがある という場合を除き、Recommendレコードを作る[0m
+    [1;34m29[0m:   [32mif[0m user_signed_in?
+    [1;34m30[0m:     @group_user = [1;34;4mGroup[0m.where([35mactivity_id[0m: @activity.id, [35muser_id[0m: current_user.id)
+    [1;34m31[0m:     [32mif[0m [1;34;4mRecommend[0m.where([35muser_id[0m: current_user.id, [35mactivity_id[0m: @activity.id).nil? || [1;34;4mGroup[0m.where([35muser_id[0m: current_user.id, [35mactivity_id[0m: @activity.id).nil?
+    [1;34m32[0m:       @recommend = [1;34;4mRecommend[0m.new([35muser_id[0m: current_user.id, [35mactivity_id[0m: @activity.id)
+    [1;34m33[0m:       @recommend.save
+    [1;34m34[0m:     [32melsif[0m [1;34;4mRecommend[0m.where([35muser_id[0m: current_user.id, [35mactivity_id[0m: @activity.id).present? && [1;34;4mGroup[0m.where([35muser_id[0m: current_user.id, [35mactivity_id[0m: @activity.id).nil?
+    [1;34m35[0m:       @recommend = [1;34;4mRecommend[0m.where([35muser_id[0m: current_user.id, [35mactivity_id[0m: @activity.id)
+    [1;34m36[0m:       @recommend.update
+    [1;34m37[0m:     [32mend[0m
+    [1;34m38[0m:   [32mend[0m
+    [1;34m39[0m:   binding.pry
+ => [1;34m40[0m: [32mend[0m
+

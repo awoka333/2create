@@ -1,43 +1,59 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-12">
-      <h2>コメント</h2>
+    <div class="col-sm-12 mt-4">
+      <h2><%= @activity.name %> コメント一覧</h2>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12">
-      <% @comments.each do |comment| %>
-        <table>
-          <tr>
-            <td>
-              <%= comment.sentence %>
-              <br>
-              <%= link_to "編集", edit_comment_path(comment) %> | <%= link_to "削除", comment_path(comment), method: :delete, class: "link-danger" %>
-            </td>
-            <td><%= comment.user.name %> <%= comment.created_at %></td>
-          </tr>
-        </table>
+    <div class="col-sm-12 mt-4">
+      <%= link_to activity_path(@activity) do %>
+        <button type="button" class="btn btn-dark">サークルページに戻る</button>
       <% end %>
     </div>
   </div>
-  <div class="row">
+  <% if @comments.nil? %>
+    <div class="row">
+      <div class="col-sm-12 mt-4">
+        <p>コメントはありません</p>
+      </div>
+    </div>
+  <% else %>
+    <div class="row">
+      <div class="col-sm-12 pl-4">
+        <table class="table table-inverse">
+          <% @comments.each do |comment| %>
+            <tr>
+              <td>
+                <%= comment.sentence %>
+                <br>
+                <%= link_to "編集", edit_comment_path(comment) %> | <%= link_to "削除", comment_path(comment), method: :delete, class: "link-danger" %>
+              </td>
+              <td><%= comment.user.name %></td>
+              <td><%= comment.created_at %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  <% end %>
+
+
+  <div class="row mt-5">
     <div class="col-sm-12">
       <h2>コメント送信</h2>
     </div>
   </div>
-  <div class="row">
+  <div class="row mt-3 justify-content-center">
     <%= form_with model: @comment, url: comments_path(activity_id: @activity.id), local: true do |f| %>
       <div class="col-sm-8">
-        <%= f.text_area :sentence, placeholder: "コメントをここに入力" %>
+        <%= f.text_area :sentence, placeholder: "コメントをここに入力", size: "80x10" %>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-12 mt-1 mb-3 text-center">
         <%= f.submit "コメントする", class: "btn-sm btn btn-secondary" %>
       </div>
     <% end %>
   </div>
   <div class="row">
     <div class="col-sm-12">
-      <p><%= paginate @comments_paginate %></p>
+      <p><%= paginate @comments %></p>
     </div>
   </div>
 </div>

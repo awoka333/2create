@@ -21,5 +21,5 @@ class User < ApplicationRecord
   validates :encrypted_password, presence: true, length: { minimum:8 }
   validates :authority, presence: true
 
-  enum authority: { 'ユーザー': 0, '管理者': 1 }
+  enum authority: { 'ユーザー': 0, '管理者': 99 }
 end
