@@ -9,19 +9,19 @@ class Group < ApplicationRecord
   enum graduate_status: { '卒業しない': 0, '卒業依頼': 1, '卒業': 2 }
 
   # returnは書いても書かなくてもよい
-  # 10行目でorder_sortという変数を宣言、コントローラのreturn_statusメソッドから値を貰う
-  def self.return_status(order_sort)
-    if order_sort == '1'
+  # 10行目でgroup_sortという変数を宣言、コントローラのreturn_statusメソッドから値を貰う
+  def self.return_status(group_sort)
+    if group_sort == '1'      # サークル編集ページ(activities/edit)から来る
       return 'メンバー'
-    elsif order_sort == '2'
-      return 'リーダー'
-    elsif order_sort == '3'
-      return 'シニア'
-    elsif order_sort == "98"
+    # elsif group_sort == '2' # サークル編集ページ(activities/edit)のcheck_boxの値から、トランザクション処理する
+    #   return 'リーダー'
+    # elsif group_sort == '3' # group_sort == 100の時、同時更新する（3つ下の行）
+    #   return 'シニア'
+    elsif group_sort == "98"  # サークル編集ページ(activities/edit)から来る
       return '卒業しない'
-    elsif order_sort == "99"
+    elsif group_sort == "99"  # マイページ(users/show)から来る
       return '卒業依頼'
-    elsif order_sort == '100'
+    elsif group_sort == '100' # サークル編集ページ(activities/edit)から来る
       return '卒業'
     end
   end

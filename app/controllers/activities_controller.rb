@@ -11,7 +11,7 @@ class ActivitiesController < ApplicationController
   end
 
   def index
-    @theme = Theme.find(1)
+    @theme = Theme.last
     @activities = Activity.all
     @activities_paginate = @activities.page(params[:page]).per(10)
   end
@@ -24,6 +24,7 @@ class ActivitiesController < ApplicationController
     @leaders = @groups.where(member_status: 'リーダー')
     @juniors = @groups.where(member_status: 'メンバー')
     @pre_members = @groups.where(member_status: '承認待ち')
+    @pre_graduates = @groups.where(graduate_status: '卒業依頼')
     @comments = @activity.comments.order(created_at: :desc).limit(3) # 最大3つのレコードを配列として取得
     # ログイン時は、Recommendテーブルに同じものがある または Groupテーブルに同じものがある という場合を除き、Recommendレコードを作る
     if user_signed_in?

@@ -1,7 +1,9 @@
 <div class="container">
-  <div class="row">
-    <%= render 'themes/theme_bar', theme: @theme %>
-  </div>
+  <% if @theme.present? %>
+    <div class="row">
+      <%= render 'themes/theme_bar', theme: @theme %>
+    </div>
+  <% end %>
   <div class="row">
 
     <!--ここから真ん中のエリア-->
@@ -12,11 +14,11 @@
         </div>
       </div>
       <div class="row justify-content-center mt-3">
-        <% if @recommends.count == 0 %>
+        <% if @recommends.empty? %>
           <%= link_to activities_path do %>
             <button type="button" class="btn btn-info">サークルを探しにいく！</button>
           <% end %>
-        <!--オススメテーブルにレコードがある場合、おすすめサークルをラスト3つ並べる（数はコントローラ参照）-->
+        <!--オススメテーブルにレコードがある場合、おすすめサークルをラストから最大3つ並べる-->
         <% else %>
           <% @activities.each do |activity| %>
             <table>
@@ -52,7 +54,7 @@
                         <button type="button" class="btn-sm btn btn-danger">申請取消</button>
                       <% end %>
                     <% elsif group.member_status != '承認待ち' %>
-                      <%= link_to group_path(group, order_sort: 99), method: :patch do %>
+                      <%= link_to group_path(group, group_sort: 99), method: :patch do %>
                         <button type="button" class="btn-sm btn btn-secondary">卒業依頼</button>
                       <% end %>
                     <% end %>
@@ -99,8 +101,8 @@
       </div>
       <div class="row mt-4">
         <div class="col-sm-11 mb-4">
-          <!--ordersortでパラメーター渡す-->
-          <%= link_to works_path(order_sort: 3) do %>
+          <!--work_sortでパラメーター渡す-->
+          <%= link_to works_path(work_sort: 1) do %>
               <button type="button" class="btn btn-info">あなたの作品をみる</button>
           <% end %>
         </div>
