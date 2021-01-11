@@ -1,0 +1,31 @@
+ja:
+  activerecord:
+      attributes:
+        activity:
+          name: サークル名
+          act_image: サークル画像
+          to_create: 作るもの
+          to_study: 勉強すること
+          to_do: 次回日程
+        comment:
+          sentence: コメント
+        group:
+          member_status: メンバーステータス
+          graduate_status: 卒業ステータス
+        theme:
+          month: 月
+          theme1: テーマ１
+          theme2: テーマ２
+          theme3: テーマ３
+          sentence: テーマ文
+        user:
+          name: ニックネーム
+          authority: 権限
+          is_deleted: 退会ステータス
+        work:
+          work_image: 作品画像
+          title: 作品タイトル
+          point: 一言メッセージ
+          creator1: 2creator
+          creator1: Spetial thanks
+          is_masking: 公開ステータス

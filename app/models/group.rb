@@ -11,25 +11,40 @@ class Group < ApplicationRecord
   def update_status(status)
     statuses = {
       # member_statusの返り値
-      waiting_accept: '承認待ち',
-      accept: 'メンバー',
-      leader: 'リーダー',
-      senior: 'シニア',
+      waiting_accept: 0,
+      accept: 1,
+      leader: 2,
+      senior: 3,
       # graduate_statusの返り値
-      no_graduate: '卒業しない',
-      pre_graduate: '卒業依頼',
-      graduate: '卒業'
+      no_graduate: 0,
+      pre_graduate: 1,
+      graduate: 2
     }
     if status.to_sym == :senior
-       update(member_status: statuses[status], graduate_status: '卒業')
+      update(member_status: statuses[status.to_sym], graduate_status: '卒業')
     elsif status.to_sym == :waiting_accept
-      update(member_status: statuses[status])
+      update(member_status: statuses[status.to_sym])
     elsif status.to_sym == :accept
-      update(member_status: statuses[status])
+      update(member_status: statuses[status.to_sym])
     elsif status.to_sym == :leader
-      update(member_status: statuses[status]) # まとめたい
+      update(member_status: statuses[status.to_sym]) # まとめたい
     else
-      update(graduate_status: statuses[status])
+      update(graduate_status: statuses[status.to_sym])
     end
   end
+
+  #  1行にまとめる時の記述。可読性は上より低い
+  #   if status.to_sym == :senior
+  #     update(member_status: statuses[status.to_sym], graduate_status: '卒業')
+  #   elsif status.to_sym == :waiting_accept || status.to_sym == :accept || status.to_sym == :leader
+  #     status_to_sym(statuses[status.to_sym])
+  #   else
+  #     update(graduate_status: statuses[status.to_sym]) # 下のメソッドを参照している
+  #   end
+  # end
+
+  # protected
+  # def self.status_to_sym(status)
+  #   update(member_status: status)
+  # end
 end

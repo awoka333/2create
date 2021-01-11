@@ -1,6 +1,6 @@
 class ActivitiesController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
-  before_action :modify, :destroy, if: proc { current_user.authority == "管理者" }
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :modify, :destroy, if: proc { user_signed_in? && current_user.authority == "管理者" }
 
   def not_user
     sign_out
@@ -27,11 +27,10 @@ class ActivitiesController < ApplicationController
     @comments = @activity.comments.order(created_at: :desc).limit(3) # 最大3つのレコードを配列として取得
     # ログイン時は、Recommendテーブルに同じものがある または Groupテーブルに同じものがある という場合を除き、Recommendレコードを作る
     if user_signed_in?
-      @group_user = Group.where(activity_id: @activity.id, user_id: current_user.id)
-      if Recommend.where(user_id: current_user.id, activity_id: @activity.id).nil? || Group.where(user_id: current_user.id, activity_id: @activity.id).nil?
+      if Recommend.where(user_id: current_user.id, activity_id: @activity.id).empty? || Group.where(user_id: current_user.id, activity_id: @activity.id).empty?
         @recommend = Recommend.new(user_id: current_user.id, activity_id: @activity.id)
         @recommend.save
-      elsif Recommend.where(user_id: current_user.id, activity_id: @activity.id).present? && Group.where(user_id: current_user.id, activity_id: @activity.id).nil?
+      elsif Recommend.where(user_id: current_user.id, activity_id: @activity.id).present? && Group.where(user_id: current_user.id, activity_id: @activity.id).empty?
         @recommend = Recommend.where(user_id: current_user.id, activity_id: @activity.id)
         @recommend.update
       end
@@ -40,7 +39,6 @@ class ActivitiesController < ApplicationController
 
   def modify
     @activities = Activity.all.order(created_at: :desc).page(params[:page]).per(10)
-    @activities_paginate = @activities
   end
 
   def create
@@ -71,6 +69,9 @@ class ActivitiesController < ApplicationController
   def update
     @activity = Activity.find(params[:id])
     @leaders = params[:activity][:leader]
+    @groups = Group.where(activity_id: @activity.id)
+    @leaders = @groups.where(member_status: 'リーダー')
+    @pre_graduates = @groups.where(graduate_status: '卒業依頼')
     if @activity.update(activity_params)
       # transaction処理で、値を一気に書き換えていく。eにはエラー内容が入る。
       # 一度全てメンバーに書き換えた後、@leadersで受け取ったuserをリーダーとして登録する。
@@ -83,9 +84,13 @@ class ActivitiesController < ApplicationController
         end
         redirect_to activity_path(@activity)
       rescue => e
+        @users = @activity.group_users
+        # user_ids = @groups.map(&:user_id)
+        # @users = User.where(id: user_ids)
         render 'edit'
       end
     else
+      @users = @activity.group_users
       render 'edit'
     end
   end

@@ -6,13 +6,18 @@
   <% end %>
   <div class="row">
     <div class="col-sm-8 mt-4">
-      <h2><%= @activity.name %></h2>
-    </div>
-    <div class="col-sm-4 mt-4">
-      <%= link_to edit_work_path(@work) do %>
-        <button type="button" class="btn btn-secondary">作品を編集する</button>
+      <%= link_to activity_path(@work.activity) do %>
+        <button type="button" class="btn-lg btn btn-light"><h2><%= @activity.name %></h2></button>
       <% end %>
     </div>
+
+    <% if user_signed_in? && Group.where(user_id: current_user.id, activity_id: @activity.id).present? %>
+      <div class="col-sm-4 mt-4">
+        <%= link_to edit_work_path(@work) do %>
+          <button type="button" class="btn btn-secondary">作品を編集する</button>
+        <% end %>
+      </div>
+    <% end %>
   </div>
   <div class="row">
     <div class="col-sm-6 ml-4 mb-4 mt-3">
@@ -20,26 +25,29 @@
         <tr><td colspan="2"><%= attachment_image_tag @work, :work_image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></td></tr>
         <tr>
           <td><%= @work.title %></td>
-          <td id="favorite-<%= @work.id %>"><%= render 'favorites/favorite', work: @work %></td>
+          <td id="favorite-<%= @work.id %>">
+            <% if user_signed_in? %>
+              <%= render 'favorites/favorite', work: @work %>
+            <% end %>
+          </td>
         </tr>
-        <tr><td clospan="2"><%= @work.created_at %></td></tr>
+        <tr><td clospan="2"><%= @work.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td></tr>
       </table>
     </div>
     <div class="col-sm-5 mb-4">
       <h3>2creator</h3>
       <% @creator1.each do |creator| %>
-        <p><%= creator.name %></p>
+        <span class="ml-3"><%= creator.name %></span>
       <% end %>
       <% if @creator2.present? %>
         <br>
-        <h3>Special thanks</h3>
+        <h3 class="mt-4">Special thanks</h3>
         <% @creator2.each do |creator| %>
-          <p><%= creator.name %></p>
+          <span class="ml-3"><%= creator.name %></span>
         <% end %>
       <% end %>
-      <br>
-      <h3>ポイント</h3>
-      <%= @work.point %>
+      <h3 class="mt-4">ポイント</h3>
+      <p class="ml-3"><%= @work.point %></p>
     </div>
   </div>
 </div>
