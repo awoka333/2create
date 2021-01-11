@@ -23,18 +23,18 @@
             <h2>2creatorの作品例</h2>
         </div>
     </div>
-    <div class="row">
-        <% if @firstworks.nil? %>
+    <div class="row justify-content-center">
+        <% if @firstworks.present? %>
             <!--新着workを3つ並べる-->
-            <div class="col-sm-3 ml-4">
-                <% @firstworks.each do |firstwork| %>
+            <% @firstworks.each do |firstwork| %>
+                <div class="col-sm-3 ml-4 mr-4">
                     <table>
-                        <tr><td><%= attachment_image_tag firstwork, :work_image, format: 'jpeg', fallback: "no_image.jpg", size: "400x250" %></td></tr>
+                        <tr><td><%= attachment_image_tag firstwork, :work_image, format: 'jpeg', fallback: "no_image.jpg", size: "300x200" %></td></tr>
                         <tr><td><%= firstwork.title %></td></tr>
                         <tr><td><%= firstwork.activity.name %></td></tr>
                     </table>
-                <% end %>
-            </div>
+                </div>
+            <% end %>
         <% else %>
             <div class="col-sm-12 ml-5 pl-5">
                 <p>Comming soon...</p>

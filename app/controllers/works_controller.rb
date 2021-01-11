@@ -1,8 +1,6 @@
 class WorksController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :creator1_string, only: [:create, :update]  # 配列展開
-  before_action :creator2_string, only: [:create, :update], if: proc { params[:work][:creator2].present? } # [:work][:creator2]が送られてきているか確認
-  before_action :modify, :mask, if: proc { current_user.authority == "管理者" }
+  before_action :modify, :mask, if: proc { user_signed_in? && current_user.authority == "管理者" }
 
   def not_user
     sign_out
@@ -22,14 +20,28 @@ class WorksController < ApplicationController
     @activity = Activity.find(params[:activity_id])
     @work.user_id = current_user.id
     @work.activity_id = @activity.id
-    if @work.save
+    if params[:work][:creator1] != nil      # check_boxの値の設定
+      if params[:work][:creator2] != nil    # creator1とcreator2のparamsが両方ある時
+        @work.creator1 = params[:work][:creator1].map!(&:to_i).join(", ")
+        @work.creator2 = params[:work][:creator2].map!(&:to_i).join(", ")
+      else                                  # creator1のparamsのみある時
+        @work.creator1 = params[:work][:creator1].map!(&:to_i).join(", ")
+      end
+      if @work.save
       redirect_to work_path(@work)
+      else
+        @groups = Group.where(activity_id: @activity.id)
+        # user_ids = @groups.map(&:user_id)
+        # @users = User.where(id: user_ids)
+        # sourceでモデルの記述が成功した場合
+        @users = @activity.group_users
+        render 'new'
+      end
+    # creator1にチェックが無い時
     else
       @groups = Group.where(activity_id: @activity.id)
-      user_ids = @groups.map(&:user_id)
-      @users = User.where(id: user_ids)
-      # sourceでモデルの記述が成功した場合
-      # @users = @activity.group_users
+      @users = @activity.group_users
+      flash.now[:alert] = '・2creatorにチェックを入れてください'
       render 'new'
     end
   end
@@ -49,12 +61,11 @@ class WorksController < ApplicationController
   def show
     @work = Work.find(params[:id])
     @activity = @work.activity
-    # before_actionがある時
     @creator1 = User.where(id: @work.creator1.split(',')) # @work.creator1の中身を配列にして、展開した配列の値すべてをidとして取得する
     if @work.creator2.present?
-      @creator2 = User.where(id: @work.creator2.split(',')) # 配列の形式は["1", "2"]なので、','で区切ると配列になる
+      @creator2 = User.where(id: @work.creator2.split(',')) # 配列の形式は["1", "2"]なので、','で区切ると配列になる  イメージ例 [:user]["n", "n+1, "n+2",...]
       # @creator1 = User.where(id: @work.creator1)  # creator1: "[\"1\", \"2\"]"
-      # @creator2 = User.where(id: @work.creator2)  # creator2: "[\"2\", \"3\"]"という値を["2", "3"]に出来るなら、こちらを使いたい(creator1/2_stringを参照しないで済む)
+      # @creator2 = User.where(id: @work.creator2)  # creator2: "[\"2\", \"3\"]"という値を["2", "3"]に出来るなら、こちらを使いたい
     else
       @creator2 = User.none
     end
@@ -69,18 +80,41 @@ class WorksController < ApplicationController
     @work = Work.find(params[:id])
     @activity = @work.activity
     @groups = @activity.groups
+    @users = @activity.group_users
     # user_ids = @groups.map(&:user_id)
     # @users = User.where(id: user_ids)
     # sourceでモデルの記述が成功した場合
-    @users = @activity.group_users
   end
 
   def update
     @work = Work.find(params[:id])
-    if @work.update(work_params)
-      redirect_to work_path(@work)
+    # creator1とcreator2(idの配列)が送られてきた時  ※文字列nameの配列だと取得失敗
+    if params[:work][:creator1] != nil
+      if params[:work][:creator2] != nil    # creator1とcreator2のparamsが両方ある時
+        @work.creator1 = params[:work][:creator1].map!(&:to_i).join(", ")
+        @work.creator2 = params[:work][:creator2].map!(&:to_i).join(", ")
+        # @work.title = params[:work][:title]
+        # @work.work_image = params[:work][:work_image]
+      else                                  # creator1のparamsのみある時
+        @work.creator1 = params[:work][:creator1].map!(&:to_i).join(", ")
+        # @work.title = params[:work][:title]
+        # @work.work_image = params[:work][:work_image]
+      end
+      if @work.update(work_params)
+        redirect_to work_path(@work)
+      else
+        @activity = @work.activity
+        @groups = @activity.groups
+        @users = @activity.group_users
+        render 'edit'
+      end
+    # creator1にチェックが無い時
     else
-      render 'edit'
+        @activity = @work.activity
+        @groups = @activity.groups
+        @users = @activity.group_users
+        flash.now[:alert] = '・2creatorにチェックを入れてください'
+        render 'edit'
     end
   end
 
@@ -105,13 +139,5 @@ class WorksController < ApplicationController
   def work_params
     params.require(:work).permit(:user_id, :act_id, :title, :point, :work_image, :creator1, :creator2)
     # params.require(:work).permit(:user_id, :act_id, :title, :point, :work_image, creator1:[], creator2:[]) # 配列で取得する時はこの表記
-  end
-
-  # 配列で取得したデータ展開用のストロングパラメータ
-  def creator1_string
-    params[:work][:creator1] = params[:work][:creator1].join(", ")  # DB保存の前に配列を展開する
-  end
-  def creator2_string
-    params[:work][:creator2] = params[:work][:creator2].join(", ")  # DB保存の前に配列を展開する
   end
 end

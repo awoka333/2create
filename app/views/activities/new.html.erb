@@ -19,9 +19,30 @@
     </div>
     <div class="row mt-4">
       <div class="col-sm-6">
-        <h2><%= f.label :act_image, "サークル画像の選択" %></h2>
-        <p>※Activity表示用の画像として表示されます。</p>
+        <h4 class="mb-0"><%= f.label :act_image, "サークル画像の選択" %></h4>
+        <%= attachment_image_tag @activity, :act_image, fallback: "no-image.jpg", id: "img_preview", style: "height: 200px; width:300px;" %><br>
         <%= f.attachment_field :act_image %>
+
+        <!--画面プレビュー用 jsの記述を直書き。これだとエラーメッセージも非同期化する必要がない-->
+        <script>
+        $(document).on("turbolinks:load", function(){
+          function readURL(input) {
+            if(input.files && input.files[0]){
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                $('#img_preview').attr('src', e.target.result);
+              }
+              reader.readAsDataURL(input.files[0]);
+            }
+          }
+          $("#activity_act_image").change(function(){
+            readURL(this);
+          });
+        });
+        </script>
+
+        <p>※Activity表示用の画像として表示されます。</p>
+
       </div>
     </div>
     <div class="row mt-4">

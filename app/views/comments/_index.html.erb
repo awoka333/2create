@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-sm-12 mt-4">
+    <h2><%= activity.name %> コメント一覧</h2>
+  </div>
+  <div class="col-sm-12 mt-4">
+    <%= link_to activity_path(activity) do %>
+      <button type="button" class="btn btn-dark">サークルページに戻る</button>
+    <% end %>
+  </div>
+</div>
+<% if comments.nil? %>
+  <div class="row">
+    <div class="col-sm-12 mt-4">
+      <p>コメントはありません</p>
+    </div>
+  </div>
+<% else %>
+  <div class="row", id="comments_area">
+    <div class="col-sm-12 pl-4">
+      <table class="table table-inverse">
+        <% comments.each do |comment| %>
+          <tr>
+            <td>
+              <%= comment.sentence %>
+              <br>
+              <%= link_to "編集", edit_comment_path(comment) %> | <%= link_to "削除", comment_path(comment), method: :delete, class: "link-danger" %>
+            </td>
+            <td><%= comment.user.name %></td>
+            <td><%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+<% end %>

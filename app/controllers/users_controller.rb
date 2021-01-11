@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :not_user, if: proc { current_user.is_deleted == true }
-  before_action :index, if: proc { current_user.authority == "管理者" }
+  before_action :index, if: proc { user_signed_in? && current_user.authority == "管理者" }
 
   def not_user
     sign_out
@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   def show
     @user = current_user
     @theme = Theme.last
-    @recommends = Recommend.order('created_at DESC').limit(3).where(user_id: current_user.id) # 最大3つのレコードを配列として取得
+    @recommends = Recommend.order('updated_at DESC').limit(3).where(user_id: current_user.id) # 最大3つのレコードを配列として取得
     activity_ids = @recommends.map(&:activity_id)   # 配列でactivity_idを全て取得
     @activities = Activity.where(id: activity_ids)  # idがactivity_idsと合致するActivityのレコードを全て取得
     @groups = current_user.groups

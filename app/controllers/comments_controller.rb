@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :not_user, if: proc { current_user.is_deleted == true }
-  before_action :modify, if: proc { current_user.authority == "管理者" }
+  before_action :modify, if: proc { user_signed_in? && current_user.authority == "管理者" }
 
   def not_user
     sign_out
@@ -31,7 +31,7 @@ class CommentsController < ApplicationController
     @comment.user_id = current_user.id
     @comment.activity_id = @activity.id
     @comment.save
-    redirect_to request.referer
+    render 'index'
   end
 
   def update
@@ -43,7 +43,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment = Comment.find(params[:id])
     @comment.destroy
-    redirect_to request.referer
+    render 'index'
   end
 
   private

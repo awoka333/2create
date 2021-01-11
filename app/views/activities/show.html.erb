@@ -4,9 +4,24 @@
     <div class="col-sm-7 mt-4">
       <div class="row">
         <h2 class="ml-3"><%= @activity.name %> 新着作品</h2>
+        <div class="col-sm-12 text-center">
+          <% @activity.works.order(created_at: :desc).limit(2).each do |work| %>
+            <table>
+              <tr><td colspan="2"><%= attachment_image_tag work, :work_image, format: 'jpeg', size: "300x200" %></td></tr>
+              <tr>
+                <td><%= work.title %></td>
+                <td id="favorite-<%= work.id %>">
+                  <% if user_signed_in? %>
+                    <%= render 'favorites/favorite', work: work %></td>
+                  <% end %>
+              </tr>
+              <tr><td colspan="2"><%= User.find(work.creator1).name %></td></tr>
+            </table>
+          <% end %>
+        </div>
         <div class="col-sm-12 text-center mt-2 mb-2">
           <!--現在のユーザーと@activityが紐づくgroupsレコードが存在する時-->
-          <% if current_user.groups.where(activity_id: @activity.id).present? && current_user.groups.where.not(member_status: "承認待ち").present? %>
+          <% if user_signed_in? && current_user.groups.where(activity_id: @activity.id).present? && current_user.groups.where.not(activity_id: @activity.id, member_status: "承認待ち").present? %>
             <%= link_to new_work_path(activity_id: @activity) do %>
               <button type="button" class="btn btn-info">作品を投稿する</button>
             <% end %>
@@ -16,18 +31,6 @@
             <% end %>
           <% end %>
         </div>
-        <div class="col-sm-12">
-          <% @activity.works.order(created_at: :desc).limit(2).each do |work| %>
-            <table>
-              <tr><%= attachment_image_tag work, :work_image, format: 'jpeg', size: "400x250" %></tr>
-              <tr>
-                <td><%= work.title %></td>
-                <td id="favorite-<%= work.id %>"><%= render 'favorites/favorite', work: work %></td>
-              </tr>
-              <tr><%= work.creator1 %></tr>
-            </table>
-          <% end %>
-        </div>
       </div>
 
       <div class="row">
@@ -35,9 +38,11 @@
           <h2><%= @activity.name %> メンバー</h2>
         </div>
         <div class="col-sm-12 text-center">
-          <% unless current_user.groups.where(activity_id: @activity.id).exists? %> <!--現在のユーザーと@activityが紐づくgroupsレコードが存在しない時-->
-            <%= link_to groups_path(activity_id: @activity), method: :post do %>
-              <button type="button" class="btn btn-info">メンバーになる！</button>
+          <% if user_signed_in? %>
+            <% unless current_user.groups.where(activity_id: @activity.id).present? %> <!--現在のユーザーと@activityが紐づくgroupsレコードが存在しない時-->
+              <%= link_to groups_path(activity_id: @activity), method: :post do %>
+                <button type="button" class="btn btn-info">メンバーになる！</button>
+              <% end %>
             <% end %>
           <% end %>
         </div>
@@ -57,14 +62,14 @@
               <tr>
                 <td><%= pre.user.name %></td>
                 <td>
-                  <%# if @group_user.present? && @group_user.member_status != "承認待ち" %> <!--groupに属する自分以外のユーザー(承認待ちでない)に表示-->
-                    <%= link_to group_path(pre, group_sort: 1), method: :patch do %>
+                  <% if @group_user.present? && @group_user.member_status != "承認待ち" %> <!--groupに属するユーザー(承認待ちでない)に表示-->
+                    <%= link_to group_path(pre, group_sort: :accept), method: :patch do %>
                       <button type="button" class="btn btn-info">メンバー承認</button>
                     <% end %>
                     <%= link_to group_path(pre), method: :delete do %>
                       <button type="button" class="btn btn-danger">承認しない</button>
                     <% end %>
-                  <%# end %>
+                  <% end %>
                 </td>
               </tr>
             </table>
@@ -106,7 +111,10 @@
         <div class="col-sm-12">
           <div class="row">
             <div class="col-sm-12 text-right">
-              <% if current_user.groups.where(activity_id: @activity.id).exists? %>
+              <!--現在のユーザーと@activityが紐づくgroupsレコードが存在する時-->
+              <!--my_this_activity_group = current_user.groups.where(activity_id: @activity.id)-->
+              <%# if user_signed_in? && my_this_activity_group.present? && my_this_activity_group.where.not(member_status: "承認待ち").present? %>
+              <% if user_signed_in? && current_user.groups.where(activity_id: @activity.id).present? && current_user.groups.where.not(activity_id: @activity.id, member_status: "承認待ち").present? %>
                 <%= link_to edit_activity_path(@activity) do %>
                   <button type="button" class="btn btn-outline-secondary">ページを編集する</button>
                 <% end %>
@@ -139,7 +147,7 @@
                   <p><%= comment.sentence %></p>
                 </div>
                 <div class="col-sm-12 border-bottom">
-                  <p><%= comment.user.name %> <%= comment.created_at %></p>
+                  <p><%= comment.user.name %> <%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
                 </div>
               </div>
             <% end %>
@@ -148,7 +156,7 @@
           <div class="row mt-4 mb-4">
             <div class="col-sm-12 text-center">
               <%= link_to comments_path(activity_id: @activity) do %>
-                <button type="button" class="btn btn-dark">コメントする</button>
+                <button type="button" class="btn btn-dark">コメント</button>
               <% end %>
             </div>
           </div>
