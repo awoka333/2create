@@ -15,7 +15,8 @@ class UsersController < ApplicationController
   def show
     @user = current_user
     @theme = Theme.last
-    @recommends = Recommend.order('updated_at DESC').limit(3).where(user_id: current_user.id) # 最大3つのレコードを配列として取得
+    @recommends = Recommend.where(user_id: current_user.id).order('updated_at')
+    # @recommends = Recommend.where(user_id: current_user.id).order('updated_at DESC').limit(3) # 最大3つのレコードを配列として取得
     activity_ids = @recommends.map(&:activity_id)   # 配列でactivity_idを全て取得
     @activities = Activity.where(id: activity_ids)  # idがactivity_idsと合致するActivityのレコードを全て取得
     @groups = current_user.groups

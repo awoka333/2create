@@ -21,7 +21,7 @@
         </div>
         <div class="col-sm-12 text-center mt-2 mb-2">
           <!--現在のユーザーと@activityが紐づくgroupsレコードが存在する時-->
-          <% if user_signed_in? && current_user.groups.where(activity_id: @activity.id).present? && current_user.groups.where.not(activity_id: @activity.id, member_status: "承認待ち").present? %>
+          <% if user_signed_in? && current_user.groups.where(activity_id: @activity.id).where.not(member_status: "承認待ち").present? %>
             <%= link_to new_work_path(activity_id: @activity) do %>
               <button type="button" class="btn btn-info">作品を投稿する</button>
             <% end %>
@@ -62,7 +62,8 @@
               <tr>
                 <td><%= pre.user.name %></td>
                 <td>
-                  <% if @group_user.present? && @group_user.member_status != "承認待ち" %> <!--groupに属するユーザー(承認待ちでない)に表示-->
+                  <!--現在のユーザーと@activityが紐づくgroupsレコードが存在する時-->
+                  <% if user_signed_in? && current_user.groups.where(activity_id: @activity.id).where.not(member_status: "承認待ち").present? %>
                     <%= link_to group_path(pre, group_sort: :accept), method: :patch do %>
                       <button type="button" class="btn btn-info">メンバー承認</button>
                     <% end %>
@@ -112,9 +113,7 @@
           <div class="row">
             <div class="col-sm-12 text-right">
               <!--現在のユーザーと@activityが紐づくgroupsレコードが存在する時-->
-              <!--my_this_activity_group = current_user.groups.where(activity_id: @activity.id)-->
-              <%# if user_signed_in? && my_this_activity_group.present? && my_this_activity_group.where.not(member_status: "承認待ち").present? %>
-              <% if user_signed_in? && current_user.groups.where(activity_id: @activity.id).present? && current_user.groups.where.not(activity_id: @activity.id, member_status: "承認待ち").present? %>
+              <% if user_signed_in? && current_user.groups.where(activity_id: @activity.id).where.not(member_status: "承認待ち").present? %>
                 <%= link_to edit_activity_path(@activity) do %>
                   <button type="button" class="btn btn-outline-secondary">ページを編集する</button>
                 <% end %>

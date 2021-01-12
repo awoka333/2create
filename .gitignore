@@ -34,3 +34,5 @@
 .DS_Store
 # for masking_ENV_file
 /.env
+
+/vender/*

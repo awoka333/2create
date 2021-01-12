@@ -27,12 +27,12 @@ class ActivitiesController < ApplicationController
     @comments = @activity.comments.order(created_at: :desc).limit(3) # 最大3つのレコードを配列として取得
     # ログイン時は、Recommendテーブルに同じものがある または Groupテーブルに同じものがある という場合を除き、Recommendレコードを作る
     if user_signed_in?
-      if Recommend.where(user_id: current_user.id, activity_id: @activity.id).empty? || Group.where(user_id: current_user.id, activity_id: @activity.id).empty?
-        @recommend = Recommend.new(user_id: current_user.id, activity_id: @activity.id)
-        @recommend.save
-      elsif Recommend.where(user_id: current_user.id, activity_id: @activity.id).present? && Group.where(user_id: current_user.id, activity_id: @activity.id).empty?
-        @recommend = Recommend.where(user_id: current_user.id, activity_id: @activity.id)
+      if Group.where(user_id: current_user.id, activity_id: @activity.id).empty? && Recommend.where(user_id: current_user.id, activity_id: @activity.id).present?
+        @recommend = Recommend.where(user_id: current_user.id, activity_id: @activity.id) # サークル所属しておらず、おすすめサークルとして登録はある時
         @recommend.update
+      elsif  && Group.where(user_id: current_user.id, activity_id: @activity.id).empty?
+        @recommend = Recommend.new(user_id: current_user.id, activity_id: @activity.id)   # サークル所属しておらず、おすすめサークルとして登録もない時
+        @recommend.save
       end
     end
   end
@@ -50,6 +50,7 @@ class ActivitiesController < ApplicationController
         member_status: 'リーダー'
       )
       leader.save
+
       redirect_to activity_path(@activity.id)
     else
       render "new"
