@@ -19,17 +19,22 @@
         </div>
     </div>
     <div class="row mt-4">
-        <div class="col-sm-8">
+        <div class="col-sm-12">
             <h2>2creatorの作品例</h2>
         </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-2 mb-5">
         <% if @firstworks.present? %>
             <!--新着workを3つ並べる-->
             <% @firstworks.each do |firstwork| %>
-                <div class="col-sm-3 ml-4 mr-4">
+                <div class="col-sm-5 ml-4 mr-4">
                     <table>
-                        <tr><td><%= attachment_image_tag firstwork, :work_image, format: 'jpeg', fallback: "no_image.jpg", size: "300x200" %></td></tr>
+                        <tr>
+                            <td><%= link_to work_path(firstwork) do %>
+                                    <%= attachment_image_tag firstwork, :work_image, format: 'jpeg', fallback: "no_image.jpg", size: "450x300" %>
+                                <% end %>
+                            </td>
+                        </tr>
                         <tr><td><%= firstwork.title %></td></tr>
                         <tr><td><%= firstwork.activity.name %></td></tr>
                     </table>

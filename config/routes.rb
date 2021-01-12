@@ -5,27 +5,27 @@ Rails.application.routes.draw do
   get 'homes/about'
 
   patch 'users/withdraw'
-  resources :users, only:[:index, :edit, :update]
+  resources :users, only: [:index, :edit, :update]
   get 'users/my_page' => 'users#show', as: 'my_page'
   get 'users/unsubscribe'
 
   get 'activities/modify'
   resources :activities
 
-  resources :groups, only:[:show, :create, :update, :destroy]
+  resources :groups, only: [:show, :create, :update, :destroy]
 
   get 'works/modify'
   patch 'works/mask'
   resources :works
 
-  resources :themes, only:[:new, :create]
+  resources :themes, only: [:new, :create]
 
-  resources :comments, only:[:index, :edit, :create, :update, :destroy]
+  resources :comments, only: [:index, :edit, :create, :update, :destroy]
   get 'comments/modify'
 
-  resources :favorites, only:[:create, :destroy]
+  resources :favorites, only: [:create, :destroy]
 
-  resources :recommends, only:[:create, :update]
+  resources :recommends, only: [:create, :update]
 
   get 'search', to: 'search#search_result'
 end
