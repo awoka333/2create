@@ -31,7 +31,7 @@ class CommentsController < ApplicationController
     @comment.user_id = current_user.id
     @comment.activity_id = @activity.id
     @comment.save
-    render 'index'
+    redirect_to request.referer
   end
 
   def update
@@ -43,7 +43,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment = Comment.find(params[:id])
     @comment.destroy
-    render 'index'
+    redirect_to request.referer
   end
 
   private
