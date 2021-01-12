@@ -81,7 +81,7 @@ gem 'bootstrap', '~> 4.5.3'
 gem 'jquery-rails'
 
 # ページネーション
-gem 'kaminari','~> 1.2.1'
+gem 'kaminari', '~> 1.2.1'
 
 # 検索機能
 gem 'ransack'

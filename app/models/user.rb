@@ -22,7 +22,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :email, presence: true
-  validates :encrypted_password, presence: true, length: { minimum:8 }
+  validates :encrypted_password, presence: true, length: { minimum:6 }
   validates :authority, presence: true
 
   enum authority: { 'ユーザー': 0, '管理者': 99 }

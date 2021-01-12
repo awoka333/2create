@@ -29,8 +29,8 @@ class ActivitiesController < ApplicationController
     if user_signed_in?
       if Group.where(user_id: current_user.id, activity_id: @activity.id).empty? && Recommend.where(user_id: current_user.id, activity_id: @activity.id).present?
         @recommend = Recommend.where(user_id: current_user.id, activity_id: @activity.id) # サークル所属しておらず、おすすめサークルとして登録はある時
-        @recommend.update
-      elsif  && Group.where(user_id: current_user.id, activity_id: @activity.id).empty?
+        @recommend.update(recommend_params)
+      elsif Group.where(user_id: current_user.id, activity_id: @activity.id).empty?
         @recommend = Recommend.new(user_id: current_user.id, activity_id: @activity.id)   # サークル所属しておらず、おすすめサークルとして登録もない時
         @recommend.save
       end
@@ -63,8 +63,9 @@ class ActivitiesController < ApplicationController
     @pre_members = @groups.where(member_status: '承認待ち')
     @leaders = @groups.where(member_status: 'リーダー')
     @pre_graduates = @groups.where(graduate_status: '卒業依頼')
-    user_ids = @groups.map(&:user_id)
-    @users = User.where(id: user_ids)
+    @users = @activity.group_users
+    # user_ids = @groups.map(&:user_id)
+    # @users = User.where(id: user_ids)
   end
 
   def update
@@ -103,7 +104,12 @@ class ActivitiesController < ApplicationController
   end
 
   private
+
   def activity_params
     params.require(:activity).permit(:name, :act_image, :to_create, :to_study, :to_do)
+  end
+
+  def recommend_params
+    params.require(:recommend).permit(:user_id, :activity_id)
   end
 end

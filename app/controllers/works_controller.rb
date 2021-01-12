@@ -28,7 +28,7 @@ class WorksController < ApplicationController
         @work.creator1 = params[:work][:creator1].map!(&:to_i).join(", ")
       end
       if @work.save
-      redirect_to work_path(@work)
+        redirect_to work_path(@work)
       else
         @groups = Group.where(activity_id: @activity.id)
         # user_ids = @groups.map(&:user_id)
@@ -110,11 +110,11 @@ class WorksController < ApplicationController
       end
     # creator1にチェックが無い時
     else
-        @activity = @work.activity
-        @groups = @activity.groups
-        @users = @activity.group_users
-        flash.now[:alert] = '・2creatorにチェックを入れてください'
-        render 'edit'
+      @activity = @work.activity
+      @groups = @activity.groups
+      @users = @activity.group_users
+      flash.now[:alert] = '・2creatorにチェックを入れてください'
+      render 'edit'
     end
   end
 
@@ -136,6 +136,7 @@ class WorksController < ApplicationController
   end
 
   private
+
   def work_params
     params.require(:work).permit(:user_id, :act_id, :title, :point, :work_image, :creator1, :creator2)
     # params.require(:work).permit(:user_id, :act_id, :title, :point, :work_image, creator1:[], creator2:[]) # 配列で取得する時はこの表記

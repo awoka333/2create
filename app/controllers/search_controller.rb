@@ -12,9 +12,11 @@ class SearchController < ApplicationController
   end
 
   private
+
   def search_activity_params
     params.require(:q).permit(:name_cont)
   end
+
   def search_work_params
     params.require(:w).permit(:title_cont)
   end

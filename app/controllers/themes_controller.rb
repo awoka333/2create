@@ -9,7 +9,7 @@ class ThemesController < ApplicationController
   end
 
   def new
-    @theme = Theme.new
+    @theme = Theme.new(theme_params)
   end
 
   def create
@@ -22,6 +22,7 @@ class ThemesController < ApplicationController
   end
 
   private
+
   def theme_params
     params.require(:theme).permit(:month, :theme1, :theme2, :theme3, :sentence)
   end
