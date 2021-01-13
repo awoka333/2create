@@ -1,15 +1,19 @@
 class ThemesController < ApplicationController
   before_action :authenticate_user!
   before_action :not_user, if: proc { current_user.is_deleted == true }
-  before_action :new, :create, if: proc { user_signed_in? && current_user.authority == "管理者" }
+  before_action :not_admin, if: proc { user_signed_in? && current_user.authority != "管理者" }
 
   def not_user
     sign_out
     redirect_to new_user_registration_path
   end
 
+  def not_admin
+    redirect_to request.referer
+  end
+
   def new
-    @theme = Theme.new(theme_params)
+    @theme = Theme.new
   end
 
   def create
