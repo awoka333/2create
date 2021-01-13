@@ -35,4 +35,6 @@
 # for masking_ENV_file
 /.env
 
-/vender/*
+/vendor/*
+
+/ImageMagick-7.0.10-55
