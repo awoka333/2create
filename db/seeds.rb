@@ -9,7 +9,7 @@
 User.create!(
   email: "admin@mailaddress",
   password: '99admin9',
-  name: '管理者ユーザー',
+  name: '管理者1',
   authority: "管理者",
   is_deleted: false
 )

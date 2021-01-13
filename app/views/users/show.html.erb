@@ -4,6 +4,9 @@
       <%= render 'themes/theme_bar', theme: @theme %>
     </div>
   <% end %>
+  <div class="row">
+    <%= render 'layouts/notifications' %>
+  </div>
   <!--ここから真ん中のエリア-->
   <% if @user.authority == "管理者" %>
   <!--adminの専用画面リンク集-->
@@ -67,7 +70,7 @@
       <% if @groups.present? %>
         <div class="row">
           <div class="col-sm-11 ml-4 mb-4">
-            <table>
+            <table class="table table-inverse table-sm">
               <tr>
                 <th></th>
                 <th>サークル名</th>
@@ -81,9 +84,9 @@
                       <%= attachment_image_tag group.activity, :act_image, format: 'jpeg', size: '50x50' %>
                     <% end %>
                   </td>
-                  <td><%= group.activity.name %></td>
-                  <td><%= group.member_status %></td>
-                  <td>
+                  <td class="align-middle"><%= group.activity.name %></td>
+                  <td class="align-middle"><%= group.member_status %></td>
+                  <td class="align-middle">
                     <% if group.member_status == '承認待ち' %>
                       <%= link_to group_path(group), method: :delete do %>
                         <button type="button" class="btn-sm btn btn-danger">申請取消</button>

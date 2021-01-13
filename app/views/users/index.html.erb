@@ -12,16 +12,16 @@
     </div>
   <% else %>
     <!--user登録情報の編集フォーム-->
-    <% @users.each do |user| %>
-      <div class="row justify-content-center">
-        <div class="col-sm-11 ml-4">
-          <table class="table table-hover table-inverse">
-            <tr class="table-dark">
-              <th>ニックネーム</th>
-              <th>メールアドレス</th>
-              <th>ステータス</th>
-              <th></th>
-            </tr>
+    <div class="row justify-content-center">
+      <div class="col-sm-11 ml-4">
+        <table class="table table-hover table-inverse">
+          <tr class="table-dark">
+            <th>ニックネーム</th>
+            <th>メールアドレス</th>
+            <th>ステータス</th>
+            <th></th>
+          </tr>
+          <% @users.each do |user| %>
             <tr>
               <td class="align-middle"><%= user.name %></td>
               <td class="align-middle"><%= user.email %></td>
@@ -38,10 +38,10 @@
                 <% end %>
               </td>
             </tr>
-          </table>
-        </div>
+          <% end %>
+        </table>
       </div>
-    <% end %>
+    </div>
   <% end %>
 
   <div class="row">

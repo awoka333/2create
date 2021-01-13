@@ -1,10 +1,15 @@
 class WorksController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :modify, :mask, if: proc { user_signed_in? && current_user.authority == "管理者" }
+  before_action :not_user, if: proc { current_user.is_deleted == true }, except: [:index, :show]
+  before_action :not_admin, if: proc { user_signed_in? && current_user.authority != "管理者" }, only: [:modify, :mask]
 
   def not_user
     sign_out
     redirect_to new_user_registration_path
+  end
+
+  def not_admin
+    redirect_to request.referer
   end
 
   def new
@@ -31,9 +36,6 @@ class WorksController < ApplicationController
         redirect_to work_path(@work)
       else
         @groups = Group.where(activity_id: @activity.id)
-        # user_ids = @groups.map(&:user_id)
-        # @users = User.where(id: user_ids)
-        # sourceでモデルの記述が成功した場合
         @users = @activity.group_users
         render 'new'
       end
@@ -49,12 +51,12 @@ class WorksController < ApplicationController
   def index
     @theme = Theme.last
     if params[:work_sort] == '1' # マイページ(users/show)から来た場合
-      @works = current_user.works.page(params[:page]).per(10)
+      @works = Work.where(user_id: current_user.id, is_masking: false).page(params[:page]).per(10)
     elsif params[:work_sort] == '2' # サークル詳細ページ(activities/show)から来た場合
       @activity = Activity.find(params[:activity_id])
-      @works = @activity.works.page(params[:page]).per(10)
+      @works = @activity.works.where(is_masking: false).page(params[:page]).per(10)
     else
-      @works = Work.includes(:activity).page(params[:page]).per(10)
+      @works = Work.includes(:activity).where(is_masking: false).page(params[:page]).per(10)
     end
   end
 
@@ -65,7 +67,7 @@ class WorksController < ApplicationController
     if @work.creator2.present?
       @creator2 = User.where(id: @work.creator2.split(',')) # 配列の形式は["1", "2"]なので、','で区切ると配列になる  イメージ例 [:user]["n", "n+1, "n+2",...]
       # @creator1 = User.where(id: @work.creator1)  # creator1: "[\"1\", \"2\"]"
-      # @creator2 = User.where(id: @work.creator2)  # creator2: "[\"2\", \"3\"]"という値を["2", "3"]に出来るなら、こちらを使いたい
+      # @creator2 = User.where(id: @work.creator2)  # creator2: "[\"2\", \"3\"]"という値を正規化して["2", "3"]に出来るなら、インスタンス変換せずに配列のまま保存していてもこの記述でよい
     else
       @creator2 = User.none
     end
@@ -73,7 +75,7 @@ class WorksController < ApplicationController
 
   def modify
     @activity = Activity.find(params[:activity_id])
-    @works = Work.where(activity_id: @activity.id).page(params[:page]).per(10)
+    @works = Work.where(activity_id: @activity.id).page(params[:page]).per(10) # is_masking(公開ステータス)に関わらず全て取得
   end
 
   def edit
@@ -81,9 +83,6 @@ class WorksController < ApplicationController
     @activity = @work.activity
     @groups = @activity.groups
     @users = @activity.group_users
-    # user_ids = @groups.map(&:user_id)
-    # @users = User.where(id: user_ids)
-    # sourceでモデルの記述が成功した場合
   end
 
   def update
@@ -93,12 +92,9 @@ class WorksController < ApplicationController
       if params[:work][:creator2] != nil    # creator1とcreator2のparamsが両方ある時
         @work.creator1 = params[:work][:creator1].map!(&:to_i).join(", ")
         @work.creator2 = params[:work][:creator2].map!(&:to_i).join(", ")
-        # @work.title = params[:work][:title]
-        # @work.work_image = params[:work][:work_image]
       else                                  # creator1のparamsのみある時
         @work.creator1 = params[:work][:creator1].map!(&:to_i).join(", ")
-        # @work.title = params[:work][:title]
-        # @work.work_image = params[:work][:work_image]
+        @work.creator2 = nil  # creator2の値を空にする
       end
       if @work.update(work_params)
         redirect_to work_path(@work)

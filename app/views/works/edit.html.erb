@@ -52,9 +52,12 @@
 
     <div class="row">
       <div class="col-sm-12 text-center mt-4 mb-4">
-        <%= f.submit "更新する", :class=>"btn btn-secondary" %>
+        <%= link_to work_path(@work) do %>
+            <button type="button" class="btn-sm btn btn-secondary">作品ページに戻る</button>
+        <% end %>
+        <%= f.submit "更新する", :class=>"btn-sm btn btn-dark" %>
         <%= link_to work_path(@work), method: :delete do %>
-          <button type="button" class="btn btn-danger">削除する</button>
+          <button type="button" class="btn-sm btn btn-danger">削除する</button>
         <% end %>
       </div>
     </div>

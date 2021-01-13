@@ -1,53 +1,61 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-12 mt-4">
       <h2><%= @user.name %> のサークル会員情報</h2>
     </div>
   </div>
 
-  <!--user登録情報の編集フォーム-->
-  <div class="row justify-content-center">
-    <div class="col-sm-10">
-      <table class="table table-hover table-inverse">
-        <tr class="table-dark">
-          <th>サークル</th>
-          <th>現在のステータス</th>
-          <th colspan="5"></th>
-        </tr>
-        <% @groups.each do |group| %>
-          <%= form_with model: group, url: group_path(group, group_sort: 101), method: :patch, local: true do |f| %>
-          <div class="row">
-            <%= render 'layouts/error_messages', model: f.object %>
-          </div>
-            <tr>
-              <td class="align-middle"><%= group.activity.name %></td>
-              <td class="align-middle"><%= group.member_status %></td>
-              <td class="align-middle">
-                <%= radio_button_tag(:group_sort, :waiting_accept) %>
-                <%= f.label :承認待ち %>
-                <%= radio_button_tag(:member_status, :accept) %>
-                <%= f.label :メンバー %>
-                <%= radio_button_tag(:member_status, :leader) %>
-                <%= f.label :リーダー %>
-                <%= radio_button_tag(:member_status, :senior) %>
-                <%= f.label :シニア %>
-              </td>
-              <td class="align-middle"><%= f.submit "更新する", :class=>"btn btn-info" %></td>
-              <td class="align-middle">
-                <%= link_to group_path(group), method: :delete do %>
-                  <button type="button" class="btn btn-danger">メンバー登録削除</button>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        <% end %>
-      </table>
+  <%# if @users.nil? %>
+    <div class="row justify-content-center">
+      <div class="col-sm-11 ml-4">
+        <p><%= @user.name %>はサークルに参加していません</p>
+      </div>
     </div>
-  </div>
-  <div class="row">
+  <%# else %>
+    <!--user登録情報の編集フォーム-->
+    <div class="row justify-content-center">
+      <div class="col-sm-12">
+        <table class="table table-hover table-inverse">
+          <tr class="table-dark">
+            <th>サークル</th>
+            <th>現在のステータス</th>
+            <th colspan="5"></th>
+          </tr>
+          <% @groups.each do |group| %>
+            <%= form_with model: group, url: group_path(group), method: :patch, local: true do |f| %>
+            <div class="row">
+              <%= render 'layouts/error_messages', model: f.object %>
+            </div>
+              <tr>
+                <td class="align-middle"><%= group.activity.name %></td>
+                <td class="align-middle"><%= group.member_status %></td>
+                <td class="align-middle">
+                  <%= radio_button_tag(:group_sort, :waiting_accept) %>
+                  <%= f.label :承認待ち %>
+                  <%= radio_button_tag(:group_sort, :accept) %>
+                  <%= f.label :メンバー %>
+                  <%= radio_button_tag(:group_sort, :leader) %>
+                  <%= f.label :リーダー %>
+                  <%= radio_button_tag(:group_sort, :senior) %>
+                  <%= f.label :シニア %>
+                </td>
+                <td class="align-middle"><%= f.submit "更新する", :class=>"btn btn-info" %></td>
+                <td class="align-middle">
+                  <%= link_to group_path(group), method: :delete do %>
+                    <button type="button" class="btn btn-danger">メンバー登録削除</button>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  <%# end %>
+
+  <div class="row justify-content-center">
     <div class="col-sm-12">
       <p><%= paginate @groups %></p>
     </div>
   </div>
-
 </div>

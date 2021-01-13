@@ -87,8 +87,8 @@
         <div class="row mt-3">
           <div class="col-sm-12 flex-wrap">
             <h4>リーダー</h4>
-            <% if @leaders == nil || @leaders.count == 0%>
-              <p>現在リーダーはいません。</p>
+            <% if @leaders.count == 0 %>
+              <p>現在リーダーはいません</p>
             <% else %>
               <p class="mb-1">現在のリーダー：</p>
               <span class="ml-2">
@@ -97,7 +97,7 @@
                 <% end %>
               </span>
             <% end %>
-            <p class="mt-2">リーダーにチェックを入れてください ↓</p>
+            <p class="mt-4">リーダーにチェックを入れてください ↓</p>
             <p> <!--member_statusをリーダーにしたいuserにチェックを入れるためのcheck_box-->
               <% @users.each do |user| %>
                 <%= f.check_box :leader, {multiple: true}, user.id, nil %>
@@ -110,21 +110,29 @@
         <div class="row mt-3">
           <div class="col-sm-12">
             <h4>卒業申請</h4>
-            <table>
-              <tr>
-                <td>名前</td>
-                <td>作品数</td>
-                <td>卒業申請</td>
-              </tr>
-              <% @pre_graduates.each do |pre_graduate| %>
+            <% if @pre_graduates.count == 0 %>
+              <p class="ml-2">卒業申請はありません</p>
+            <% else %>
+              <table class="table table-inverse table-sm">
                 <tr>
-                  <td><%= pre_graduate.user.name %></td>
-                  <td><%= pre_graduate.activity.works.where(user_id: pre_graduate.user.id).count %></td>  <!--activityに紐づくworksの中から、userのものだけ抽出する-->
-                  <td><%= link_to "卒業する", group_path(pre_graduate, group_sort: :senior), method: :patch, class: 'btn-sm btn btn-danger' %></td>
-                  <td><%= link_to "卒業申請取消", group_path(pre_graduate, group_sort: :no_graduate), method: :patch, class: 'btn-sm btn btn-info' %></td>
+                  <td>名前</td>
+                  <td>作品数</td>
+                  <td colspan="2">卒業申請</td>
                 </tr>
-              <% end %>
-            </table>
+                <% @pre_graduates.each do |pre_graduate| %>
+                  <tr>
+                    <td><%= pre_graduate.user.name %></td>
+                    <td><%= pre_graduate.activity.works.where(user_id: pre_graduate.user.id).count %></td>  <!--activityに紐づくworksの中から、userのものだけ抽出する-->
+                    <td>
+                      <% unless pre_graduate.user == current_user %>
+                        <%= link_to "卒業する", group_path(pre_graduate, group_sort: :senior), method: :patch, class: 'btn-sm btn btn-danger' %>
+                      <% end %>
+                    </td>
+                    <td><%= link_to "卒業申請取消", group_path(pre_graduate, group_sort: :no_graduate), method: :patch, class: 'btn-sm btn btn-info' %></td>
+                  </tr>
+                <% end %>
+              </table>
+            <% end %>
           </div>
         </div>
       </div>
