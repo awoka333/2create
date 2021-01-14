@@ -14,17 +14,23 @@ User.create!(
   is_deleted: false
 )
 
-User.create!(
-  email: "admin@mailaddress",
-  password: '99admin9',
-  name: 'クリエイター1',
-  authority: "ユーザー",
-  is_deleted: false
-)
-5.times do |n|
+30.times do |n|
     User.create!(
-      email: "test#{n + 1}@test.com",
+      email: "creator#{n + 1}@gmail.com",
+      password: "creator#{n + 1}",
       name: "クリエイター#{n + 1}",
-      image: File.open('./app/assets/images/test.jpg')
+      authority: "ユーザー",
+      is_deleted: false
+    )
+  end
+  
+        image: File.open('./app/assets/images/test.jpg')
+  10.times do |n|
+    Activity.create!(
+      name: "creator#{n + 1}@gmail.com",
+      act_image: "creator#{n + 1}",
+      to_create: "クリエイター#{n + 1}",
+      to_study: "ユーザー",
+      to_do: false
     )
   end

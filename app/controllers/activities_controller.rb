@@ -35,7 +35,7 @@ class ActivitiesController < ApplicationController
     if user_signed_in?
       if Group.where(user_id: current_user.id, activity_id: @activity.id).empty? && Recommend.find_by(user_id: current_user.id, activity_id: @activity.id).present?
         @recommend = Recommend.find_by(user_id: current_user.id, activity_id: @activity.id) # サークル所属しておらず、おすすめサークルとして登録はある時
-        @recommend.touch(:updated_at)
+        @recommend.touch(:updated_at) # touchメソッドはupdated_atカラムのみ更新・保存をするメソッド
       elsif Group.where(user_id: current_user.id, activity_id: @activity.id).empty?
         @recommend = Recommend.new(user_id: current_user.id, activity_id: @activity.id)   # サークル所属しておらず、おすすめサークルとして登録もない時
         @recommend.save
