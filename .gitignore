@@ -35,8 +35,7 @@
 # for masking_ENV_file
 /.env
 
+# for additional data mask
 /vendor/*
-
 /ImageMagick-7.0.10-55
-
 /ImageMagick.tar.gz

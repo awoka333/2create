@@ -13,3 +13,18 @@ User.create!(
   authority: "管理者",
   is_deleted: false
 )
+
+User.create!(
+  email: "admin@mailaddress",
+  password: '99admin9',
+  name: 'クリエイター1',
+  authority: "ユーザー",
+  is_deleted: false
+)
+5.times do |n|
+    User.create!(
+      email: "test#{n + 1}@test.com",
+      name: "クリエイター#{n + 1}",
+      image: File.open('./app/assets/images/test.jpg')
+    )
+  end

@@ -18,6 +18,7 @@ module Two2create
     config.time_zone = 'Tokyo' # タイムゾーンを日本時間にする
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }  # エラーメッセージによるレイアウト崩れ防止
     config.i18n.default_locale = :ja  # エラーメッセージの日本語化
-    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml').to_s]  # localesのymlファイル群を読み込むためのパスを通す
+    # config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml').to_s]  # localesのymlファイル群を読み込むためのパスを通す
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
   end
 end
