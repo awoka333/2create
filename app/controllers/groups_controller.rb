@@ -33,7 +33,7 @@ class GroupsController < ApplicationController
   def update
     @group = Group.find(params[:id])
     # update内容を分類する。groupモデルのupdate_statusメソッド参照。
-    @group.update_status(params[:group_sort])
+    @group.update_status(params[:group_sort.to_sym])
     if @group.save
       redirect_to request.referer
     else
