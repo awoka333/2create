@@ -25,6 +25,12 @@ class ActivitiesController < ApplicationController
   def show
     @activity = Activity.find(params[:id])
     @groups = Group.where(activity_id: @activity.id)
+    # updateアクションでmember_status: "シニア"から変更したgroupを、graduate_status: "卒業" と member_status: "シニア"が両立しないものと定義して検出
+    @pre_seniors = @groups.where(graduate_status: "卒業").where.not(member_status: 'シニア')
+    pre_senior_ids = @pre_seniors.pluck(:user_id)
+    @pre_senior_groups = @groups.where(user_id: pre_senior_ids)
+    @pre_senior_groups.update(graduate_status: "卒業しない")
+    # ここまででpre_seniorsのgraduate_status修正完了
     @seniors = @groups.where(member_status: 'シニア')
     @leaders = @groups.where(member_status: 'リーダー')
     @juniors = @groups.where(member_status: 'メンバー')
