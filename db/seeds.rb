@@ -7,29 +7,33 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create!(
-  email: "admin@mailaddress",
-  password: '99admin9',
+  email: "admin1@mailaddress",
+  password: 'admin1admin',
   name: '管理者1',
   authority: "管理者",
   is_deleted: false
 )
 
-30.times do |n|
-    User.create!(
-      email: "creator#{n + 1}@gmail.com",
-      password: "creator#{n + 1}",
-      name: "クリエイター#{n + 1}",
-      authority: "ユーザー",
-      is_deleted: false
-    )
-  end
+User.create!(
+  email: "admin2@mailaddress",
+  password: 'admin2admin',
+  name: '管理者2',
+  authority: "管理者",
+  is_deleted: false
+)
 
-  10.times do |n|
-    Activity.create!(
-      name: "絵画サークル#{n + 1}",
-      act_image: File.open('./public/white-color.jpg'),
-      to_create: "絵画",
-      to_study: "画材の性質、デッサン",
-      to_do: "5月11日（火）19時～です"
-    )
-  end
+User.create!(
+  email: "guest1@mailaddress",
+  password: 'guest1guest',
+  name: 'ゲスト1',
+  authority: "ユーザー",
+  is_deleted: false
+)
+
+User.create!(
+  email: "guest2@mailaddress",
+  password: 'guest2guest',
+  name: 'ゲスト2',
+  authority: "ユーザー",
+  is_deleted: false
+)

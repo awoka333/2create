@@ -138,8 +138,6 @@
       </div>
     </div>
     <div class="row justify-content-center">
-      <%= hidden_field_tag :pre_members, @pre_members.user_id %>
-      <%= hidden_field_tag :seniors, @seniors.user_id %>
       <%= f.submit "更新する", class: "btn-sm btn btn-dark mt-4 mb-4 mr-2" %>
       <%= link_to activity_path(@activity) do %>
           <button type="button" class="btn-sm btn btn-secondary mt-4 mb-4 ml-2">サークルページに戻る</button>

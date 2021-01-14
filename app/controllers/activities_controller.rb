@@ -66,21 +66,17 @@ class ActivitiesController < ApplicationController
   def edit
     @activity = Activity.find(params[:id])
     @groups = Group.where(activity_id: @activity.id)
-    @pre_members = @groups.where(member_status: '承認待ち')
     @leaders = @groups.where(member_status: 'リーダー')
-    @seniors = @groups.where(member_status: 'シニア')
     @pre_graduates = @groups.where(graduate_status: '卒業依頼')
     @users = @activity.group_users
-    # user_ids = @groups.map(&:user_id)
-    # @users = User.where(id: user_ids)
   end
 
   def update
     @activity = Activity.find(params[:id])
     @leaders = params[:activity][:leader]
-    @pre_members = params[:pre_members]
-    @seniors = params[:seniors]
     @groups = Group.where(activity_id: @activity.id)
+    pre_member_ids = @groups.where(member_status: '承認待ち').pluck(:user_id)
+    senior_ids = @groups.where(member_status: 'シニア').pluck(:user_id)
     if @activity.update(activity_params)
       # transaction処理で、値を一気に書き換えていく。eにはエラー内容が入る。
       # 一度全てメンバーに書き換えた後、@leadersで受け取ったuserをリーダーとして登録する。
@@ -88,18 +84,16 @@ class ActivitiesController < ApplicationController
         Group.transaction do
           @group = Group.where(activity_id: @activity.id)
           @group.update(member_status: "メンバー")
-          @group = @group.where(user_id: @pre_members)
-          @group.update(member_status: "承認待ち")
-          @group = @group.where(user_id: @leaders)
-          @group.update(member_status: "リーダー")
-          @group = @group.where(user_id: @seniors)
-          @group.update(member_status: "シニア")
+          @pre_group = @group.where(user_id: pre_member_ids)
+          @pre_group.update(member_status: "承認待ち")
+          @leader_group = @group.where(user_id: @leaders)
+          @leader_group.update(member_status: "リーダー")
+          @senior_group = @group.where(user_id: senior_ids)
+          @senior_group.update(member_status: "シニア")
         end
         redirect_to activity_path(@activity)
       rescue => e
         @users = @activity.group_users
-        # user_ids = @groups.map(&:user_id)
-        # @users = User.where(id: user_ids)
         render 'edit'
       end
     else
