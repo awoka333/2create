@@ -14,7 +14,7 @@ class GroupsController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @groups = Group.all.page(params[:page]).per(25)
+    @groups = @user.groups.page(params[:page]).per(25)
   end
 
   def create

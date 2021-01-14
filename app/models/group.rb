@@ -27,7 +27,7 @@ class Group < ApplicationRecord
     elsif status.to_sym == :accept
       update(member_status: statuses[status.to_sym])
     elsif status.to_sym == :leader
-      update(member_status: statuses[status.to_sym]) # まとめたい
+      update(member_status: statuses[status.to_sym])
     else
       update(graduate_status: statuses[status.to_sym])
     end

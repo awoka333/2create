@@ -5,13 +5,13 @@
     </div>
   </div>
 
-  <%# if @users.nil? %>
+  <% if @groups.nil? %>
     <div class="row justify-content-center">
       <div class="col-sm-11 ml-4">
         <p><%= @user.name %>はサークルに参加していません</p>
       </div>
     </div>
-  <%# else %>
+  <% else %>
     <!--user登録情報の編集フォーム-->
     <div class="row justify-content-center">
       <div class="col-sm-12">
@@ -51,7 +51,7 @@
         </table>
       </div>
     </div>
-  <%# end %>
+  <% end %>
 
   <div class="row justify-content-center">
     <div class="col-sm-12">
