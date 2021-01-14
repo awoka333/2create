@@ -1,6 +1,6 @@
 class ThemesController < ApplicationController
   before_action :authenticate_user!
-  before_action :not_user, if: proc { current_user.is_deleted == true }
+  before_action :not_user, if: proc { user_signed_in? && current_user.is_deleted == true }
   before_action :not_admin, if: proc { user_signed_in? && current_user.authority != "管理者" }
 
   def not_user

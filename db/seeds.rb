@@ -23,14 +23,13 @@ User.create!(
       is_deleted: false
     )
   end
-  
-        image: File.open('./app/assets/images/test.jpg')
+
   10.times do |n|
     Activity.create!(
-      name: "creator#{n + 1}@gmail.com",
-      act_image: "creator#{n + 1}",
-      to_create: "クリエイター#{n + 1}",
-      to_study: "ユーザー",
-      to_do: false
+      name: "絵画サークル#{n + 1}",
+      act_image: File.open('./public/white-color.jpg'),
+      to_create: "絵画",
+      to_study: "画材の性質、デッサン",
+      to_do: "5月11日（火）19時～です"
     )
   end

@@ -1,6 +1,6 @@
 class ActivitiesController < ApplicationController
   before_action :authenticate_user!, except: [:not_user, :not_admin, :index, :show]
-  before_action :not_user, if: proc { current_user.is_deleted == true }, except: [:index, :show]
+  before_action :not_user, if: proc { user_signed_in? && current_user.is_deleted == true }, except: [:index, :show]
   before_action :not_admin, if: proc { user_signed_in? && current_user.authority != "管理者" }, only: [:modify, :destroy]
 
   def not_user
@@ -68,6 +68,7 @@ class ActivitiesController < ApplicationController
     @groups = Group.where(activity_id: @activity.id)
     @pre_members = @groups.where(member_status: '承認待ち')
     @leaders = @groups.where(member_status: 'リーダー')
+    @seniors = @groups.where(member_status: 'シニア')
     @pre_graduates = @groups.where(graduate_status: '卒業依頼')
     @users = @activity.group_users
     # user_ids = @groups.map(&:user_id)
@@ -77,6 +78,8 @@ class ActivitiesController < ApplicationController
   def update
     @activity = Activity.find(params[:id])
     @leaders = params[:activity][:leader]
+    @pre_members = params[:pre_members]
+    @seniors = params[:seniors]
     @groups = Group.where(activity_id: @activity.id)
     if @activity.update(activity_params)
       # transaction処理で、値を一気に書き換えていく。eにはエラー内容が入る。
@@ -85,8 +88,12 @@ class ActivitiesController < ApplicationController
         Group.transaction do
           @group = Group.where(activity_id: @activity.id)
           @group.update(member_status: "メンバー")
+          @group = @group.where(user_id: @pre_members)
+          @group.update(member_status: "承認待ち")
           @group = @group.where(user_id: @leaders)
           @group.update(member_status: "リーダー")
+          @group = @group.where(user_id: @seniors)
+          @group.update(member_status: "シニア")
         end
         redirect_to activity_path(@activity)
       rescue => e

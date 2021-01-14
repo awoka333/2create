@@ -1,6 +1,6 @@
 class WorksController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :not_user, if: proc { current_user.is_deleted == true }, except: [:index, :show]
+  before_action :not_user, if: proc { user_signed_in? && current_user.is_deleted == true }, except: [:index, :show]
   before_action :not_admin, if: proc { user_signed_in? && current_user.authority != "管理者" }, only: [:modify, :mask]
 
   def not_user

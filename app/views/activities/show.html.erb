@@ -133,7 +133,11 @@
           <div class="row mt-4">
             <div class="col-sm-12">
               <h2><%= @activity.name %> 次回日程</h2>
-              <p><%= @activity.to_do %></p>
+              <% if @activity.to_do.present? %>
+                <p><%= @activity.to_do %></p>
+              <% else %>
+                <p>次回は未定です</p>
+              <% end %>
             </div>
           </div>
         </div>
