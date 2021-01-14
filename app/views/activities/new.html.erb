@@ -20,7 +20,7 @@
     <div class="row mt-4">
       <div class="col-sm-6">
         <h4 class="mb-0"><%= f.label :act_image, "サークル画像の選択" %></h4>
-        <%= attachment_image_tag @activity, :act_image, fallback: "no-image.jpg", id: "img_preview", style: "height: 200px; width:300px;" %><br>
+        <%#= attachment_image_tag @activity, :act_image, fallback: "no-image.jpg", id: "img_preview", style: "height: 200px; width:300px;" %><br>
         <%= f.attachment_field :act_image %>
 
         <!--画面プレビュー用 jsの記述を直書き。これだとエラーメッセージも非同期化する必要がない-->
