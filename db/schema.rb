@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_05_073821) do
+ActiveRecord::Schema.define(version: 2021_01_18_135757) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name", null: false
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2021_01_05_073821) do
     t.text "sentence", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "score", precision: 5, scale: 3
   end
 
   create_table "favorites", force: :cascade do |t|

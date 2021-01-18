@@ -87,19 +87,19 @@
                   <td class="align-middle"><%= group.activity.name %></td>
                   <td class="align-middle"><%= group.member_status %></td>
                   <td class="align-middle">
-                    <% if group.member_status == '承認待ち' %>
+                    <% if group.member_status == :pre_member %>
                       <%= link_to group_path(group), method: :delete do %>
                         <button type="button" class="btn-sm btn btn-danger">申請取消</button>
                       <% end %>
-                    <% elsif group.graduate_status == '卒業しない' %>
+                    <% elsif group.graduate_status == :no_graduate %>
                       <%= link_to group_path(group, group_sort: :pre_graduate), method: :patch do %>
                         <button type="button" class="btn-sm btn btn-info">卒業依頼</button>
                       <% end %>
-                    <% elsif group.graduate_status == '卒業依頼' %>
+                    <% elsif group.graduate_status == :pre_graduate %>
                       <%= link_to group_path(group, group_sort: :no_graduate), method: :patch do %>
                         <button type="button" class="btn-sm btn btn-danger">卒業依頼取消</button>
                       <% end %>
-                    <% elsif group.graduate_status == '卒業' %>
+                    <% elsif group.graduate_status == :graduated %>
                         <p>卒業生</p>
                     <% end %>
                   </td>

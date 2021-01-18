@@ -11,7 +11,14 @@ ja:
           sentence: コメント
         group:
           member_status: メンバーステータス
+          pre_member: 承認待ち
+          member: メンバー
+          leader: リーダー
+          senior: シニア
           graduate_status: 卒業ステータス
+          no_graduate: 卒業しない
+          pre_graduate: 卒業依頼
+          graduated: 卒業
         theme:
           month: 月
           theme1: テーマ１

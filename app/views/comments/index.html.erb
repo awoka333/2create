@@ -42,6 +42,9 @@
           <% @comments.each do |comment| %>
             <tr>
               <td>
+                <%# if user_signed_in? && current_user.authority == "管理者" %>
+                  <span class="sentence-score">本文の感情分析スコア<%= comment.score %></span>
+                <%# end %>
                 <%= comment.sentence %>
                 <% if comment.user == current_user %>
                   <br>

@@ -26,16 +26,17 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:id])
     @groups = Group.where(activity_id: @activity.id)
     # updateアクションでmember_status: "シニア"から変更したgroupを、graduate_status: "卒業" と member_status: "シニア"が両立しないものと定義して検出
-    @pre_seniors = @groups.where(graduate_status: "卒業").where.not(member_status: 'シニア')
-    pre_senior_ids = @pre_seniors.pluck(:user_id)
-    @pre_senior_groups = @groups.where(user_id: pre_senior_ids)
-    @pre_senior_groups.update(graduate_status: "卒業しない")
+    @pre_seniors = @groups.where(graduate_status: :graduated).where.not(member_status: :senior)
+    # @pre_senior_groups = @groups.where(user_id: @pre_seniors.pluck(:user_id))
+    # @pre_senior_groups.update(graduate_status: "卒業しない")
+    @pre_seniors.each {|pre_senior| pre_senior.no_graduate!}
+    # @pre_seniors.no_graduate!
     # ここまででpre_seniorsのgraduate_status修正完了
-    @seniors = @groups.where(member_status: 'シニア')
-    @leaders = @groups.where(member_status: 'リーダー')
-    @juniors = @groups.where(member_status: 'メンバー')
-    @pre_members = @groups.where(member_status: '承認待ち')
-    @pre_graduates = @groups.where(graduate_status: '卒業依頼')
+    @seniors = @groups.where(member_status: :senior)
+    @leaders = @groups.where(member_status: :leader)
+    @juniors = @groups.where(member_status: :member)
+    @pre_members = @groups.where(member_status: :pre_member)
+    @pre_graduates = @groups.where(graduate_status: :pre_graduate)
     @comments = @activity.comments.order(created_at: :desc).limit(3) # 最大3つのレコードを配列として取得
     # ログイン時は、Recommendテーブルに同じものがある または Groupテーブルに同じものがある という場合を除き、Recommendレコードを作る
     if user_signed_in?
@@ -59,7 +60,7 @@ class ActivitiesController < ApplicationController
       leader = Group.new(
         user_id: current_user.id,
         activity_id: @activity.id,
-        member_status: 'リーダー'
+        member_status: 'leader'
       )
       leader.save
 
@@ -72,36 +73,53 @@ class ActivitiesController < ApplicationController
   def edit
     @activity = Activity.find(params[:id])
     @groups = Group.where(activity_id: @activity.id)
-    @leaders = @groups.where(member_status: 'リーダー')
-    @pre_graduates = @groups.where(graduate_status: '卒業依頼')
+    @pre_members = @groups.where(member_status: :pre_member)
+    @leaders = @groups.where(member_status: :leader)
+    @pre_graduates = @groups.where(graduate_status: :pre_graduate)
+    # @leaders = @groups.where(member_status: 'リーダー')
+    # @pre_graduates = @groups.where(graduate_status: '卒業依頼')
     @users = @activity.group_users
   end
 
   def update
     @activity = Activity.find(params[:id])
-    @leaders = params[:activity][:leader]
     @groups = Group.where(activity_id: @activity.id)
-    pre_member_ids = @groups.where(member_status: '承認待ち').pluck(:user_id)
-    senior_ids = @groups.where(member_status: 'シニア').pluck(:user_id)
+    @pre_members = @groups.where(member_status: :pre_member)
+    @leaders = @groups.where(member_status: :leader)
+    @pre_graduates = @groups.where(graduate_status: :pre_graduate)
+    # pre_member_ids = @groups.where(member_status: :pre_member).pluck(:user_id)
+    # senior_ids = @groups.where(member_status: :senior).pluck(:user_id)
+    # pre_member_ids = @groups.where(member_status: '承認待ち').pluck(:user_id)
+    # senior_ids = @groups.where(member_status: 'シニア').pluck(:user_id)
     if @activity.update(activity_params)
       # transaction処理で、値を一気に書き換えていく。eにはエラー内容が入る。
       # 一度全てメンバーに書き換えた後、@leadersで受け取ったuserをリーダーとして登録する。
+
+      # メソッド化
+      # @group.update_status_with_activity(params[:group_sort.to_sym])
+
       begin
-        Group.transaction do
-          @group = Group.where(activity_id: @activity.id)
-          @group.update(member_status: "メンバー")
-          @pre_group = @group.where(user_id: pre_member_ids)
-          @pre_group.update(member_status: "承認待ち")
-          @leader_group = @group.where(user_id: @leaders)
-          @leader_group.update(member_status: "リーダー")
-          @senior_group = @group.where(user_id: senior_ids)
-          @senior_group.update(member_status: "シニア")
-        end
+        Group.update_member_status!(@activity.id, params[:activity][:leader])
+        # Group.transaction do
+        #   @group = Group.where(activity_id: @activity.id)
+        #   @group.member!
+        #   # @group.update(member_status: "メンバー")
+        #   @pre_group = @group.where(user_id: pre_member_ids)
+        #   @pre_group.pre_member!
+        #   # @pre_group.update(member_status: "承認待ち")
+        #   @leader_group = @group.where(user_id: @leaders)
+        #   @leader_group.leader!
+        #   # @leader_group.update(member_status: "リーダー")
+        #   @senior_group = @group.where(user_id: senior_ids)
+        #   @senior_group.senior!
+        #   # @senior_group.update(member_status: "シニア")
+        # end
         redirect_to activity_path(@activity)
       rescue => e
         @users = @activity.group_users
         render 'edit'
       end
+
     else
       @users = @activity.group_users
       render 'edit'

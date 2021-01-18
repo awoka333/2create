@@ -30,6 +30,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     @comment.user_id = current_user.id
     @comment.activity_id = @activity.id
+    @comment.score = Language.get_data(comment_params[:sentence]) # sentenceの自然言語処理をする
     @comment.save
     redirect_to request.referer
   end

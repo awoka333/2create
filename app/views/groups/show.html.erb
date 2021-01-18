@@ -30,14 +30,15 @@
                 <td class="align-middle"><%= group.activity.name %></td>
                 <td class="align-middle"><%= group.member_status %></td>
                 <td class="align-middle">
+                  <!--group_sortの値は任意で定義している-->
                   <%= radio_button_tag(:group_sort, :waiting_accept) %>
-                  <%= f.label :承認待ち %>
+                  <%= f.label :pre_member %>
                   <%= radio_button_tag(:group_sort, :accept) %>
-                  <%= f.label :メンバー %>
+                  <%= f.label :member %>
                   <%= radio_button_tag(:group_sort, :leader) %>
-                  <%= f.label :リーダー %>
+                  <%= f.label :leader %>
                   <%= radio_button_tag(:group_sort, :senior) %>
-                  <%= f.label :シニア %>
+                  <%= f.label :senior %>
                 </td>
                 <td class="align-middle"><%= f.submit "更新する", :class=>"btn btn-info" %></td>
                 <td class="align-middle">
