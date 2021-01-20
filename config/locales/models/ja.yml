@@ -36,3 +36,14 @@ ja:
           creator1: 2creator
           creator1: Spetial thanks
           is_masking: 公開ステータス
+  enums:
+    group:
+      member_status:
+        pre_member: 承認待ち
+        member: メンバー
+        leader: リーダー
+        senior: シニア
+      # graduate_status: 卒業ステータス
+      #   no_graduate: 卒業しない
+      #   pre_graduate: 卒業依頼
+      #   graduated: 卒業

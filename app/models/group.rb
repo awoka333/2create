@@ -52,8 +52,6 @@ class Group < ApplicationRecord
   #   update(member_status: status)
   # end
 
-
-
   def self.update_member_status!(activity_id, leader_ids)
     transaction do
       groups = where(activity_id: activity_id)
@@ -72,4 +70,5 @@ class Group < ApplicationRecord
       # @senior_group.update(member_status: "シニア")
     end
   end
+
 end
