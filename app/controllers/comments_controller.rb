@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
 
   def index
     @activity = Activity.find(params[:activity_id])
-    @comments = Comment.where(activity_id: @activity.id).order(created_at: :desc).page(params[:page]).per(25)
+    @comments = Comment.includes([:user]).where(activity_id: @activity.id).order(created_at: :desc).page(params[:page]).per(25)
     @comment = Comment.new
   end
 
@@ -19,9 +19,8 @@ class CommentsController < ApplicationController
   end
 
   def modify
-    # 自然言語処理機能 導入予定
     @activity = Activity.find(params[:activity_id])
-    @comments = Comment.where(activity_id: @activity.id).order(created_at: :desc).page(params[:page]).per(25)
+    @comments = Comment.where(activity_id: @activity.id).order(created_at: :desc).includes([:user]).page(params[:page]).per(25)
     @comment = Comment.new
   end
 
@@ -31,8 +30,12 @@ class CommentsController < ApplicationController
     @comment.user_id = current_user.id
     @comment.activity_id = @activity.id
     @comment.score = Language.get_data(comment_params[:sentence]) # sentenceの自然言語処理をする
-    @comment.save
-    redirect_to request.referer
+    if @comment.save
+      redirect_to request.referer
+    else
+      @comments = Comment.includes([:user]).where(activity_id: @activity.id).order(created_at: :desc).page(params[:page]).per(25)
+      render 'index'
+    end
   end
 
   def update

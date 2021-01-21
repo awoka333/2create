@@ -160,7 +160,13 @@
                   <p><%= comment.sentence %></p>
                 </div>
                 <div class="col-sm-12 border-bottom">
-                  <p><%= comment.user.name %> <%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
+                  <p>
+                    <% if comment.user.authority == "管理者" %>
+                      <button type="button" class="btn btn-outline-dark btn-sm", disabled>管理者</button>
+                    <% else %>
+                      <%= comment.user.name %>
+                    <% end %>
+                    <%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
                 </div>
               </div>
             <% end %>

@@ -34,7 +34,11 @@
     <div class="col-sm-12 mt-4">
       <div class="row">
         <div class="col-sm-8">
-          <h2>おすすめサークル</h2>
+          <% if current_user.authority == '管理者' %>
+            <h2>最近閲覧したサークル</h2>
+          <% else %>
+            <h2>おすすめサークル</h2>
+          <% end %>
         </div>
       </div>
       <div class="row justify-content-center mt-3">
@@ -85,7 +89,7 @@
                     <% end %>
                   </td>
                   <td class="align-middle"><%= group.activity.name %></td>
-                  <td class="align-middle"><%= group.member_status %></td>
+                  <td class="align-middle"><%= group.member_status_i18n %></td>  <!--メンバーステータスを日本語化-->
                   <td class="align-middle">
                     <% if group.member_status == :pre_member %>
                       <%= link_to group_path(group), method: :delete do %>

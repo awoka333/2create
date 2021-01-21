@@ -2,6 +2,7 @@
   <div class="row">
     <div class="col-sm-12 pt-4">
       <h2>コメント送信</h2>
+      <p>※優しい言葉を掛け合いましょう！</p>
     </div>
   </div>
 
@@ -29,7 +30,7 @@
       <% end %>
     </div>
   </div>
-  <% if @comments.nil? %>
+  <% if @comments.empty? %>
     <div class="row">
       <div class="col-sm-12 mt-4">
         <p>コメントはありません</p>
@@ -42,17 +43,20 @@
           <% @comments.each do |comment| %>
             <tr>
               <td>
-                <%# if user_signed_in? && current_user.authority == "管理者" %>
-                  <span class="sentence-score">本文の感情分析スコア<%= comment.score %></span>
-                <%# end %>
                 <%= comment.sentence %>
                 <% if comment.user == current_user %>
                   <br>
                   <%= link_to "編集", edit_comment_path(comment) %> | <%= link_to "削除", comment_path(comment), method: :delete, class: "link-danger" %>
                 <% end %>
               </td>
-              <td><%= comment.user.name %></td>
-              <td><%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+              <td class="align-middle">
+                <% if comment.user.authority == "管理者" %>
+                  <button type="button" class="btn btn-outline-dark btn-sm", disabled>管理者</button>
+                <% else %>
+                  <%= comment.user.name %>
+                <% end %>
+              </td>
+              <td class="align-middle"><%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
             </tr>
           <% end %>
         </table>

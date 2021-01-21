@@ -19,12 +19,10 @@ class UsersController < ApplicationController
   def show
     @user = current_user
     @theme = Theme.last
-    # activity_ids = @recommends.map(&:activity_id)   # 配列でactivity_idを全て取得
-    # @activities = Activity.where(id: activity_ids)  # idがactivity_idsと合致するActivityのレコードを全て取得
-    @groups = current_user.groups
-    @recommends = Recommend.where(user_id: current_user.id).order('updated_at DESC').limit(3) # 最大3つのレコードを配列として取得
-    @activities = []
-    @recommends.each do |recommend|
+    @groups = current_user.groups.includes([:activity])
+    @recommends = Recommend.where(user_id: current_user.id).includes([:activity]).order('updated_at DESC').limit(3) # 最大3つのレコードを配列として取得
+    @activities = []                    # 空の配列@activitiesを用意
+    @recommends.each do |recommend|     # @recommendsを展開し、紐づくActivityのレコードすべてを@activitiesに入れる
       @activities << recommend.activity
     end
   end

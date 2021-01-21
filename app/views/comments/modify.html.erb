@@ -30,7 +30,7 @@
     </div>
   <% end %>
 
-  <% if @comments.nil? %>
+  <% if @comments.empty? %>
     <div class="row">
       <div class="col-sm-12 mt-4">
         <p>コメントはありません</p>
@@ -40,13 +40,30 @@
     <div class="row">
       <div class="col-sm-12 pl-4">
         <table class="table table-inverse">
-        <% @comments.each do |comment| %>
+          <% @comments.each do |comment| %>
             <tr>
-              <td><%= comment.sentence %></td>
-              <td><%= comment.user.name %></td>
-              <td><%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+              <td>
+                <%= comment.sentence %>
+                <br>
+                <% if comment.score.to_f <= -0.5 %>
+                  <span class="text-danger">感情スコア<%= comment.score %></span>
+                <% elsif comment.score.to_f >= 0.5 %>
+                  <span class="text-success">感情スコア<%= comment.score %></span>
+                <% else %>
+                  <span>感情スコア<%= comment.score %></span>
+                <% end %>
+                <%= link_to "削除", comment_path(comment), method: :delete, class: "link-danger" %>
+              </td>
+              <td class="align-middle">
+                <% if comment.user.authority == "管理者" %>
+                  <button type="button" class="btn btn-outline-dark btn-sm", disabled>管理者</button>
+                <% else %>
+                  <%= comment.user.name %>
+                <% end %>
+              </td>
+              <td class="align-middle"><%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
             </tr>
-        <% end %>
+          <% end %>
         </table>
       </div>
     </div>
