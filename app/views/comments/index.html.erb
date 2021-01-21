@@ -46,7 +46,7 @@
                 <%= comment.sentence %>
                 <% if comment.user == current_user %>
                   <br>
-                  <%= link_to "編集", edit_comment_path(comment) %> | <%= link_to "削除", comment_path(comment), method: :delete, class: "link-danger" %>
+                  <%= link_to "編集", edit_comment_path(comment) %> | <%= link_to "削除", comment_path(comment), method: :delete %>
                 <% end %>
               </td>
               <td class="align-middle">

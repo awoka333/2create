@@ -45,14 +45,18 @@
               <td>
                 <%= comment.sentence %>
                 <br>
-                <% if comment.score.to_f <= -0.5 %>
+                <% if comment.score <= -0.5 %>
                   <span class="text-danger">感情スコア<%= comment.score %></span>
-                <% elsif comment.score.to_f >= 0.5 %>
+                <% elsif comment.score >= 0.5 %>
                   <span class="text-success">感情スコア<%= comment.score %></span>
                 <% else %>
                   <span>感情スコア<%= comment.score %></span>
                 <% end %>
-                <%= link_to "削除", comment_path(comment), method: :delete, class: "link-danger" %>
+                <% if comment.user.authority == "管理者" %>
+                  <br>
+                  <%= link_to "編集", edit_comment_path(comment) %> |
+                <% end %>
+                <%= link_to "削除", comment_path(comment), method: :delete %>
               </td>
               <td class="align-middle">
                 <% if comment.user.authority == "管理者" %>

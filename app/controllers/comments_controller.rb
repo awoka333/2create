@@ -20,7 +20,7 @@ class CommentsController < ApplicationController
 
   def modify
     @activity = Activity.find(params[:activity_id])
-    @comments = Comment.where(activity_id: @activity.id).order(created_at: :desc).includes([:user]).page(params[:page]).per(25)
+    @comments = Comment.includes([:user]).where(activity_id: @activity.id).order(created_at: :desc).page(params[:page]).per(25)
     @comment = Comment.new
   end
 
@@ -40,8 +40,12 @@ class CommentsController < ApplicationController
 
   def update
     @comment = Comment.find(params[:id])
-    @comment.update(comment_params)
-    redirect_to comments_path(activity_id: @comment.activity_id)
+    @comment.score = Language.get_data(comment_params[:sentence]) # sentenceの自然言語処理をする
+    if @comment.update(comment_params)
+      redirect_to comments_path(activity_id: @comment.activity_id)
+    else
+      render 'edit'
+    end
   end
 
   def destroy

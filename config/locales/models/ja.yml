@@ -9,6 +9,7 @@ ja:
           to_do: 次回日程
         comment:
           sentence: コメント
+          score: コメントの優しさ
         group:
           member_status: メンバーステータス
           pre_member: 承認待ち
