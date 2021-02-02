@@ -11,7 +11,7 @@
       <% end %>
     </div>
 
-    <% if user_signed_in? && Group.where(user_id: current_user.id, activity_id: @activity.id).present? %>
+    <% if user_signed_in? && Group.where(user_id: current_user.id, activity_id: @activity.id).where.not(member_status: 0).present? %>
       <div class="col-sm-4 mt-4">
         <%= link_to edit_work_path(@work) do %>
           <button type="button" class="btn btn-secondary">作品を編集する</button>
