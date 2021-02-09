@@ -12,14 +12,13 @@ class ActivitiesController < ApplicationController
     redirect_to request.referer
   end
 
-
   def new
     @activity = Activity.new
   end
 
   def index
     @theme = Theme.last
-    @activities = Activity.all.page(params[:page]).per(25)
+    @activities = Activity.includes([:groups]).page(params[:page]).per(25)
   end
 
   def show
@@ -28,8 +27,6 @@ class ActivitiesController < ApplicationController
     # updateアクションでmember_status: "シニア"から変更したgroupを、graduate_status: graduated と member_status: seniorが両立しないものと定義して検出
     @pre_seniors = @groups.where(graduate_status: :graduated).where.not(member_status: :senior)
     @pre_seniors.each {|pre_senior| pre_senior.no_graduate!}
-    # @pre_senior_groups = @groups.where(user_id: @pre_seniors.pluck(:user_id))
-    # @pre_senior_groups.update(graduate_status: no_graduate)                  # 30行目は、31,32行目と等しい
     # ここまででpre_seniorsのgraduate_status修正完了
     @seniors = @groups.where(member_status: :senior)
     @leaders = @groups.where(member_status: :leader)
@@ -50,7 +47,7 @@ class ActivitiesController < ApplicationController
   end
 
   def modify
-    @activities = Activity.all.order(created_at: :desc).page(params[:page]).per(10)
+    @activities = Activity.includes([:groups]).order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def create
@@ -75,8 +72,6 @@ class ActivitiesController < ApplicationController
     @pre_members = @groups.where(member_status: :pre_member)
     @leaders = @groups.where(member_status: :leader)
     @pre_graduates = @groups.where(graduate_status: :pre_graduate)
-    # @leaders = @groups.where(member_status: 'リーダー')
-    # @pre_graduates = @groups.where(graduate_status: '卒業依頼')
     @users = @activity.group_users
   end
 
@@ -86,8 +81,6 @@ class ActivitiesController < ApplicationController
     @pre_members = @groups.where(member_status: :pre_member)
     @leaders = @groups.where(member_status: :leader)
     @pre_graduates = @groups.where(graduate_status: :pre_graduate)
-    # pre_member_ids = @groups.where(member_status: :pre_member).pluck(:user_id)
-    # senior_ids = @groups.where(member_status: :senior).pluck(:user_id)
     if @activity.update(activity_params)
       # transaction処理で、値を一気に書き換えていく。eにはエラー内容が入る。
       # 一度全てメンバーに書き換えた後、@leadersで受け取ったuserをリーダーとして登録する。

@@ -2,11 +2,10 @@ class SearchController < ApplicationController
   def search_result
     @theme = Theme.last
     if params[:q].present?
-      @q = Activity.ransack(search_activity_params)
+      @q = Activity.includes([:groups]).ransack(search_activity_params)
       @activities = @q.result(distinct: true).page(params[:page]).per(25)
     else
       @w = Work.ransack(params[:w], search_key: :w)
-      # @w = Work.ransack(search_work_params)
       @works = @w.result(distinct: true).page(params[:page]).per(10)
     end
   end

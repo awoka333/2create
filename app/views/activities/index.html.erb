@@ -46,7 +46,15 @@
                   <% end %>
                 </td>
                 <td class="align-middle"><%= link_to activity.name, activity_path(activity) %></td>
-                <td class="align-middle"><%= activity.groups.count %>人</td>
+                <td class="align-middle">
+                  <% group_sum = 0 %>
+                  <% activity.groups.each do |group| %>
+                    <% unless group.member_status == "pre_member" %>
+                      <% group_sum += 1 %>
+                    <% end %>
+                  <% end %>
+                  <%= group_sum %>人
+                </td>
                 <td class="align-middle"><%= activity.to_create %></td>
                 <td class="align-middle"><%= activity.to_study %></td>
               </tr>

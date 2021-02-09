@@ -34,21 +34,6 @@ class Group < ApplicationRecord
     end
   end
 
-  #  1行にまとめる時の記述。可読性は上より低い
-  #   if status.to_sym == :senior
-  #     update(member_status: statuses[status.to_sym], graduate_status: '卒業')
-  #   elsif status.to_sym == :waiting_accept || status.to_sym == :accept || status.to_sym == :leader
-  #     status_to_sym(statuses[status.to_sym])
-  #   else
-  #     update(graduate_status: statuses[status.to_sym]) # 下のメソッドを参照している
-  #   end
-  # end
-
-  # protected
-  # def self.status_to_sym(status)
-  #   update(member_status: status)
-  # end
-
   def self.update_member_status!(activity_id, leader_ids)                      # leaderのuser_idすべてを予め取得
     transaction do
       groups = where(activity_id: activity_id)
