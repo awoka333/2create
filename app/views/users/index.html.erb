@@ -33,7 +33,7 @@
                 <% end %>
               </td>
               <td class="align-middle">
-                <%= link_to group_path(user.id) do %>
+                <%= link_to group_path(user.id), method: :get do %>
                   <button type="button" class="btn btn-info">編集する</button>
                 <% end %>
               </td>
